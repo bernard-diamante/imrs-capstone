@@ -2,7 +2,7 @@
 *.log
 *.pot
 *.pyc
-*.env
+imrs/.env
 __pycache__/
 local_settings.py
 media/
