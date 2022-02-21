@@ -1,9 +1,10 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from .models import *
 from .forms import *
+from django.contrib import messages
 
 # 1 - Dashboard
 # ListView ?
@@ -128,7 +129,7 @@ class CreateSiteView(LoginRequiredMixin, generic.CreateView):
         #return super(CreateSiteView, self).form_valid(form)
         pass
 
-def site_create(request):
+#def site_create(request):
     #form = SiteModelForm()
     #if request.method == 'POST':
     #    form = SiteModelForm(request.POST)
@@ -139,7 +140,7 @@ def site_create(request):
     #    "form": form
     #}
     #return render(request, "url", context)
-    pass
+#    pass
 
 # 6.2 - List Site
 # ListView
@@ -151,12 +152,12 @@ class ListSiteView(LoginRequiredMixin, generic.ListView):
         queryset = Site_Item_Inventory.objects.all()
         pass
 
-def site_list(request):
-    site = Site.objects.all()
-    context = {
-        "site": site
-    }
-    return render (request, "url", context)
+#def site_list(request):
+#    site = Site.objects.all()
+#    context = {
+#        "site": site
+#    }
+#    return render (request, "url", context)
 
 # 6.3 - Update Site
 # UpdateView
@@ -176,14 +177,29 @@ class UpdateSiteView(LoginRequiredMixin, generic.UpdateView):
         messages.info(self.request, "Messages")
         return super(UpdateSiteView, self).form_valid(form)
 
-def site_update(request, pk):
-    site = Site.objects.get(id=pk)
-    form = SiteModelForm
+# def site_update(request, pk):
+#     site = Site.objects.get(id=pk)
+#     form = SiteModelForm(instance = site)
+#     if request.method == "POST":
+#         form = SiteModelForm(request.POST, instance=site)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("url")
+#     context = {
+#         "form": form,
+#         "site": site
+#     }
+#     return render(request, "url", context)
 
 
 # 6.4 - Delete Site
 # DeleteView
 class DeleteSiteView(LoginRequiredMixin, generic.DeleteView):
-    pass
+    template_name = "url"
 
+    def get_success_url(self):
+        return reverse("url")
 
+    def get_queryset(self):
+        user = self.request.user
+        return site.objects.all()
