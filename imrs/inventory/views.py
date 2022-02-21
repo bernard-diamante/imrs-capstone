@@ -87,35 +87,35 @@ class DeleteRequisitionView(LoginRequiredMixin, generic.DeleteView):
 
 # --------------------------------------------------------------- #
 
-# 5 - Transfer
+#  - Transfer
 # ListView
 # # class TransferListView(generic.ListView):
 # #     # template_name = "html file"
 # #     queryset = Material_Transfer.objects.all()
 # #     context_object_name = "transfer"
 
-# # 5.1 - Add Transfer
+# #  - Add Transfer
 # # CreateView
 # class AddTransferView(generic.CreateView):
 #     # template_name = 'html file'
 #     form_class = TransferModelForm
 #     pass
 
-# # 5.2 - Update Transfer
+# #  - Update Transfer
 # # UpdateView 
 # class UpdateTransferView(generic.UpdateView):
 #     # template_name = 'html file'
 #     form_class = TransferModelForm
 #     pass
 
-# 5.3 Delete Transfer 
+#  Delete Transfer 
 # DeleteView
 #class DeleteTransferView(generic.DeleteView):
 #    pass
 
 # --------------------------------------------------------------- #
 
-# 6.1 - Create Site
+# 5.1 - Create Site
 # CreateView
 class CreateSiteView(LoginRequiredMixin, generic.CreateView):
     # template_name = 'html file'
@@ -142,7 +142,7 @@ class CreateSiteView(LoginRequiredMixin, generic.CreateView):
     #return render(request, "url", context)
 #    pass
 
-# 6.2 - List Site
+# 5.2 - List Site
 # ListView
 class ListSiteView(LoginRequiredMixin, generic.ListView):
     template_name = "html file"
@@ -159,7 +159,7 @@ class ListSiteView(LoginRequiredMixin, generic.ListView):
 #    }
 #    return render (request, "url", context)
 
-# 6.3 - Update Site
+# 5.3 - Update Site
 # UpdateView
 class UpdateSiteView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'html file'
@@ -192,7 +192,7 @@ class UpdateSiteView(LoginRequiredMixin, generic.UpdateView):
 #     return render(request, "url", context)
 
 
-# 6.4 - Delete Site
+# 5.4 - Delete Site
 # DeleteView
 class DeleteSiteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "url"
