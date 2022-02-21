@@ -177,7 +177,8 @@ class UpdateSiteView(LoginRequiredMixin, generic.UpdateView):
         return super(UpdateSiteView, self).form_valid(form)
 
 def site_update(request, pk):
-    
+    site = Site.objects.get(id=pk)
+    form = SiteModelForm
 
 
 # 6.4 - Delete Site
