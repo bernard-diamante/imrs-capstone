@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load tailwind_filters %}
+
+{% block content %}
+
+<!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+<!-- <div class="max-w-lg mx-auto">
+
+    <div class="py-5 border-b border-gray-200">
+        <a class="hover:text-blue-500" href="{% url 'signup' %}">Don't have an account?</a>
+    </div>
+
+    <form method="post" class="mt-5">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type='submit' class="w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-md">
+            Login
+        </button>
+    </form>
+    <div class="py-5 border-t border-gray-200 mt-5">
+        <a class="hover:text-blue-500" href="{% url 'reset-password' %}">Forgot password?</a>
+    </div>
+</div> -->
+
+<!-- Tailblocks -->
+<section class="text-gray-600 body-font">
+   <!-- <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
+        <h1 class="title-font font-medium text-3xl text-gray-900">Slow-carb next level shoindcgoitch ethical authentic, poko scenester</h1>
+        <p class="leading-relaxed mt-4">Poke slow-carb mixtape knausgaard, typewriter street art gentrify hammock starladder roathse. Craies vegan tousled etsy austin.</p>
+      </div> -->
+    <div class="container px-5 py-24 mx-auto items-center">
+
+      <!-- Logo and Label -->
+      <div class="mx-auto items-center flex-wrap mb-20 w-1/2">
+        <img class="mx-auto mb-5 h-20" src="LOGO1.png"> <!-- NOTE: Adjust image height -->
+        <h1 class="text-center text-3xl break-normal mx-auto">Inventory Management and</h1>
+        <h1 class="text-center text-3xl break-normal mx-auto">Requisition System</h1>
+      </div>
+
+      <!-- Login Box -->
+      <div class="lg:w-2/6 md:w-1/2 max-w-15 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto md:mr-auto w-full mt-10 md:mt-0">
+        <h2 class="text-gray-900 text-lg font-medium title-font mb-5">Sign In</h2>
+        <div class="relative mb-4">
+          <label for="emp-id" class="leading-7 text-sm text-gray-600">Employee ID</label>
+          <input type="text" id="emp-id" name="emp-id" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+        </div>
+        <div class="relative mb-4">
+          <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
+          <input type="password" id="password" name="password" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+        </div>
+        <button class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Login</button>
+        <!-- <p class="text-xs text-gray-500 mt-3">Literally you probably haven't heard of them jean shorts.</p> -->
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}
