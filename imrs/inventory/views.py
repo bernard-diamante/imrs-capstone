@@ -67,6 +67,16 @@ class ItemUpdateView(LoginRequiredMixin, generic.UpdateView):
         messages.info(self.request, "Messages")
         return super(ItemUpdateView, self).form_valid(form)
 
+class ItemDeleteView(LoginRequiredMixin, generic.DeleteView):
+    template_name = "url"
+
+    def get_success_url(self):
+        return reverse("item-list")
+
+    def get_queryset(self):
+        user = self.request.user
+        return Item.objects.all()
+
 class ItemDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "html file"
     context_object_name = "item"
@@ -167,3 +177,29 @@ class SiteDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_queryset(self):
         user = self.request.user
         return Site.objects.all()
+
+class SiteItemInventoryUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'html file'
+    form_class = SiteItemInventoryModelForm
+
+    def get_queryset(self):
+        user = self.request.user
+        return Site_Item_Inventory.objects.all()
+    
+    def get_success_url(self):
+        return reverse("")
+    
+    def form_valid(self,form):
+        form.save()
+        messages.info(self.request, "Messages")
+        return super(SiteItemInventoryUpdateView, self).form_valid(form)
+
+# class SiteItemInventoryDeleteView(LoginRequiredMixin, generic.DeleteView):
+#     template_name = "html file"
+
+#     def get_success_url(self):
+#         return reverse("")
+    
+#     def get_queryset(self):
+#         user = self.request.user
+#         return Site_Item_Inventory.objects.all()

@@ -18,6 +18,7 @@ class SiteModelForm(forms.ModelForm):
         model = Site
         fields = (
             'siteName',
+            'userID',
             'siteLotNo',
             'siteBlockNo',
             'siteBarangay',
@@ -33,8 +34,8 @@ class ItemModelForm(forms.ModelForm):
         model = Item
         fields = (
             'itemName',
-            'itemUnitCategory',
-            'itemUnitType',
+            'itemCategory',
+            'itemSubcategory',
         )
 
 

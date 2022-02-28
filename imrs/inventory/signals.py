@@ -9,11 +9,12 @@ def calculate_item_status(sender, instance, **kwargs):
         pass
     else:
         if instance.siteItemTurnover == 'f':
-            instance.siteItemMinThreshold = instance.siteItemMinThreshold * 1.5
+            mult = 1.5
         elif instance.siteItemTurnover == 'n':
-            instance.siteItemMinThreshold = instance.siteItemMinThreshold * 1.25
+            mult = 1.25
         elif instance.siteItemTurnover == 's':
-            instance.siteItemMinThreshold = instance.siteItemMinThreshold
+            mult = 1
+        instance.siteItemMinThreshold *= mult
             
         if instance.siteItemCount >= instance.siteItemMinThreshold:
             instance.siteItemStatus = 1
@@ -22,12 +23,3 @@ def calculate_item_status(sender, instance, **kwargs):
         else:
             instance.siteItemStatus = 3
 
-
-
-
-
-
-# siteItemCount
-# siteItemTurnover
-# siteItemMinThreshold
-# siteItemStatus

@@ -32,17 +32,15 @@ class User(AbstractUser):
 class Item(models.Model):
     itemID = models.AutoField(primary_key=True)
     itemName = models.CharField(max_length=30)
-    itemUnitCategory = models.CharField(max_length=1, choices=UNIT_CATEGORY, default="d")
-    itemUnitType = models.CharField(max_length=2, choices=UNIT_TYPE, null=True, blank=True)
-    # itemClassification = models.CharField(max_length=1, choices=*wala pa*)
-    #itemMaterial = # to clarify
+    itemCategory = models.CharField(max_length=50)
+    itemSubcategory = models.CharField(max_length=50)
 
     def __str__(self):
         return self.itemName
 
 class Site(models.Model):
     siteID = models.AutoField(primary_key=True) #change to UUIDField if needed
-    userID = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL) ## added null=True
+    userID = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL) ## added null=True
     siteName = models.CharField(max_length=50, null=True)
     siteLotNo = models.CharField(max_length=30, null=True)
     siteBlockNo = models.CharField(max_length=30, null=True)
