@@ -6,162 +6,143 @@ from .models import *
 from .forms import *
 from django.contrib import messages
 
-# 1 - Dashboard
-# ListView ?
+
 class DashboardListView(generic.ListView):
-    pass
+    template_name = "html file"
 
-# --------------------------------------------------------------- #
+    def get_context_data(self, **kwargs):
+        context = super(DashboardListView, self).get_context_data(**kwargs)
 
-# 3, 3.1 - Inventory
-# ListView
+        user = self.request.user
+
+        # Add dashboard contents
+
+        return context
+
 class InventoryListView(LoginRequiredMixin, generic.ListView):
-    # template_name = "html file"
+    template_name = "inventory.html"
     def get_queryset(self):
         queryset = Site_Item_Inventory.objects.all()
     context_object_name = "inventory"
 
-# 3.2, 3.3, 3.4 - Add Item
-# CreateView
-class AddItemView(LoginRequiredMixin, generic.CreateView):
-    template_name = "html file"
-    form_class = ItemModelForm
-    
-    def get_success_url(self):
-        # return reverse("url")
-        pass
+    def get_context_data(self, **kwargs):
+        context = super(InventoryListView, self).get_context_data(**kwargs)
+        user = self.request.user
+        
+        #Conditionals
 
-# 3.x - Update Item
-# UpdateView
-class UpdateItemView(LoginRequiredMixin, generic.UpdateView):
+        return context
+        
+
+class ItemListView(LoginRequiredMixin, generic.ListView):
+    template_name = "html file"
+    context_object_name = "item"
+
+    def get_queryset(self):
+        queryset = Item.objects.all()
+
+class ItemAddView(LoginRequiredMixin, generic.CreateView):
     template_name = "html file"
     form_class = ItemModelForm
     
     def get_success_url(self):
-        # return reverse("url")
-        pass
+        return reverse("item-list")
+
+    def form_valid(self, form):
+        return super(ItemAddView, self).form_valid(form)
+
+class ItemUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "html file"
+    form_class = ItemModelForm
     
-# 3.x - Item Details
-# DetailView
+    def get_queryset(self):
+        user = self.request.user
+        return Item.objects.all()
+
+    def get_success_url(self):
+        return reverse("item-list")
+    
+    def form_valid(self, form):
+        form.save()
+        messages.info(self.request, "Messages")
+        return super(ItemUpdateView, self).form_valid(form)
+
 class ItemDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "html file"
     context_object_name = "item"
 
     def get_queryset(self):
-        # return Items.object.all()
-        pass
+        return Item.objects.all()
 
-# --------------------------------------------------------------- #
-
-# 4 - Requisition
-# ListView
 class RequisitionListView(LoginRequiredMixin, generic.ListView):
-    # template_name = "html file"
+    template_name = "html file"
     queryset = Material_Requisition.objects.all()
     context_object_name = "requisition"
 
+    def get_queryset(self):
+        queryset = Site_Item_Inventory.objects.all()
+    context_object_name = "inventory"
 
-# 4.1. 4.2, 4.3 - Add Requisition
-# CreateView
-class AddRequisitionView(LoginRequiredMixin, generic.CreateView):
-    # template_name = "html file"
+    def get_context_data(self, **kwargs):
+        context = super(InventoryListView, self).get_context_data(self, **kwargs)
+        user = self.request.user
+        
+        return context
+
+class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
+    template_name = "html file"
     form_class = RequisitionModelForm
-    pass
+
     def get_success_url(self):
-        # return reverse("url")
-        pass
+        return reverse("requisition-list")
 
+    def form_valid(self, form):
+        return super(RequisitionAddView, self).form_valid(form)
 
-# 4.4 - Update Requisition
-# UpdateView
-class UpdateRequisitionView(LoginRequiredMixin, generic.UpdateView):
-    # template_name = "html file"
+class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "html file"
     form_class = RequisitionModelForm
-    pass
+    
+    def get_queryset(self):
+        user = self.request.user
+        return Material_Requisition.objects.all()
 
+    def get_success_url(self):
+        return reverse("requisition-list")
+    
+    def form_valid(self, form):
+        form.save()
+        messages.info(self.request, "Messages")
+        return super(RequisitionUpdateView, self).form_valid(form)
 
-# 4.5 - Delete Requisition
-# DeleteView
-class DeleteRequisitionView(LoginRequiredMixin, generic.DeleteView):
-    pass
+class RequisitionDeleteView(LoginRequiredMixin, generic.DeleteView):
+    template_name = "url"
 
-# --------------------------------------------------------------- #
+    def get_success_url(self):
+        return reverse("requisition-list")
 
-#  - Transfer
-# ListView
-# # class TransferListView(generic.ListView):
-# #     # template_name = "html file"
-# #     queryset = Material_Transfer.objects.all()
-# #     context_object_name = "transfer"
+    def get_queryset(self):
+        user = self.request.user
+        return Material_Requisition.objects.all()
 
-# #  - Add Transfer
-# # CreateView
-# class AddTransferView(generic.CreateView):
-#     # template_name = 'html file'
-#     form_class = TransferModelForm
-#     pass
-
-# #  - Update Transfer
-# # UpdateView 
-# class UpdateTransferView(generic.UpdateView):
-#     # template_name = 'html file'
-#     form_class = TransferModelForm
-#     pass
-
-#  Delete Transfer 
-# DeleteView
-#class DeleteTransferView(generic.DeleteView):
-#    pass
-
-# --------------------------------------------------------------- #
-
-# 5.1 - Create Site
-# CreateView
-class CreateSiteView(LoginRequiredMixin, generic.CreateView):
-    # template_name = 'html file'
+class SiteCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'html file'
     form_class = SiteModelForm
 
     def get_success_url(self):
-        #return reverse("url")
-        pass
+        return reverse("site-list")
 
     def form_valid(self, form):
-        #return super(CreateSiteView, self).form_valid(form)
-        pass
+        return super(SiteCreateView, self).form_valid(form)
 
-#def site_create(request):
-    #form = SiteModelForm()
-    #if request.method == 'POST':
-    #    form = SiteModelForm(request.POST)
-    #    if form.is_valid():
-    #        form.save()
-    #        return redirect("url")
-    #context = {
-    #    "form": form
-    #}
-    #return render(request, "url", context)
-#    pass
-
-# 5.2 - List Site
-# ListView
-class ListSiteView(LoginRequiredMixin, generic.ListView):
+class SiteListView(LoginRequiredMixin, generic.ListView):
     template_name = "html file"
     context_object_name = "site"
 
     def get_queryset(self):
         queryset = Site_Item_Inventory.objects.all()
-        pass
 
-#def site_list(request):
-#    site = Site.objects.all()
-#    context = {
-#        "site": site
-#    }
-#    return render (request, "url", context)
-
-# 5.3 - Update Site
-# UpdateView
-class UpdateSiteView(LoginRequiredMixin, generic.UpdateView):
+class SiteUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'html file'
     form_class = SiteModelForm
     
@@ -170,36 +151,19 @@ class UpdateSiteView(LoginRequiredMixin, generic.UpdateView):
         return Site.objects.all()
 
     def get_success_url(self):
-        return reverse("url")
+        return reverse("site-list")
 
     def form_valid(self, form):
         form.save()
         messages.info(self.request, "Messages")
-        return super(UpdateSiteView, self).form_valid(form)
+        return super(SiteUpdateView, self).form_valid(form)
 
-# def site_update(request, pk):
-#     site = Site.objects.get(id=pk)
-#     form = SiteModelForm(instance = site)
-#     if request.method == "POST":
-#         form = SiteModelForm(request.POST, instance=site)
-#         if form.is_valid():
-#             form.save()
-#             return redirect("url")
-#     context = {
-#         "form": form,
-#         "site": site
-#     }
-#     return render(request, "url", context)
-
-
-# 5.4 - Delete Site
-# DeleteView
-class DeleteSiteView(LoginRequiredMixin, generic.DeleteView):
-    template_name = "url"
+class SiteDeleteView(LoginRequiredMixin, generic.DeleteView):
+    template_name = "html file"
 
     def get_success_url(self):
-        return reverse("url")
+        return reverse("site-list")
 
     def get_queryset(self):
         user = self.request.user
-        return site.objects.all()
+        return Site.objects.all()

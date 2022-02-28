@@ -18,7 +18,6 @@ class User(AbstractUser):
     userMiddleName = models.CharField(max_length=50)
     userLastName = AbstractUser.last_name
     userSuffix = models.CharField(max_length=30)
-    userType = models.PositiveSmallIntegerField()
     userEmail = AbstractUser.email
     userContactNo = models.CharField(max_length=11)
     userRole = models.PositiveSmallIntegerField(default=3, choices=USER_ROLE_CHOICES)
@@ -31,34 +30,11 @@ class User(AbstractUser):
         return self.userEmail
 
 class Item(models.Model):
-    UNIT_TYPE = [
-    # Metric
-        ('mm', 'milimeter'),
-        ('cm', 'centimeter'),
-        ('m', 'meter'),
-        ('mg','miligrams'),
-        ('g','grams'),
-        ('kg','kilograms'),
-        
-        # Imperial
-        ('in', 'inches'),
-        ('ft', 'feet'),
-        ('lb', 'pound'),
-        ('t', 'tonne'),
-        ]
-
-    UNIT_CATEGORY = [
-        ('d', 'Dimensions'),
-        ('w', 'Weight'),
-        ('v', 'Volume'),
-        ('a', 'Amount'),
-        ('e', 'Equipment')
-    ]
     itemID = models.AutoField(primary_key=True)
     itemName = models.CharField(max_length=30)
-    itemCategory = models.CharField(max_length=1, choices=UNIT_CATEGORY, default="Dimensions")
-    itemUnitType_1 = models.CharField(max_length=1, choices=UNIT_CATEGORY, default="Dimensions")
-    itemUnitType_2 = models.CharField(max_length=2, choices=UNIT_TYPE, null=True, blank=True)
+    itemUnitCategory = models.CharField(max_length=1, choices=UNIT_CATEGORY, default="d")
+    itemUnitType = models.CharField(max_length=2, choices=UNIT_TYPE, null=True, blank=True)
+    # itemClassification = models.CharField(max_length=1, choices=*wala pa*)
     #itemMaterial = # to clarify
 
     def __str__(self):
@@ -84,11 +60,21 @@ class Site_Item_Inventory(models.Model):
         (2, 'Low'),
         (3, 'Empty')
     ]
+
+    ITEM_TURNOVER = [
+        ('s', 'Slow'),
+        ('n', 'Normal'),
+        ('f', 'Fast'),
+    ]
+    
     itemID = models.ForeignKey('Item', on_delete=models.CASCADE)
     siteID = models.OneToOneField('Site', on_delete=models.CASCADE) 
     siteItemCount = models.PositiveIntegerField(default=0)
-    siteItemStatus = models.PositiveSmallIntegerField(default=0, choices=ITEM_STATUS)
+    siteItemStatus = models.PositiveSmallIntegerField(default=1, choices=ITEM_STATUS)
+    siteItemTurnover = models.CharField(max_length=1, choices=ITEM_TURNOVER, default="f")
+    siteItemMinThreshold = models.PositiveSmallIntegerField(default=0)
     
+
     class Meta:
         UniqueConstraint(fields = ['itemID', 'siteID'], name = 'composite_pk')
     
@@ -111,3 +97,5 @@ class Material_Requisition(models.Model):
     reqStatus = models.PositiveSmallIntegerField(choices=REQ_STATUS, default=0)
     class Meta:
         UniqueConstraint(fields = ['siteID'], name = 'site_unique')
+    
+

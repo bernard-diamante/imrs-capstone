@@ -33,9 +33,8 @@ class ItemModelForm(forms.ModelForm):
         model = Item
         fields = (
             'itemName',
-            'itemCategory',
-            'itemUnitType_1',
-            'itemUnitType_2'
+            'itemUnitCategory',
+            'itemUnitType',
         )
 
 
