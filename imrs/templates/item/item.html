@@ -15,7 +15,7 @@
 </style>
 
 <!-- <div class="items-start container mx-auto mt-20"> -->
-    <h2 class="font-bold text-4xl pb-10">Inventory</h2>
+    <h2 class="font-bold text-4xl pb-10">Items</h2>
 
     <div class="flex space-x-5">
         <table id="inventory-list"
@@ -23,32 +23,32 @@
             <thead class="bg-gray-400 text-white">
                 <tr>
                     <th class="p-1 font-medium">Item</th>
-                    <th class="p-1 font-medium">Count</th>
                     <th class="p-1 font-medium">Category</th>
                     <th class="p-1 font-medium">Subcategory</th>
-                    <th class="p-1 font-medium">Status</th>
+                    <th class="p-1"></th>
                 </tr>
             </thead>
             <tbody class="text-center">
                 {% for item in inventory %}
                     <tr id="inventoryRow_{{ forloop.counter }}" data-href="{% url 'inventory:detail-inv-item' item.pk %}" class="row table-row">
                         <td class="p-2">{{ item.itemID.itemName }}</td>
-                        <td class="p-2">{{ item.siteItemCount }}</td>
                         <td class="p-2">{{ item.itemID.itemCategory }}</td>
                         <td class="p-2">{{ item.itemID.itemSubcategory }}</td>
-                        <td class="p-2">{{ item.siteItemStatus }}</td>
+                        <td>
+                            <input type="radio">
+                        </td>
                     </tr>
-                {% empty %}
-                <li>No objects yet.</li>
                 {% endfor %}
-                <!-- <tr class="row table-row border-b">
-                    <td>Planks</td>
-                    <td>13 pcs</td>
-                    <td>Dimensions</td>
-                    <td>Normal</td>
-                    <td>Fast</td>
-                    <td>Material</td>
-                </tr> -->
+
+                <tr id="inventoryRow_{{ forloop.counter }}" class="row table-row">
+                    <td class="p-2">Nails</td>
+                    <td class="p-2">Main Cat</td>
+                    <td class="p-2">Sub Cat</td>
+                    <td>
+                        <input type="radio">
+                    </td>
+                </tr>
+
             </tbody>
         </table>
 

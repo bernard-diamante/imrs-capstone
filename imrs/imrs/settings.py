@@ -36,7 +36,11 @@ INSTALLED_APPS = [
     'theme',
 
     # Local apps
-    'inventory'
+    'inventory',
+    'item',
+    'project_site',
+    'requisition',
+    'dashboard',
 
 ]
 

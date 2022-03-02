@@ -1,9 +1,9 @@
-from secrets import choice
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import UniqueConstraint
+from item.models import Item
+from project_site.models import Site
 # from django.contrib.auth.mixins import LoginRequiredMixin
-from django.conf import settings
 
 
 class User(AbstractUser):
@@ -29,27 +29,6 @@ class User(AbstractUser):
     def __str__(self):
         return self.userEmail
 
-class Item(models.Model):
-    itemID = models.AutoField(primary_key=True)
-    itemName = models.CharField(max_length=30)
-    itemCategory = models.CharField(max_length=50, null=True)
-    itemSubcategory = models.CharField(max_length=50, null=True)
-
-    def __str__(self):
-        return self.itemName
-
-class Site(models.Model):
-    siteID = models.AutoField(primary_key=True) #change to UUIDField if needed
-    userID = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL) ## added null=True
-    siteName = models.CharField(max_length=50, null=True)
-    siteStreetNumber = models.CharField(max_length=30, null=True)
-    siteStreet = models.CharField(max_length=30, null=True)
-    siteBarangay = models.CharField(max_length=30)
-    siteCity = models.CharField(max_length=35)
-    siteProvince = models.CharField(max_length=30)
-    siteRegion = models.CharField(max_length=30)
-    siteZip = models.CharField(max_length=10)
-    siteContactNo = models.CharField(max_length=11)
 
 # Associative (Inventory - Site)
 class Site_Item_Inventory(models.Model):
@@ -65,8 +44,8 @@ class Site_Item_Inventory(models.Model):
         ('f', 'Fast'),
     ]
     
-    itemID = models.ForeignKey('Item', on_delete=models.CASCADE)
-    siteID = models.ForeignKey('Site', on_delete=models.CASCADE) 
+    itemID = models.ForeignKey('item.Item', on_delete=models.CASCADE)
+    siteID = models.ForeignKey('project_site.Site', on_delete=models.CASCADE) 
     siteItemCount = models.PositiveIntegerField(default=0)
     siteItemStatus = models.PositiveSmallIntegerField(default=1, choices=ITEM_STATUS)
     siteItemTurnover = models.CharField(max_length=1, choices=ITEM_TURNOVER, default="f")
@@ -76,24 +55,6 @@ class Site_Item_Inventory(models.Model):
     class Meta:
         UniqueConstraint(fields = ['itemID', 'siteID'], name = 'composite_pk')
     
-class Material_Requisition(models.Model):
-    REQ_STATUS = [
-        (0,'For Review'),
-        (1, 'Awaiting Delivery'),
-        (2, 'Request Denied'),
-        (3, 'Delivered'),
-    ]
-    reqID = models.AutoField(primary_key=True) #change to UUIDField if needed
-    siteID = models.ForeignKey("Site", related_name='destinationSite', on_delete=models.CASCADE) 
-    reqDescription = models.CharField(max_length=1000)
-    reqDateSubmitted = models.DateTimeField(auto_now=True)
-    reqDateNeeded = models.DateTimeField(auto_now=False)
-    reqItems = models.ManyToManyField(Item)
-    # If error, look up backwards relation
-    originSiteID = models.ForeignKey('Site', related_name='originSite', on_delete=models.CASCADE, blank=True, null=True) 
 
-    reqStatus = models.PositiveSmallIntegerField(choices=REQ_STATUS, default=0)
-    class Meta:
-        UniqueConstraint(fields = ['siteID'], name = 'site_unique')
     
 

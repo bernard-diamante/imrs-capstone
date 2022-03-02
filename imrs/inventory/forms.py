@@ -2,43 +2,6 @@ from django import forms
 from .models import *
 
 
-class RequisitionModelForm(forms.ModelForm):
-    class Meta:
-        model = Material_Requisition
-        fields = (
-            'reqDescription',
-            'reqDateNeeded'
-        )
-    # reqform_Description = forms.CharField(label="Reason for Material Requisition", max_length=1000)
-    # reqform_DateSubmitted = forms.
-
-
-class SiteModelForm(forms.ModelForm):
-    class Meta:
-        model = Site
-        fields = (
-            'siteName',
-            'userID',
-            'siteStreetNumber',
-            'siteStreet',
-            'siteBarangay',
-            'siteCity',
-            'siteProvince',
-            'siteRegion',
-            'siteZip',
-            'siteContactNo'
-        )
-
-class ItemModelForm(forms.ModelForm):
-    class Meta:
-        model = Item
-        fields = (
-            'itemName',
-            'itemCategory',
-            'itemSubcategory',
-        )
-
-
 # class TransferModelForm(forms.ModelForm):
 #     class Meta:
 #         model = Material_Transfer
@@ -52,7 +15,12 @@ class SiteItemInventoryModelForm(forms.ModelForm):
         model = Site_Item_Inventory
         fields = (
             'siteItemCount',
-            'siteItemStatus'
+            'siteItemTurnover'
         )
+
+    def __init__(self, *args, **kwargs):
+        super(SiteItemInventoryModelForm, self).__init__(*args, **kwargs)
+        self.fields['siteItemCount'].label = "Item Count"
+        self.fields['siteItemTurnover'].label = "Item Turnover"
 ################################
 # renewal_date = forms.DateField(help_text="Enter a date between now and 4 weeks (default 3).")
