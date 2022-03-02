@@ -29,6 +29,7 @@ urlpatterns = [
 
     # Site Inventory
     path('site/inv/', InventoryListView.as_view(), name='inventory-list'),
-    path('site/inv/update/<int:pk>/', SiteItemInventoryUpdateView.as_view(), name='update-inv-item'),
+    path('site/inv/update/<int:pk>/', InventoryUpdateView.as_view(), name='update-inv-item'),
+    path('site/inv/<int:pk>/', InventoryDetailView.as_view(), name='detail-inv-item'),
     # path('site/inv/delete/<int:pk>/', SiteItemInventoryDeleteView.as_view(), name='delete-inv-item'),
 ]

@@ -19,8 +19,8 @@ class SiteModelForm(forms.ModelForm):
         fields = (
             'siteName',
             'userID',
-            'siteLotNo',
-            'siteBlockNo',
+            'siteStreetNumber',
+            'siteStreet',
             'siteBarangay',
             'siteCity',
             'siteProvince',

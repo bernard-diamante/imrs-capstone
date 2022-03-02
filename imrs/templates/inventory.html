@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load tailwind_filters %}
+{% load static %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+
+{% block content %}
+<style>
+    tr:nth-child(even) {
+        background-color: whitesmoke;
+    }
+    tr:nth-child(od) {
+        background-color: #fff;
+    }
+</style>
+
+<!-- <div class="items-start container mx-auto mt-20"> -->
+    <h2 class="font-bold text-4xl pb-10">Inventory</h2>
+
+    <div class="flex space-x-5">
+        <table id="inventory-list"
+            class="table h-full w-full overflow-hidden rounded-lg shadow-lg ease-in duration-300 hover:shadow">
+            <thead class="bg-gray-400 text-white">
+                <tr>
+                    <th class="p-1 font-medium">Item</th>
+                    <th class="p-1 font-medium">Count</th>
+                    <th class="p-1 font-medium">Category</th>
+                    <th class="p-1 font-medium">Subcategory</th>
+                    <th class="p-1 font-medium">Status</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for item in inventory %}
+                    <tr id="inventoryRow_{{ forloop.counter }}" data-href="{% url 'inventory:detail-inv-item' item.pk %}" class="row table-row">
+                        <td class="p-2">{{ item.itemID.itemName }}</td>
+                        <td class="p-2">{{ item.siteItemCount }}</td>
+                        <td class="p-2">{{ item.itemID.itemCategory }}</td>
+                        <td class="p-2">{{ item.itemID.itemSubcategory }}</td>
+                        <td class="p-2">{{ item.siteItemStatus }}</td>
+                    </tr>
+                {% empty %}
+                <li>No objects yet.</li>
+                {% endfor %}
+                <!-- <tr class="row table-row border-b">
+                    <td>Planks</td>
+                    <td>13 pcs</td>
+                    <td>Dimensions</td>
+                    <td>Normal</td>
+                    <td>Fast</td>
+                    <td>Material</td>
+                </tr> -->
+            </tbody>
+        </table>
+
+        <!-- Add item and search -->
+        <div
+            class="h-full bg-gray-400 flex flex-col space-y-3 justify-end rounded-lg px-3 py-3 shadow-lg ease-in duration-300 hover:shadow">
+            <!-- FOR MAIN OFFICE ONLY
+            <button class="w-full px-3 py-1 bg-slate-200 cursor-pointer rounded-full">Add Item</button> -->
+            <div class="border-t-40 text-white">
+                Filter by:
+                <select name="category" id="category" class="text-black rounded">
+                    <option value="id">ID</option>
+                    <option value="type">Count</option>
+                    <option value="type">Type</option>
+                </select>
+            </div>
+            <div class="flex">
+                <input class="rounded border-2 border-gray-300 px-2 py-auto" type="search" placeholder="Search">
+                    <span class="material-icons-sharp text-white ml-2">
+                        search
+                    </span>
+            </div>
+        </div>
+    </div>
+
+<!-- </div> -->
+
+<script src="{% static 'js/inventory-details.js' %}"></script>
+
+{% endblock content %}

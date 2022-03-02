@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <title>Inventory Management and Requisition System</title>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="max-w-7xl mx-auto">
+        <div class="items-start container mx-auto mt-20">
+        {% block content %}
+        {% endblock content %}
+        </div>
+    </div>
+    {% include "scripts.html" %}
+</body>
+</html>

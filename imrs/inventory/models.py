@@ -32,8 +32,8 @@ class User(AbstractUser):
 class Item(models.Model):
     itemID = models.AutoField(primary_key=True)
     itemName = models.CharField(max_length=30)
-    itemCategory = models.CharField(max_length=50)
-    itemSubcategory = models.CharField(max_length=50)
+    itemCategory = models.CharField(max_length=50, null=True)
+    itemSubcategory = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return self.itemName
@@ -42,8 +42,8 @@ class Site(models.Model):
     siteID = models.AutoField(primary_key=True) #change to UUIDField if needed
     userID = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL) ## added null=True
     siteName = models.CharField(max_length=50, null=True)
-    siteLotNo = models.CharField(max_length=30, null=True)
-    siteBlockNo = models.CharField(max_length=30, null=True)
+    siteStreetNumber = models.CharField(max_length=30, null=True)
+    siteStreet = models.CharField(max_length=30, null=True)
     siteBarangay = models.CharField(max_length=30)
     siteCity = models.CharField(max_length=35)
     siteProvince = models.CharField(max_length=30)
@@ -66,7 +66,7 @@ class Site_Item_Inventory(models.Model):
     ]
     
     itemID = models.ForeignKey('Item', on_delete=models.CASCADE)
-    siteID = models.OneToOneField('Site', on_delete=models.CASCADE) 
+    siteID = models.ForeignKey('Site', on_delete=models.CASCADE) 
     siteItemCount = models.PositiveIntegerField(default=0)
     siteItemStatus = models.PositiveSmallIntegerField(default=1, choices=ITEM_STATUS)
     siteItemTurnover = models.CharField(max_length=1, choices=ITEM_TURNOVER, default="f")

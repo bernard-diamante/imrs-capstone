@@ -21,17 +21,14 @@ class DashboardListView(generic.ListView):
 
 class InventoryListView(LoginRequiredMixin, generic.ListView):
     template_name = "inventory.html"
-    def get_queryset(self):
-        queryset = Site_Item_Inventory.objects.all()
     context_object_name = "inventory"
-
-    def get_context_data(self, **kwargs):
-        context = super(InventoryListView, self).get_context_data(**kwargs)
-        user = self.request.user
+    model = Site_Item_Inventory
+    def get_queryset(self):
+        qs = Site_Item_Inventory.objects.all()
+        return qs
         
         #Conditionals
 
-        return context
         
 
 class ItemListView(LoginRequiredMixin, generic.ListView):
@@ -82,7 +79,7 @@ class ItemDetailView(LoginRequiredMixin, generic.DetailView):
     context_object_name = "item"
 
     def get_queryset(self):
-        return Item.objects.all()
+        return Item.objects.filter(pk=self.pk)
 
 class RequisitionListView(LoginRequiredMixin, generic.ListView):
     template_name = "html file"
@@ -178,7 +175,7 @@ class SiteDeleteView(LoginRequiredMixin, generic.DeleteView):
         user = self.request.user
         return Site.objects.all()
 
-class SiteItemInventoryUpdateView(LoginRequiredMixin, generic.UpdateView):
+class InventoryUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'html file'
     form_class = SiteItemInventoryModelForm
 
@@ -187,14 +184,19 @@ class SiteItemInventoryUpdateView(LoginRequiredMixin, generic.UpdateView):
         return Site_Item_Inventory.objects.all()
     
     def get_success_url(self):
-        return reverse("")
+        return reverse("inventory-list")
     
     def form_valid(self,form):
         form.save()
         messages.info(self.request, "Messages")
-        return super(SiteItemInventoryUpdateView, self).form_valid(form)
+        return super(ItemDetailView, self).form_valid(form)
 
-# class SiteItemInventoryDeleteView(LoginRequiredMixin, generic.DeleteView):
+class InventoryDetailView(LoginRequiredMixin, generic.DetailView):
+    template_name = "view_site_item.html"
+    model = Site_Item_Inventory
+
+
+# class InventoryDeleteView(LoginRequiredMixin, generic.DeleteView):
 #     template_name = "html file"
 
 #     def get_success_url(self):
