@@ -40,6 +40,16 @@ class InventoryDetailView(LoginRequiredMixin, generic.DetailView):
         return reverse("inventory:detail-inv-item")
 
 
+class InventoryCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Site_Item_Inventory
+
+    def get_success_url(self):
+        return reverse("inventory:inventory-list")
+
+    def get_queryset(self):
+        user = self.request.user
+        return Site_Item_Inventory.objects.all()
+
 class InventoryDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Site_Item_Inventory
 

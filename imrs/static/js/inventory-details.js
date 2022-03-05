@@ -54,7 +54,7 @@
 // }
 
 $(document).ready(function () {
-    $("table tr").click(function () {
+    $("#tableRow").click(function () {
       window.location = $(this).data("href");
       return false;
     });

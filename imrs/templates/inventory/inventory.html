@@ -6,14 +6,23 @@
 />
 
 {% block content %}
-<style>
+<!-- <style>
   tr:nth-child(even) {
     background-color: whitesmoke;
   }
+
+  tr:nth-child(even):hover {
+    background-color: gray;
+  }
+
   tr:nth-child(od) {
     background-color: #fff;
   }
-</style>
+
+  tr:nth-child(od):hover {
+    background-color: darkgray;
+  }
+</style> -->
 
 <!-- <div class="items-start container mx-auto mt-20"> -->
 <h2 class="font-bold text-4xl pb-10">Inventory</h2>
@@ -21,7 +30,7 @@
 <div class="flex space-x-5">
   <table
     id="inventory-list"
-    class="table h-full w-full overflow-hidden rounded-lg shadow-lg ease-in duration-300 hover:shadow"
+    class="table h-full w-full overflow-hidden rounded-lg shadow-lg "
   >
     <thead class="bg-gray-400 text-white">
       <tr>
@@ -29,21 +38,24 @@
         <th class="p-1 font-medium">Count</th>
         <th class="p-1 font-medium">Category</th>
         <th class="p-1 font-medium">Subcategory</th>
+        <th class="p-1 font-medium">Turnover</th>
         <th class="p-1 font-medium">Status</th>
       </tr>
     </thead>
     <tbody class="text-center">
       {% for item in inventory %}
       <tr
-        id="inventoryRow_{{ forloop.counter }}"
+        id="tableRow"
         data-href="{% url 'inventory:detail-inv-item' item.pk %}"
-        class="row table-row"
+        class="row table-row cursor-pointer bg-white hover:bg-gray-100 even:bg-gray-200 even:hover:bg-gray-300 ease-in duration-100"
       >
         <td class="p-2">{{ item.itemID.itemName }}</td>
         <td class="p-2">{{ item.siteItemCount }}</td>
         <td class="p-2">{{ item.itemID.itemCategory }}</td>
         <td class="p-2">{{ item.itemID.itemSubcategory }}</td>
-        <td class="p-2">{{ item.siteItemStatus }}</td>
+        <td class="p-2">{{ item.get_siteItemTurnover_display }}</td>
+        <td class="p-2">{{ item.get_siteItemStatus_display }}</td>
+        
       </tr>
       {% endfor %}
     </tbody>

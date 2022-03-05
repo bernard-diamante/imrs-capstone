@@ -9,6 +9,15 @@ from .models import *
 #             'originSiteID',
 #         )
 
+class AddSiteItemInventoryModelForm(forms.ModelForm):
+    model = Site_Item_Inventory
+    fields = (
+        'itemID'
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(AddSiteItemInventoryModelForm,self).__init__(*args, **kwargs)
+        self.fields['itemID'].label = "Item ID"
 
 class SiteItemInventoryModelForm(forms.ModelForm):
     class Meta:

@@ -10,10 +10,10 @@
 <h2 class="font-bold text-black text-4xl pb-10">Inventory</h2>
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
-  <div class="flex w-full mb-10">
+  <div class="flex w-full mb-5">
     <a href="{% url 'inventory:inventory-list' %}">
       <button
-        class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center"
+        class="flex mr-auto bg-gray-100 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-200 rounded inline-flex items-center justify-center ease-in duration-100"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -67,6 +67,12 @@
       >
     </div>
     <div class="flex py-2 border-t border-gray-200">
+      <span class="text-gray-500">Turnover</span>
+      <span class="ml-auto text-gray-900"
+        >{{ object.siteItemTurnover }}</span
+      >
+    </div>
+    <div class="flex py-2 border-t border-gray-200">
       <span class="text-gray-500">Status</span>
       <span class="ml-auto text-gray-900">{{ object.siteItemStatus }}</span>
     </div>
@@ -75,13 +81,13 @@
     <div id="buttons" class="flex">
       <a href="{% url 'inventory:update-inv-item' object.pk %}">
         <button
-          class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+          class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
         >
           Update
         </button>
       </a>
       <button
-        class="modal-toggle flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded"
+        class="modal-toggle flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded ease-in duration-100"
       >
         Delete
       </button>

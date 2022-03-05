@@ -5,52 +5,49 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
 
 {% block content %}
-<style>
-    tr:nth-child(even) {
-        background-color: whitesmoke;
-    }
-    tr:nth-child(od) {
-        background-color: #fff;
-    }
-</style>
 
 <!-- <div class="items-start container mx-auto mt-20"> -->
     <h2 class="font-bold text-4xl pb-10">Items</h2>
 
     <div class="flex space-x-5">
+        
         <table id="inventory-list"
-            class="table h-full w-full overflow-hidden rounded-lg shadow-lg ease-in duration-300 hover:shadow">
+            class="table h-full w-full overflow-hidden rounded-lg shadow-lg">
             <thead class="bg-gray-400 text-white">
                 <tr>
                     <th class="p-1 font-medium">Item</th>
                     <th class="p-1 font-medium">Category</th>
                     <th class="p-1 font-medium">Subcategory</th>
-                    <th class="p-1"></th>
+                    <th class="p-1 font-medium"></th>
                 </tr>
             </thead>
             <tbody class="text-center">
-                {% for item in inventory %}
-                    <tr id="inventoryRow_{{ forloop.counter }}" data-href="{% url 'inventory:detail-inv-item' item.pk %}" class="row table-row">
-                        <td class="p-2">{{ item.itemID.itemName }}</td>
-                        <td class="p-2">{{ item.itemID.itemCategory }}</td>
-                        <td class="p-2">{{ item.itemID.itemSubcategory }}</td>
-                        <td>
-                            <input type="radio">
+                {% for item in items %}
+                <!-- ADD: Conditional to only display items not in site inv -->
+                    <tr id="tableRow" data-href="" 
+                    class="row table-row cursor-pointer bg-white hover:bg-gray-100 even:bg-gray-200 even:hover:bg-gray-300 ease-in duration-100">
+                        <td class="p-2">{{ item.itemName }}</td>
+                        <td class="p-2">{{ item.itemCategory }}</td>
+                        <td class="p-2">{{ item.itemSubcategory }}</td>
+                        <td class="flex justify-end">
+                            <form class="flex justify-end" action="{% url 'item:add-item-inv' item.itemID %}">
+                                {% csrf_token %}
+                            <!-- <input data-product={{ item.itemID }} data-action="add" class="h-4 w-4 cursor-pointer" type="checkbox"> -->
+                                <input id="item-{{ item.itemID }}" value="+" type="submit"
+                                    class="text-sm font-bold cursor-pointer flex mr-3 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
+                                >
+                                <!-- <button id="item-{{ item.itemID }}" value="{{ item.itemID }}" onclick="addItem(this.value)"
+                                    class="text-sm font-bold cursor-pointer flex mr-3 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
+                                >+</button> -->
+                            </form>
                         </td>
                     </tr>
+                
                 {% endfor %}
-
-                <tr id="inventoryRow_{{ forloop.counter }}" class="row table-row">
-                    <td class="p-2">Nails</td>
-                    <td class="p-2">Main Cat</td>
-                    <td class="p-2">Sub Cat</td>
-                    <td>
-                        <input type="radio">
-                    </td>
-                </tr>
-
+            
             </tbody>
         </table>
+        </form>
 
         <!-- Add item and search -->
         <div
@@ -75,7 +72,7 @@
     </div>
 
 <!-- </div> -->
-
-<script src="{% static 'js/inventory-details.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/item-add-inventory.js' %}" ></script> 
+<!-- <script src="{% static 'js/inventory-details.js' %}"></script> -->
 
 {% endblock content %}

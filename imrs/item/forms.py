@@ -15,3 +15,6 @@ class ItemModelForm(forms.ModelForm):
         self.fields['itemName'].label = "Item Name"
         self.fields['itemCategory'].label = "Item Category"
         self.fields['itemSubcategory'].label = "Item Subcategory"
+
+class AddItemForm(forms.Form):
+    itemID = forms.IntegerField(min_value=0)
