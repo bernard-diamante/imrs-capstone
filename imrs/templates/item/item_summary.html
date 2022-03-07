@@ -1,0 +1,93 @@
+{% extends 'base.html' %} {% load tailwind_filters %} {% load static %} 
+
+<!--  -->
+
+{% block content %}
+
+<h2 class="font-bold text-4xl pb-10">Item Summary</h2>
+
+<div class="lg:w-4/5 mx-auto flex flex-wrap">
+
+<!-- Return to Items -->
+  <div class="flex w-full mb-5">
+    <a href="{% url 'item:item-list' %}">
+      <button
+        class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="mr-2 h-4 w-4"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        Return to Items
+      </button>
+    </a>
+  </div>
+  <div class="flex space-x-5 w-4/5 mx-auto">
+    <table
+      id="inventory-list"
+      class="table h-full w-full overflow-hidden rounded-lg shadow-lg"
+    >
+      <thead class="bg-gray-400 text-white">
+        <tr>
+          <th class="p-1 font-medium">No.</th>
+          <th class="p-1 font-medium">Item</th>
+          <th class="p-1 font-medium">Category</th>
+          <th class="p-1 font-medium">Subcategory</th>
+          <th class="p-1 font-medium"></th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        {% for item in cart %}
+        <tr
+          id="tableRow"
+          data-href=""
+          class="row table-row cursor-pointer bg-white hover:bg-gray-100 even:bg-gray-200 even:hover:bg-gray-300 ease-in duration-100"
+        >
+          <td class="p-2">{{ forloop.counter }}</td>
+          <td class="p-2">{{ item.itemName }}</td>
+          <td class="p-2">{{ item.itemCategory }}</td>
+          <td class="p-2">{{ item.itemSubcategory }}</td>
+          <td class="flex justify-end">
+            <!-- ADD DELETE URL HERE -->
+            <a
+              href=""
+              class="text-sm font-bold cursor-pointer flex mr-3 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
+              >Remove Item</a
+            >
+          </td>
+        </tr>
+        {% empty %}
+        <tr
+          class="row table-row cursor-pointer bg-white hover:bg-gray-100 even:bg-gray-200 even:hover:bg-gray-300 ease-in duration-100"
+        >
+          <td colspan="5" class="p-2">No items have been added.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <form method="post" action=""> <!-- ADD SUBMIT ORDER URL -->
+        {% csrf_token %}
+        <button
+          class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
+        >
+          Submit
+        </button>
+    </div>
+  </div>
+<!-- </div> -->
+<script
+  type="text/javascript"
+  src="{% static 'js/item-add-inventory.js' %}"
+></script>
+<!-- <script src="{% static 'js/inventory-details.js' %}"></script> -->
+
+{% endblock content %}

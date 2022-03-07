@@ -10,7 +10,7 @@ from .models import *
 #         )
 
 class AddSiteItemInventoryModelForm(forms.ModelForm):
-    model = Site_Item_Inventory
+    model = Inventory
     fields = (
         'itemID'
     )
@@ -21,7 +21,7 @@ class AddSiteItemInventoryModelForm(forms.ModelForm):
 
 class SiteItemInventoryModelForm(forms.ModelForm):
     class Meta:
-        model = Site_Item_Inventory
+        model = Inventory
         fields = (
             'siteItemCount',
             'siteItemTurnover'

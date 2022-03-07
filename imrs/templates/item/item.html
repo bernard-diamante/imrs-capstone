@@ -2,15 +2,14 @@
 {% load tailwind_filters %}
 {% load static %}
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+<!--  -->
 
 {% block content %}
 
-<!-- <div class="items-start container mx-auto mt-20"> -->
     <h2 class="font-bold text-4xl pb-10">Items</h2>
 
     <div class="flex space-x-5">
-        
+
         <table id="inventory-list"
             class="table h-full w-full overflow-hidden rounded-lg shadow-lg">
             <thead class="bg-gray-400 text-white">
@@ -29,12 +28,12 @@
                         <td class="p-2">{{ item.itemName }}</td>
                         <td class="p-2">{{ item.itemCategory }}</td>
                         <td class="p-2">{{ item.itemSubcategory }}</td>
-                        <td class="flex justify-end">
+                        <td class="">
                             <form class="flex justify-end" action="{% url 'item:add-item-inv' item.itemID %}">
                                 {% csrf_token %}
                             <!-- <input data-product={{ item.itemID }} data-action="add" class="h-4 w-4 cursor-pointer" type="checkbox"> -->
                                 <input id="item-{{ item.itemID }}" value="+" type="submit"
-                                    class="text-sm font-bold cursor-pointer flex mr-3 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
+                                    class="mx-auto text-sm font-bold cursor-pointer flex mr-3 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
                                 >
                                 <!-- <button id="item-{{ item.itemID }}" value="{{ item.itemID }}" onclick="addItem(this.value)"
                                     class="text-sm font-bold cursor-pointer flex mr-3 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
@@ -50,6 +49,7 @@
         </form>
 
         <!-- Add item and search -->
+        <div class="h-full flex flex-col">
         <div
             class="h-full bg-gray-400 flex flex-col space-y-3 justify-end rounded-lg px-3 py-3 shadow-lg ease-in duration-300 hover:shadow">
             <!-- FOR MAIN OFFICE ONLY
@@ -69,10 +69,19 @@
                     </span>
             </div>
         </div>
+        <div>
+            <a href="{% url 'item:item-cart' %}">
+                <button
+                  class="mx-auto flex justify-center w-4/5 mt-3 text-white bg-indigo-500 border-0 py-2 focus:outline-none hover:bg-indigo-600 rounded-full ease-in duration-100"
+                >
+                  View Item Summary
+                </button>
+              </a>
+        </div>
     </div>
+</div>
 
-<!-- </div> -->
+
 <script type="text/javascript" src="{% static 'js/item-add-inventory.js' %}" ></script> 
-<!-- <script src="{% static 'js/inventory-details.js' %}"></script> -->
 
 {% endblock content %}

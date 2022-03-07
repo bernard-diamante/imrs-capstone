@@ -4,7 +4,9 @@ from imrs import settings
 
 class Site(models.Model):
     siteID = models.AutoField(primary_key=True) 
-    userID = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL) 
+    userID = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+
+    # Form attributes
     siteName = models.CharField(max_length=50, null=True)
     siteStreetNumber = models.CharField(max_length=30, null=True)
     siteStreet = models.CharField(max_length=30, null=True)

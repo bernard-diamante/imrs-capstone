@@ -29,9 +29,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.userEmail
 
-
-# Associative (Inventory - Site)
-class Site_Item_Inventory(models.Model):
+class Inventory(models.Model):
     ITEM_STATUS = [
         (1,'Normal'),
         (2, 'Low'),
@@ -39,22 +37,55 @@ class Site_Item_Inventory(models.Model):
     ]
 
     ITEM_TURNOVER = [
-        ('s', 'Slow'),
-        ('n', 'Normal'),
-        ('f', 'Fast'),
+        ('S', 'Slow'),
+        ('N', 'Normal'),
+        ('F', 'Fast'),
     ]
-    
-    itemID = models.ForeignKey('item.Item', on_delete=models.CASCADE)
-    siteID = models.ForeignKey('project_site.Site', on_delete=models.CASCADE) 
+
+    itemID = models.ForeignKey('item.Item', on_delete=models.SET_NULL, null=True)
+    siteID = models.ForeignKey('project_site.Site', on_delete=models.SET_NULL, null=True)
     siteItemCount = models.PositiveIntegerField(default=0)
     siteItemStatus = models.PositiveSmallIntegerField(default=1, choices=ITEM_STATUS)
-    siteItemTurnover = models.CharField(max_length=1, choices=ITEM_TURNOVER, default="f")
+    siteItemTurnover = models.CharField(max_length=1, choices=ITEM_TURNOVER, default="F")
     siteItemMinThreshold = models.PositiveSmallIntegerField(default=0)
-    
 
     class Meta:
-        UniqueConstraint(fields = ['itemID', 'siteID'], name = 'composite_pk')
-    
+        unique_together = (('itemID', 'siteID'))
+
+
+class InventoryCart(models.Model):
+    siteID = models.OneToOneField('project_site.Site', on_delete=models.CASCADE, primary_key=True,)
+    inventorylistID = models.ForeignKey('item.Item', on_delete=models.SET_NULL, null=True, blank=True, default=None)
+
+    def __str__(self):
+        return self.siteID.siteName
+
+class CartItem(models.Model):
+    item = models.OneToOneField('item.Item', on_delete=models.SET_NULL, null=True)
+    is_Ordered = models.BooleanField(default=False)
+
 
     
+# class Site_Item_Inventory(models.Model):
+#     ITEM_STATUS = [
+#         (1,'Normal'),
+#         (2, 'Low'),
+#         (3, 'Empty')
+#     ]
+
+#     ITEM_TURNOVER = [
+#         ('s', 'Slow'),
+#         ('n', 'Normal'),
+#         ('f', 'Fast'),
+#     ]
+    
+#     itemID = models.ForeignKey('item.Item', on_delete=models.CASCADE)
+#     siteID = models.ForeignKey('project_site.Site', on_delete=models.CASCADE) 
+#     siteItemCount = models.PositiveIntegerField(default=0)
+#     siteItemStatus = models.PositiveSmallIntegerField(default=1, choices=ITEM_STATUS)
+#     siteItemTurnover = models.CharField(max_length=1, choices=ITEM_TURNOVER, default="f")
+#     siteItemMinThreshold = models.PositiveSmallIntegerField(default=0)
+    
+#     class Meta:
+#         unique_together = (('itemID', 'siteID'))
 

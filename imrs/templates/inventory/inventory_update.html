@@ -1,16 +1,14 @@
-{% extends 'base.html' %} 
-{% load tailwind_filters %} 
-{% load static %}
+{% extends 'base.html' %} {% load tailwind_filters %} {% load static %}
 
-<!-- REMOVE AFTER INTEGRATION -->
-<!-- <script src="https://cdn.tailwindcss.com"></script> -->
+<!--  -->
 
 {% block content %}
 
 <h2 class="font-bold text-black text-4xl pb-10">Inventory</h2>
+<!-- Div indent -->
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
-  <div class="flex w-full mb-10">
+  <div class="flex w-full mb-5">
     <a href="{% url 'inventory:inventory-list' %}">
       <button
         class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center"
@@ -30,11 +28,6 @@
         Return to Inventory
       </button>
     </a>
-
-    <!-- <button id="edit-item"
-          onclick="toggleButtons()" class="flex ml-auto text-white bg-gray-400 border-0 py-2 px-6 focus:outline-none hover:bg-gray-500 rounded inline-flex items-center justify-center">Edit<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-          </svg></button> -->
   </div>
   <div class="w-full px-8 py-6 mb-6 lg:mb-0 shadow-lg rounded pl-7">
     <div class="flex">
@@ -54,8 +47,7 @@
       method="post"
       action="{% url 'inventory:update-inv-item' object.pk %}"
     >
-      {% csrf_token %} 
-      {{ form|crispy }}
+      {% csrf_token %} {{ form|crispy }}
       <div class="flex justify-end mt-6 ml-auto">
         <div id="buttons" class="flex">
           <input

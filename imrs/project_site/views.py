@@ -36,7 +36,7 @@ class SiteUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def form_valid(self, form):
         form.save()
-        messages.info(self.request, "Messages")
+        messages.info(self.request, "Site has been updated")
         return super(SiteUpdateView, self).form_valid(form)
 
 class SiteDeleteView(LoginRequiredMixin, generic.DeleteView):
