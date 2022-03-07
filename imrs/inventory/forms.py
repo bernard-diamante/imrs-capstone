@@ -1,5 +1,5 @@
 from django import forms
-from .models import *
+from project_site.models import *
 
 
 # class TransferModelForm(forms.ModelForm):

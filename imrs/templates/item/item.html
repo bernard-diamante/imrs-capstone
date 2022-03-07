@@ -28,20 +28,15 @@
                         <td class="p-2">{{ item.itemName }}</td>
                         <td class="p-2">{{ item.itemCategory }}</td>
                         <td class="p-2">{{ item.itemSubcategory }}</td>
-                        <td class="">
-                            <form class="flex justify-end" action="{% url 'item:add-item-inv' item.itemID %}">
-                                {% csrf_token %}
-                            <!-- <input data-product={{ item.itemID }} data-action="add" class="h-4 w-4 cursor-pointer" type="checkbox"> -->
-                                <input id="item-{{ item.itemID }}" value="+" type="submit"
-                                    class="mx-auto text-sm font-bold cursor-pointer flex mr-3 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
-                                >
-                                <!-- <button id="item-{{ item.itemID }}" value="{{ item.itemID }}" onclick="addItem(this.value)"
-                                    class="text-sm font-bold cursor-pointer flex mr-3 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
-                                >+</button> -->
-                            </form>
+                        <td class="flex justify-end">
+                            {% if item in item.all %} <!-- add correct ITEM context -->
+                            <p class="mx-auto text-sm font-bold cursor-pointer flex mr-3 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
+                            >✓</p>
+                            <a href="{% url 'item:add-to-cart' item.pk %}"
+                                class="mx-auto text-sm font-bold cursor-pointer flex mr-3 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
+                            >+</a>
                         </td>
                     </tr>
-                
                 {% endfor %}
             
             </tbody>

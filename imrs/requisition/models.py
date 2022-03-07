@@ -2,6 +2,7 @@ from django.db.models import UniqueConstraint
 from item.models import Item
 from django.db import models
 from project_site.models import Site
+
 class Material_Requisition(models.Model):
     REQ_STATUS = [
         (0,'For Review'),

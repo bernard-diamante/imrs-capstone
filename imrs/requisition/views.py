@@ -1,7 +1,7 @@
 from django.shortcuts import reverse, render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Material_Requisition
-from inventory.models import Inventory
+from project_site.models import Inventory
 from inventory.views import InventoryListView
 from .forms import RequisitionModelForm
 from django.contrib import messages

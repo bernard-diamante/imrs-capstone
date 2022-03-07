@@ -29,40 +29,17 @@ class User(AbstractUser):
     def __str__(self):
         return self.userEmail
 
-class Inventory(models.Model):
-    ITEM_STATUS = [
-        (1,'Normal'),
-        (2, 'Low'),
-        (3, 'Empty')
-    ]
-
-    ITEM_TURNOVER = [
-        ('S', 'Slow'),
-        ('N', 'Normal'),
-        ('F', 'Fast'),
-    ]
-
-    itemID = models.ForeignKey('item.Item', on_delete=models.SET_NULL, null=True)
-    siteID = models.ForeignKey('project_site.Site', on_delete=models.SET_NULL, null=True)
-    siteItemCount = models.PositiveIntegerField(default=0)
-    siteItemStatus = models.PositiveSmallIntegerField(default=1, choices=ITEM_STATUS)
-    siteItemTurnover = models.CharField(max_length=1, choices=ITEM_TURNOVER, default="F")
-    siteItemMinThreshold = models.PositiveSmallIntegerField(default=0)
-
-    class Meta:
-        unique_together = (('itemID', 'siteID'))
+# 
 
 
-class InventoryCart(models.Model):
-    siteID = models.OneToOneField('project_site.Site', on_delete=models.CASCADE, primary_key=True,)
-    inventorylistID = models.ForeignKey('item.Item', on_delete=models.SET_NULL, null=True, blank=True, default=None)
+# class CartItem(models.Model):
+#     cartItemID = models.OneToOneField('item.Item', on_delete=models.CASCADE, primary_key=True)
+#     # is_Ordered = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.siteID.siteName
 
-class CartItem(models.Model):
-    item = models.OneToOneField('item.Item', on_delete=models.SET_NULL, null=True)
-    is_Ordered = models.BooleanField(default=False)
+
+
+
 
 
     

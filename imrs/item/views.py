@@ -2,11 +2,11 @@ from django.shortcuts import reverse
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from .forms import ItemModelForm, AddItemForm
-from inventory.models import Inventory, CartItem, InventoryCart
+from .forms import ItemModelForm
 from .models import Item
+from project_site.models import *
 
-from inventory.views import InventoryCreateView
+# from inventory.views import InventoryCreateView
 
 # Create your views here.
 class ItemListView(LoginRequiredMixin, generic.ListView):
@@ -18,13 +18,13 @@ class ItemListView(LoginRequiredMixin, generic.ListView):
         return qs
         
 
-# class ItemAddInvView(generic.CreateView):
+# class AddItemInvView(generic.CreateView):
 #     form_class = AddItemForm
 #     def get_success_url(self):
 #         return reverse("item-list")
 
 #     def form_valid(self, form):
-#         return super(ItemAddInvView, self).form_valid(form)
+#         return super(AddItemInvView, self).form_valid(form)
 
 
 class ItemAddView(LoginRequiredMixin, generic.CreateView):
@@ -78,12 +78,17 @@ class CartListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "cart"
 
     def get_queryset(self):
-        qs = InventoryCart.objects.all()
+        qs = Site.objects.all()
         return qs
 
 def add_to_cart(request, **kwargs):
-    cartItems = CartItem.objects.filter(id=kwargs.get('itemID', "")).first()
-    if len(cartItems) != 0:
-        for item in cartItems:
-            if item.is_Ordered == True:
-                pass
+    itemID = Item.objects.filter(id=kwargs.get('itemID', "")).first()
+    cartItems = Site.objects.get_or_create(cartItemID=itemID)
+    if len(cartItems) == 0:
+        # TODO: Show cart is empty
+        pass
+    else:
+        pass
+
+    #     # for item in cartItems:
+    #     #         pass
