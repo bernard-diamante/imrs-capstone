@@ -11,10 +11,20 @@ from project_site.models import *
 # Create your views here.
 class ItemListView(LoginRequiredMixin, generic.ListView):
     template_name = "item/item.html"
-    context_object_name = "items"
+    context_object_name = "data"
 
     def get_queryset(self):
-        qs = Item.objects.all()
+        items = Item.objects.all()
+        inventory = Inventory.objects.all().values_list()
+        itemID_list = []
+
+        for i in inventory:
+            itemID_list.append(i[0])
+
+        qs = { 
+            "items": items,
+            "itemID_list": itemID_list,
+            }
         return qs
         
 
@@ -90,5 +100,4 @@ def add_to_cart(request, **kwargs):
     else:
         pass
 
-    #     # for item in cartItems:
-    #     #         pass
+        # for item in cartItems:

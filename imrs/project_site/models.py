@@ -49,11 +49,14 @@ class Inventory(models.Model):
     ]
     itemID = models.ForeignKey('item.Item', on_delete=models.CASCADE)
     siteID = models.ForeignKey(Site, on_delete=models.CASCADE)
-
+    
     siteItemCount = models.PositiveIntegerField(default=0)
     siteItemStatus = models.PositiveSmallIntegerField(default=1, choices=ITEM_STATUS)
     siteItemTurnover = models.CharField(max_length=1, choices=ITEM_TURNOVER, default="F")
     siteItemMinThreshold = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
-        unique_together = (('itemID', 'siteID'))
+        # unique_together = (('itemID', 'siteID'))
+        constraints = [
+            models.UniqueConstraint(fields=['itemID', 'siteID'], name='unique_item_inv')
+        ]
