@@ -142,6 +142,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 LOGIN_REDIRECT_URL = "/dashboard"
 LOGIN_URL = "/login"
 LOGOUT_REDIRECT_URL = "/login"
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = 'tailwind'

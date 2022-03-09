@@ -5,6 +5,7 @@ from django.views import generic
 from .forms import ItemModelForm
 from .models import Item
 from project_site.models import *
+from django.contrib.auth.decorators import user_passes_test
 
 # from inventory.views import InventoryCreateView
 
@@ -91,6 +92,10 @@ class CartListView(LoginRequiredMixin, generic.ListView):
         qs = Site.objects.all()
         return qs
 
+# def user_check(user):
+#     return user.username
+
+# @user_passes_test(user_check)
 def add_to_cart(request, **kwargs):
     itemID = Item.objects.filter(id=kwargs.get('itemID', "")).first()
     cartItems = Site.objects.get_or_create(cartItemID=itemID)

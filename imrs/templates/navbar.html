@@ -1,20 +1,29 @@
 {% load static %}
 
-<header class="text-gray-600 body-font bg-slate-100 h-30">
-  <div class="container mx-auto flex flex-wrap flex-col md:flex-row items-center content-center">
-    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-      <img class="mx-auto h-20" src="{% static 'images/logo.png' %}"/>
+<style>
+  .scdc-green {
+    background-color: #3f5f43;
+  }
+</style>
+
+<header class="text-gray-100 font-medium scdc-green h-30 shadow-lg">
+  <div class="container mx-auto flex flex-wrap flex-col md:flex-row items-center content-center justify-between">
+    <a class="flex items-center mb-4 md:mb-0">
+      <img class="mx-auto h-20" src="{% static 'images/logo-white.png' %}"/>
     </a>
     <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-      <a class="mr-5 hover:text-gray-900">Dashboard</a>
-      <a href="{% url 'inventory:inventory-list' %}" class="mr-5 hover:text-gray-900">Inventory</a>
-      <a class="mr-5 hover:text-gray-900">Calendar</a>
-      <a href="{% url 'item:item-list' %}" class="mr-5 hover:text-gray-900">Items</a>
+      <a class="mr-5 hover:text-gray-300 ">Dashboard</a>
+      <a href="{% url 'inventory:inventory-list' %}" class="mr-5 hover:text-gray-300">Inventory</a>
+      <a class="mr-5 hover:text-gray-300">Schedule</a>
+      <a href="{% url 'item:item-list' %}" class="mr-5 hover:text-gray-300">Items</a>
+      <a href="{% url 'requisition:requisition-list' %}" class="mr-5 hover:text-gray-300">Material Request</a>
     </nav>
-    <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Logout
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
+    <a href="{% url 'logout' %}">
+      <button class="text-gray-900 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Logout
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </a>
   </div>
 </header>

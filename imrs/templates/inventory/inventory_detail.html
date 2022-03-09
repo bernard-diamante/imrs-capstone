@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load tailwind_filters %} {% load static %} 
+{% extends 'base.html' %} {% load tailwind_filters %} {% load static %}
 
 <!--  -->
 
@@ -27,67 +27,62 @@
         Return to Inventory
       </button>
     </a>
-
-    <!-- <button id="edit-item"
-          onclick="toggleButtons()" class="flex ml-auto text-white bg-gray-400 border-0 py-2 px-6 focus:outline-none hover:bg-gray-500 rounded inline-flex items-center justify-center">Edit<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-          </svg></button> -->
   </div>
-  <div class="w-full px-8 py-6 mb-6 lg:mb-0 shadow-lg rounded pl-7">
-    <div class="flex">
-      <span class="text-gray-900 text-3xl title-font font-medium mb-4">
-        {{ object.itemID.itemName }}
-      </span>
-      <span class="ml-auto text-gray-900 text-3xl title-font font-medium mb-4"
-        >QTY:
-      </span>
-      <span class="ml-3 text-gray-900 text-3xl mb-4"
-        >{{ object.siteItemCount }}</span
-      >
-    </div>
-    <div class="flex mb-4">
-      <a
-        class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1"
-        >Item Details</a
-      >
-    </div>
-    <div class="flex pb-2">
-      <span class="text-gray-500">Category</span>
-      <span class="ml-auto text-gray-900"
-        >{{ object.itemID.itemCategory }}</span
-      >
-    </div>
-    <div class="flex py-2 border-t border-gray-200">
-      <span class="text-gray-500">Subcategory</span>
-      <span class="ml-auto text-gray-900"
-        >{{ object.itemID.itemSubcategory }}</span
-      >
-    </div>
-    <div class="flex py-2 border-t border-gray-200">
-      <span class="text-gray-500">Turnover</span>
-      <span class="ml-auto text-gray-900"
-        >{{ object.siteItemTurnover }}</span
-      >
-    </div>
-    <div class="flex py-2 border-t border-gray-200">
-      <span class="text-gray-500">Status</span>
-      <span class="ml-auto text-gray-900">{{ object.siteItemStatus }}</span>
-    </div>
-  </div>
-  <div class="flex justify-end mt-3 ml-auto">
-    <div id="buttons" class="flex">
-      <a href="{% url 'inventory:update-inv-item' object.pk %}">
-        <button
-          class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
+  <div class="flex flex-col space-x-5 w-4/5 mx-auto">
+    <div class="w-full px-8 py-6 mb-6 lg:mb-0 shadow-lg rounded pl-7">
+      <div class="flex">
+        <span class="text-gray-900 text-3xl title-font font-medium mb-4">
+          {{ object.itemID.itemName }}
+        </span>
+        <span class="ml-auto text-gray-900 text-3xl title-font font-medium mb-4"
+          >QTY:
+        </span>
+        <span class="ml-3 text-gray-900 text-3xl mb-4"
+          >{{ object.siteItemCount }}</span
         >
-          Update
+      </div>
+      <div class="flex mb-4">
+        <a
+          class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1"
+          >Item Details</a
+        >
+      </div>
+      <div class="flex pb-2">
+        <span class="text-gray-500">Category</span>
+        <span class="ml-auto text-gray-900"
+          >{{ object.itemID.itemCategory }}</span
+        >
+      </div>
+      <div class="flex py-2 border-t border-gray-200">
+        <span class="text-gray-500">Subcategory</span>
+        <span class="ml-auto text-gray-900"
+          >{{ object.itemID.itemSubcategory }}</span
+        >
+      </div>
+      <div class="flex py-2 border-t border-gray-200">
+        <span class="text-gray-500">Turnover</span>
+        <span class="ml-auto text-gray-900">{{ object.siteItemTurnover }}</span>
+      </div>
+      <div class="flex py-2 border-t border-gray-200">
+        <span class="text-gray-500">Status</span>
+        <span class="ml-auto text-gray-900">{{ object.siteItemStatus }}</span>
+      </div>
+    </div>
+    <div class="flex justify-end mt-3 ml-auto">
+      <div id="buttons" class="flex">
+        <a href="{% url 'inventory:update-inv-item' object.pk %}">
+          <button
+            class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
+          >
+            Update
+          </button>
+        </a>
+        <button
+          class="modal-toggle flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded ease-in duration-100"
+        >
+          Delete
         </button>
-      </a>
-      <button
-        class="modal-toggle flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded ease-in duration-100"
-      >
-        Delete
-      </button>
+      </div>
     </div>
   </div>
 </div>
@@ -133,11 +128,6 @@
 
       <!--Footer-->
       <div class="flex justify-end pt-4">
-        <button
-          class="modal-toggle flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded"
-        >
-          Cancel
-        </button>
         <form
           class="form-inline"
           method="post"
@@ -150,6 +140,11 @@
             class="cursor-pointer flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded"
           />
         </form>
+        <button
+          class="modal-toggle flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded"
+        >
+          Cancel
+        </button>
       </div>
     </div>
   </div>

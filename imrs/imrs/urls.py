@@ -14,9 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from django.contrib.auth.views import LoginView
+from django.urls import path, include, reverse_lazy
+from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import RedirectView
+# from inventory.views import LogOutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +26,7 @@ urlpatterns = [
     path('project_site/', include('project_site.urls')),
     path('requisition/', include('requisition.urls')),
     path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('', RedirectView.as_view(url='login/')),
 
 ]

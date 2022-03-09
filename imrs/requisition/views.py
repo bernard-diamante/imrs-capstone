@@ -11,18 +11,17 @@ from django.views import generic
 
 
 class RequisitionListView(LoginRequiredMixin, generic.ListView):
-    template_name = "html file"
-    queryset = Material_Requisition.objects.all()
+    template_name = "requisition/requisition.html"
     context_object_name = "requisition"
 
     def get_queryset(self):
-        queryset = Inventory.objects.all()
-    context_object_name = "inventory"
+        qs = Material_Requisition.objects.all()
+        return qs
 
-    def get_context_data(self, **kwargs):
-        context = super(InventoryListView, self).get_context_data(
-            self, **kwargs)
-        user = self.request.user
+    # def get_context_data(self, **kwargs):
+    #     context = super(RequisitionListView, self).get_context_data(
+    #         self, **kwargs)
+    #     user = self.request.user
 
         return context
 

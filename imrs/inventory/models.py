@@ -13,13 +13,13 @@ class User(AbstractUser):
         (2, "Warehouse Manager"),
         (3, "Site Manager")
     ]
-    userID = models.AutoField(primary_key=True) # USE FOR USER LOGIN
+    username = models.CharField(primary_key=True, max_length=3) # USE FOR USER LOGIN
     userFirstName = AbstractUser.first_name
-    userMiddleName = models.CharField(max_length=50)
+    userMiddleName = models.CharField(max_length=50, blank=True)
     userLastName = AbstractUser.last_name
-    userSuffix = models.CharField(max_length=30)
+    userSuffix = models.CharField(max_length=30, blank=True)
     userEmail = AbstractUser.email
-    userContactNo = models.CharField(max_length=11)
+    userContactNo = models.CharField(max_length=11) 
     userRole = models.PositiveSmallIntegerField(default=3, choices=USER_ROLE_CHOICES)
     
     class Meta:

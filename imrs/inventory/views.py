@@ -5,6 +5,8 @@ from django.views import generic
 from project_site.models import *
 from .forms import *
 from django.contrib import messages
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import logout
 
 
 class InventoryListView(LoginRequiredMixin, generic.ListView):

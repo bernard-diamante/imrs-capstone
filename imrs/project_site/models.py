@@ -18,15 +18,14 @@ class Site(models.Model):
         through_fields=('siteID', 'itemID'),
         blank=True,
         related_name='inventory_items')
-
-    siteName = models.CharField(max_length=50, null=True)
-    siteStreetNumber = models.CharField(max_length=30, null=True)
-    siteStreet = models.CharField(max_length=30, null=True)
+    siteName = models.CharField(max_length=50)
+    siteStreetNumber = models.CharField(max_length=30, blank=True)
+    siteStreet = models.CharField(max_length=30, blank=True)
     siteBarangay = models.CharField(max_length=30)
     siteCity = models.CharField(max_length=35)
     siteProvince = models.CharField(max_length=30)
     siteRegion = models.CharField(max_length=30)
-    siteZip = models.CharField(max_length=10)
+    siteZip = models.CharField(max_length=10, blank=True)
     siteContactNo = models.CharField(max_length=11)
 
 class Cart(models.Model):
