@@ -11,7 +11,9 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
 </head>
 <body>
-    {% include 'navbar.html' %}
+    {% if request.user.is_authenticated %}
+        {% include 'navbar.html' %}
+    {% endif %}
     <div class="max-w-7xl mx-auto">
         <div class="items-start container mx-auto mt-20">
         {% block content %}

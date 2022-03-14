@@ -17,8 +17,9 @@ class Site(models.Model):
         through='Inventory',
         through_fields=('siteID', 'itemID'),
         blank=True,
-        related_name='inventory_items')
-    siteName = models.CharField(max_length=50)
+        related_name='inventory_items'
+        )
+    siteName = models.CharField(max_length=50, blank=True)
     siteStreetNumber = models.CharField(max_length=30, blank=True)
     siteStreet = models.CharField(max_length=30, blank=True)
     siteBarangay = models.CharField(max_length=30)

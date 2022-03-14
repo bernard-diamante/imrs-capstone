@@ -1,5 +1,9 @@
 from django import forms
 from .models import *
+from project_site.models import Inventory
+from item.models import Item
+# from django_select2.forms import Select2MultipleWidget
+
 
 
 class RequisitionModelForm(forms.ModelForm):
@@ -7,11 +11,20 @@ class RequisitionModelForm(forms.ModelForm):
         model = Material_Requisition
         fields = (
             'reqDescription',
-            'reqDateNeeded'
+            'reqDateNeeded',
+            'reqItems'
         )
-        def __init__(self, *args, **kwargs):
-            super(RequisitionModelForm, self).__init__(*args, **kwargs)
-            self.fields['reqDescription'].label = "Requisition Description"
-            self.fields['reqDateNeeded'].label = "Requisition Date Needed"
+        widgets = {
+            'reqDateNeeded': forms.DateInput(attrs={'type': 'date'}),
+        }
+    def __init__(self, *args, **kwargs):
+        super(RequisitionModelForm, self).__init__(*args, **kwargs)
+        self.fields['reqDescription'].label = "Description"
+        self.fields['reqDateNeeded'].label = "Date Needed"
+        self.fields['reqItems'] = forms.ModelMultipleChoiceField(
+            queryset=Item.objects.all(),
+            widget=forms.CheckboxSelectMultiple,
+            )
+        self.fields['reqItems'].label = "Requested Items"
     # reqform_Description = forms.CharField(label="Reason for Material Requisition", max_length=1000)
     # reqform_DateSubmitted = forms.

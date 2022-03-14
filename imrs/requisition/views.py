@@ -13,6 +13,7 @@ from django.views import generic
 class RequisitionListView(LoginRequiredMixin, generic.ListView):
     template_name = "requisition/requisition.html"
     context_object_name = "requisition"
+    model = Material_Requisition
 
     def get_queryset(self):
         qs = Material_Requisition.objects.all()
@@ -27,14 +28,20 @@ class RequisitionListView(LoginRequiredMixin, generic.ListView):
 
 
 class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
-    template_name = "html file"
+    template_name = "requisition/requisition_add.html"
     form_class = RequisitionModelForm
+    model = Material_Requisition
 
     def get_success_url(self):
-        return reverse("requisition-list")
+        return reverse("requisition:requisition-list")
 
     def form_valid(self, form):
+        form.save()
         return super(RequisitionAddView, self).form_valid(form)
+
+    def get_queryset(self):
+        user = self.request.user
+        return Material_Requisition.objects.all()
 
 
 class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -55,10 +62,11 @@ class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 class RequisitionDeleteView(LoginRequiredMixin, generic.DeleteView):
-    template_name = "url"
+    template_name = "html file"
+    model = Material_Requisition
 
     def get_success_url(self):
-        return reverse("requisition-list")
+        return reverse("requisition:requisition-list")
 
     def get_queryset(self):
         user = self.request.user

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     'tailwind',
     'theme',
+    'django_select2',
 
     # Local apps
     'inventory',
