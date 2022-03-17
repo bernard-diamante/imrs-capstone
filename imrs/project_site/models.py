@@ -28,6 +28,8 @@ class Site(models.Model):
     siteRegion = models.CharField(max_length=30)
     siteZip = models.CharField(max_length=10, blank=True)
     siteContactNo = models.CharField(max_length=11)
+    def __str__(self):
+        return self.siteName
 
 class Cart(models.Model):
     siteID = models.ForeignKey(Site, on_delete=models.CASCADE)
@@ -60,3 +62,4 @@ class Inventory(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['itemID', 'siteID'], name='unique_item_inv')
         ]
+    

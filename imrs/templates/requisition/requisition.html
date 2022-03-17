@@ -4,30 +4,31 @@
 
 <h2 class="font-bold text-4xl pb-10">Material Requests</h2>
 
+<!-- IF STATEMENT to check if user is MO or SE -->
 <div class="flex space-x-5">
     <table
-      id="requisition-list"
-      class="table h-full w-full overflow-hidden rounded-lg shadow-lg"
+      id="inventory-list"
+      class="table-fixed h-full w-full overflow-hidden rounded-lg shadow-lg"
     >
         <thead class="bg-slate-100">
             <tr>
-                <th class="p-2 font-medium text-gray-600">Material Request</th>
-                <th class="p-2 font-medium text-gray-600">To Receive By</th>
+                <th class="w-2/12 p-2 font-medium text-gray-600">Req ID</th>
+                <th class="p-2 font-medium text-gray-600">Destination</th>
+                <th class="p-2 font-medium text-gray-600">Needed By</th>
                 <th class="p-2 font-medium text-gray-600">Status</th>
-                <th class="p-2 font-medium text-gray-600"></th>
+                <!-- <th class="p-2 font-medium text-gray-600"></th> -->
             </tr>
         </thead>
         <tbody class="text-center">
-          {% for item in inventory %}
+          {% for request in requisition %}
             <tr
-            id="tableRow"
-            data-href="{% url 'inventory:detail-inv-item' item.pk %}"
-            class="row table-row cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+            data-href="{% url 'requisition:detail-requisition' request.pk %}"
+            class="tableRow row table-row cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
             >
-                <td class="p-2"></td>
-                <td class="p-2"></td>
-                <td class="p-2"></td>
-                <td class="p-2"></td>
+                <td class="p-2">{{ request.reqID }}</td>
+                <td class="p-2">{{ request.siteID }}</td>
+                <td class="p-2">{{ request.reqDateNeeded }}</td>
+                <td class="p-2">{{ request.get_reqStatus_display }}</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -90,5 +91,7 @@
                 </div>
             </div>
 </div>
+
+<script src="{% static 'js/inventory-details.js' %}"></script>
 
 {% endblock %}

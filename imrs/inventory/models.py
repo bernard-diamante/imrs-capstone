@@ -27,7 +27,7 @@ class User(AbstractUser):
         verbose_name_plural = 'users'
         abstract = False
     def __str__(self):
-        return self.userEmail
+        return self.username
 
 # 
 

@@ -1,11 +1,14 @@
 from django.shortcuts import reverse, render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Material_Requisition
+from .models import Material_Requisition, Material_Requisition_Items
+from .models import Item
 from project_site.models import Inventory
 from inventory.views import InventoryListView
 from .forms import RequisitionModelForm
 from django.contrib import messages
 from django.views import generic
+from django.db.models import Prefetch
+
 
 # Create your views here.
 
@@ -33,7 +36,7 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
     model = Material_Requisition
 
     def get_success_url(self):
-        return reverse("requisition:requisition-list")
+        return reverse("requisition:list-requisition")
 
     def form_valid(self, form):
         form.save()
@@ -44,7 +47,7 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
         return Material_Requisition.objects.all()
 
 
-class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView):
+class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView): #for main office
     template_name = "html file"
     form_class = RequisitionModelForm
 
@@ -61,13 +64,36 @@ class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView):
         return super(RequisitionUpdateView, self).form_valid(form)
 
 
-class RequisitionDeleteView(LoginRequiredMixin, generic.DeleteView):
-    template_name = "html file"
+class RequisitionDetailView(LoginRequiredMixin, generic.DetailView): #for main office
     model = Material_Requisition
+    template_name = "requisition/requisition_detail.html"
+    context_object_name = "requisition"
+    queryset = Material_Requisition.objects.prefetch_related(
+        Prefetch('material_requisition_items_set', Material_Requisition_Items.objects.select_related('itemID'))
+    )
 
     def get_success_url(self):
-        return reverse("requisition:requisition-list")
+        return reverse("requisition:requisition-detail")
 
-    def get_queryset(self):
-        user = self.request.user
-        return Material_Requisition.objects.all()
+    # def get_queryset(self):
+    #     reqItems = Material_Requisition.objects.all()
+    #     requests = Material_Requisition.objects.filter(pk=self.pk)
+    #     # item_list = Item.objects.filter(pk=self.reqItems.itemID)
+    #     qs = { 
+    #             "requisition": requests,
+    #             # "item_list": item_list,
+    #             }
+    #     return qs
+    
+    
+
+# class RequisitionDeleteView(LoginRequiredMixin, generic.DeleteView):
+#     template_name = "html file"
+#     model = Material_Requisition
+
+#     def get_success_url(self):
+#         return reverse("requisition:requisition-list")
+
+#     def get_queryset(self):
+#         user = self.request.user
+#         return Material_Requisition.objects.all()

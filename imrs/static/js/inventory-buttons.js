@@ -7,15 +7,6 @@ function toggleButtons(){
   }
 }
 
-// function deleteModal(){
-//   var x = document.getElementById("delete-modal");
-//   if (x.className === "hidden") {
-//     x.className = "flex";
-//   } else {
-//     x.className = "hidden";
-//   }
-// }
-
 var closeModal = document.querySelectorAll('.modal-toggle')
 
 for (var i = 0; i < closeModal.length; i++) {

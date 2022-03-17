@@ -9,26 +9,25 @@
 <div class="flex space-x-5">
   <table
     id="inventory-list"
-    class="table h-full w-full overflow-hidden rounded-lg shadow-lg"
+    class="table-fixed h-full w-full overflow-hidden rounded-lg shadow-lg"
   >
-    <thead class="bg-slate-100">
+    <thead class="bg-slate-100 text-gray-600">
       <tr>
-        <th class="p-2 font-medium text-gray-600">Item</th>
-        <th class="p-2 font-medium text-gray-600">Count</th>
-        <th class="p-2 font-medium text-gray-600">Category</th>
-        <th class="p-2 font-medium text-gray-600">Subcategory</th>
-        <th class="p-2 font-medium text-gray-600">Turnover</th>
-        <th class="p-2 font-medium text-gray-600">Status</th>
+        <th class="w-1/4 p-2 font-medium">Item</th>
+        <th class="p-2 font-medium">Count</th>
+        <th class="p-2 font-medium">Category</th>
+        <th class="p-2 font-medium">Subcategory</th>
+        <th class="p-2 font-medium">Turnover</th>
+        <th class="p-2 font-medium">Status</th>
       </tr>
     </thead>
     <tbody class="text-center">
       {% for item in inventory %}
       <tr
-        id="tableRow"
         data-href="{% url 'inventory:detail-inv-item' item.pk %}"
-        class="row table-row cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+        class="tableRow row table-row cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
       >
-        <td class="p-2">{{ item.itemID.itemName }}</td>
+        <td class="itemName p-2">{{ item.itemID.itemName }}</td>
         <td class="p-2">{{ item.siteItemCount }}</td>
         <td class="p-2">{{ item.itemID.itemCategory }}</td>
         <td class="p-2">{{ item.itemID.itemSubcategory }}</td>
@@ -36,6 +35,13 @@
         <td class="p-2">{{ item.get_siteItemStatus_display }}</td>
       </tr>
       {% endfor %}
+      <tr
+        id="no-results"
+        style="display: none;"
+        class="row table-row bg-white"
+      >
+        <td id="no-results-td" colspan="6" class="p-2">No results found.</td>
+      </tr>
     </tbody>
   </table>
 
@@ -58,8 +64,10 @@
     </div>
     <div class="flex justify-center">
       <input
-        class="rounded border-2 border-gray-300 pl-2 py-auto"
-        type="search"
+        class="rounded border-2 border-gray-300 pl-2 py-auto text-black"
+        type="text"
+        id = "myInput"
+        onkeyup = "Search()"
         placeholder="Search"
       />
       <a

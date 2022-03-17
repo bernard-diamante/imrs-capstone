@@ -1,62 +1,43 @@
-// function toggleModal() {
-//     document.getElementById("item-details").classList.toggle("active");
-// }
-
-// function addRowHandlers() {
-//     var table = document.getElementById("inventory-list");
-//     var rows = table.getElementsByTagName("tr");
-//     for (i = 0; i < rows.length; i++) {
-//         var currentRow = table.rows[i];
-//         var createClickHandler = function (row) {
-//             return function () {
-
-//             };
-//         };
-//         currentRow.onclick = createClickHandler(currentRow);
-//     }
-// }
-
-// var openmodal = document.querySelectorAll('.row')
-// for (var i = 0; i < openmodal.length; i++) {
-//     openmodal[i].addEventListener('click', function (event) {
-//         event.preventDefault()
-//         toggleModal()
-//     })
-// }
-
-// const overlay = document.querySelector('.modal-overlay')
-// overlay.addEventListener('click', toggleModal)
-
-// var closemodal = document.querySelectorAll('.modal-close')
-// for (var i = 0; i < closemodal.length; i++) {
-//     closemodal[i].addEventListener('click', toggleModal)
-// }
-
-// document.onkeydown = function (evt) {
-//     evt = evt || window.event
-//     var isEscape = false
-//     if ("key" in evt) {
-//         isEscape = (evt.key === "Escape" || evt.key === "Esc")
-//     } else {
-//         isEscape = (evt.keyCode === 27)
-//     }
-//     if (isEscape && document.body.classList.contains('modal-active')) {
-//         toggleModal()
-//     }
-// };
-
-// function toggleModal() {
-//     const body = document.querySelector('body')
-//     const modal = document.querySelector('.modal')
-//     modal.classList.toggle('opacity-0')
-//     modal.classList.toggle('pointer-events-none')
-//     body.classList.toggle('modal-active')
-// }
-
 $(document).ready(function () {
-    $("#tableRow").click(function () {
+    $(".tableRow").click(function () {
       window.location = $(this).data("href");
-      return false;
+      return false
     });
   });
+
+  function Search() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("inventory-list");
+    tr = table.getElementsByClassName("tableRow");
+
+    var match = false;
+
+    var noResults = document.getElementById("no-results");
   
+    // Loop through all table rows, and hide those who don't match the search query
+
+    if (input.innerHTML.length === 0) {
+      match = false;
+      noResults.style.display= "none";
+    }
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          match = true;
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+
+    if (match===false) {
+      noResults.style.display= "table-row"
+    }
+  }

@@ -7,7 +7,7 @@ from django.contrib import messages
 
 # Create your views here.
 class SiteCreateView(LoginRequiredMixin, generic.CreateView):
-    template_name = 'html file'
+    template_name = 'project_site/site_create.html'
     form_class = SiteModelForm
 
     def get_success_url(self):
@@ -16,15 +16,22 @@ class SiteCreateView(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         return super(SiteCreateView, self).form_valid(form)
 
+class SiteDetailView(LoginRequiredMixin, generic.DetailView):
+    template_name = "project_site/site_detail.html"
+    context_object_name = "site"
+
+    def get_queryset(self):
+        return Site.objects.filter(pk=self.pk)
+
 class SiteListView(LoginRequiredMixin, generic.ListView):
-    template_name = "html file"
+    template_name = "project_site/site.html"
     context_object_name = "site"
 
     def get_queryset(self):
         queryset = Site.objects.all()
 
 class SiteUpdateView(LoginRequiredMixin, generic.UpdateView):
-    template_name = 'html file'
+    template_name = 'project_site/site_update.html'
     form_class = SiteModelForm
     
     def get_queryset(self):
@@ -40,7 +47,7 @@ class SiteUpdateView(LoginRequiredMixin, generic.UpdateView):
         return super(SiteUpdateView, self).form_valid(form)
 
 class SiteDeleteView(LoginRequiredMixin, generic.DeleteView):
-    template_name = "html file"
+    template_name = "project_site/site_delete.html"
 
     def get_success_url(self):
         return reverse("site-list")
