@@ -138,7 +138,7 @@ MEDIA_ROOT = "media_root"
 STATIC_ROOT = "static_root"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-AUTH_USER_MODEL = 'inventory.User'
+AUTH_USER_MODEL = 'dashboard.User'
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 LOGIN_REDIRECT_URL = "/dashboard"
 LOGIN_URL = "/login"

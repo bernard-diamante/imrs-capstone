@@ -1,6 +1,6 @@
 from django.shortcuts import reverse, render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Material_Requisition, Material_Requisition_Items
+from .models import MaterialRequisition, MaterialRequisitionItems
 from .models import Item
 from project_site.models import Inventory
 from inventory.views import InventoryListView
@@ -16,10 +16,10 @@ from django.db.models import Prefetch
 class RequisitionListView(LoginRequiredMixin, generic.ListView):
     template_name = "requisition/requisition.html"
     context_object_name = "requisition"
-    model = Material_Requisition
+    model = MaterialRequisition
 
     def get_queryset(self):
-        qs = Material_Requisition.objects.all()
+        qs = MaterialRequisition.objects.all()
         return qs
 
     # def get_context_data(self, **kwargs):
@@ -27,13 +27,13 @@ class RequisitionListView(LoginRequiredMixin, generic.ListView):
     #         self, **kwargs)
     #     user = self.request.user
 
-        return context
+        # return context
 
 
 class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
     template_name = "requisition/requisition_add.html"
     form_class = RequisitionModelForm
-    model = Material_Requisition
+    model = MaterialRequisition
 
     def get_success_url(self):
         return reverse("requisition:list-requisition")
@@ -44,7 +44,7 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
 
     def get_queryset(self):
         user = self.request.user
-        return Material_Requisition.objects.all()
+        return MaterialRequisition.objects.all()
 
 
 class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView): #for main office
@@ -53,7 +53,7 @@ class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView): #for main o
 
     def get_queryset(self):
         user = self.request.user
-        return Material_Requisition.objects.all()
+        return MaterialRequisition.objects.all()
 
     def get_success_url(self):
         return reverse("requisition-list")
@@ -65,11 +65,11 @@ class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView): #for main o
 
 
 class RequisitionDetailView(LoginRequiredMixin, generic.DetailView): #for main office
-    model = Material_Requisition
+    model = MaterialRequisition
     template_name = "requisition/requisition_detail.html"
     context_object_name = "requisition"
-    queryset = Material_Requisition.objects.prefetch_related(
-        Prefetch('material_requisition_items_set', Material_Requisition_Items.objects.select_related('itemID'))
+    queryset = MaterialRequisition.objects.prefetch_related(
+        Prefetch('materialrequisitionitems_set', MaterialRequisitionItems.objects.select_related('itemID'))
     )
 
     def get_success_url(self):

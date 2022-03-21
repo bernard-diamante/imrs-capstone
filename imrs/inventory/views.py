@@ -2,11 +2,9 @@ from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from project_site.models import *
+from project_site.models import Inventory
 from .forms import *
 from django.contrib import messages
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth import logout
 
 
 class InventoryListView(LoginRequiredMixin, generic.ListView):

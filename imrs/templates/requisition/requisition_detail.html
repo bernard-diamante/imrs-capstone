@@ -44,13 +44,13 @@
           </div>
       </div>
         {% if object.get_reqStatus_display == "For Review" %}
-        <span class="text-center ml-auto text-gray-900 text-md font-base h-full [TEST] flex justify-end text-white bg-yellow-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-yellow-500 border-0 py-2 px-5 focus:outline-none rounded-full">
         {% elif object.get_reqStatus_display == "Awaiting Delivery" %}
-        <span class="text-center ml-auto text-gray-900 text-md font-base h-full [TEST] flex justify-end text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none rounded-full">
         {% elif object.get_reqStatus_display == "Request Denied" %}
-        <span class="text-center ml-auto text-gray-900 text-md font-base h-full [TEST] flex justify-end text-white bg-red-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-red-500 border-0 py-2 px-5 focus:outline-none rounded-full">
         {% elif object.get_reqStatus_display == "Delivered" %}
-        <span class="text-center ml-auto text-gray-900 text-md font-base h-full [TEST] flex justify-end text-white bg-green-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-green-500 border-0 py-2 px-5 focus:outline-none rounded-full">
         {% endif %}
           {{ object.get_reqStatus_display }}
         </span>
@@ -69,8 +69,8 @@
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500">Description</span>
-        <span class="ml-auto text-gray-900"
+        <span class="text-gray-500 mr-20">Description</span>
+        <span class="ml-auto text-gray-900 text-justify"
           >{{ object.reqDescription }}</span
         >
       </div>
@@ -95,7 +95,7 @@
             </tr>
         </thead>
         <tbody class="text-center">
-          {% for item in object.material_requisition_items_set.all %}
+          {% for item in object.materialrequisitionitems_set.all %}
             <tr
             class="tableRow row table-row bg-white even:bg-slate-100"
             >

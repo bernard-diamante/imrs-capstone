@@ -12,7 +12,7 @@
     >
         <thead class="bg-slate-100">
             <tr>
-                <th class="w-2/12 p-2 font-medium text-gray-600">Req ID</th>
+                <th class="w-2/12 p-2 font-medium text-gray-600">Req. ID</th>
                 <th class="p-2 font-medium text-gray-600">Destination</th>
                 <th class="p-2 font-medium text-gray-600">Needed By</th>
                 <th class="p-2 font-medium text-gray-600">Status</th>
@@ -25,7 +25,7 @@
             data-href="{% url 'requisition:detail-requisition' request.pk %}"
             class="tableRow row table-row cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
             >
-                <td class="p-2">{{ request.reqID }}</td>
+                <td class="p-2">#{{ request.reqID }}</td>
                 <td class="p-2">{{ request.siteID }}</td>
                 <td class="p-2">{{ request.reqDateNeeded }}</td>
                 <td class="p-2">{{ request.get_reqStatus_display }}</td>
@@ -83,7 +83,7 @@
                 <div>
                     <a href="{% url 'requisition:add-requisition' %}">
                         <button
-                          class="mx-auto flex justify-center w-4/5 mt-3 text-white bg-indigo-500 border-0 py-2 focus:outline-none hover:bg-indigo-600 rounded-full ease-in duration-100"
+                          class="mx-auto flex justify-center w-full mt-3 text-white bg-indigo-500 border-0 py-2 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100"
                         >
                           Make a Request
                         </button>

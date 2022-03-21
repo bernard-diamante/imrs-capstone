@@ -4,9 +4,18 @@
 
 {% block content %}
 
+<style>
+  .active {
+    background-color: #3f5f43;
+    color: white;
+  }
+
+</style>
+
 <h2 class="font-bold text-4xl pb-10">Inventory</h2>
 
 <div class="flex space-x-5">
+  <div class="flex flex-col space-y-5">
   <table
     id="inventory-list"
     class="table-fixed h-full w-full overflow-hidden rounded-lg shadow-lg"
@@ -44,6 +53,8 @@
       </tr>
     </tbody>
   </table>
+  <div id="nav" class="flex justify-center space-x-2"></div>
+</div>
 
   <!-- Add item and search -->
   <div
@@ -56,15 +67,15 @@
     </div>
     <div class="pt-1 font-medium">
       Filter by:
-      <select name="category" id="category" class="text-black rounded">
-        <option value="id">ID</option>
-        <option value="type">Count</option>
-        <option value="type">Type</option>
+      <select name="category" id="category" class="text-black rounded outline-none">
+        <option value="id">Name</option>
+        <option value="type">Category</option>
+        <option value="type">Subcategory</option>
       </select>
     </div>
     <div class="flex justify-center">
       <input
-        class="rounded border-2 border-gray-300 pl-2 py-auto text-black"
+        class="rounded border-2 border-gray-200 pl-2 py-auto text-black outline-none"
         type="text"
         id = "myInput"
         onkeyup = "Search()"

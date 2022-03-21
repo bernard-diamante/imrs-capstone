@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-from dashboard.views import DashboardListView
+# from dashboard.views import DashboardListView
 
 
 app_name = 'requisition'

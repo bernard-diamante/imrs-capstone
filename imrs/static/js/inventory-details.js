@@ -41,3 +41,30 @@ $(document).ready(function () {
       noResults.style.display= "table-row"
     }
   }
+
+  // Pagination
+
+  $(document).ready(function(){
+    var rowsShown = 2;
+    var rowsTotal = $('#inventory-list tbody tr').length;
+    var numPages = rowsTotal/rowsShown;
+    for(i = 0;i < numPages;i++) {
+        var pageNum = i + 1;
+        $('#nav').append('<a href="#" rel="'+i+'">'+pageNum+'</a> ');
+    }
+    $('#inventory-list tbody tr').hide();
+    $('#inventory-list tbody tr').slice(0, rowsShown).show();
+
+    $('#nav a').addClass('text-black bg-gray-200 px-4 py-2 rounded-lg outline-none hover:bg-gray-300 ease-in duration-100');
+    $('#nav a:first').removeClass('hover:bg-gray-300').addClass('scdc-green hover:scdc-green text-white');
+    $('#nav a').bind('click', function(){
+
+        $('#nav a').removeClass('scdc-green text-white').addClass('text-black bg-gray-200 hover:bg-gray-300');
+        $(this).removeClass('text-black bg-gray-200 hover:bg-gray-300').addClass('scdc-green hover:scdc-green text-white');
+        var currPage = $(this).attr('rel');
+        var startItem = currPage * rowsShown;
+        var endItem = startItem + rowsShown;
+        $('#inventory-list tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
+        css('display','table-row').animate({opacity:250}, 300);
+    });
+});

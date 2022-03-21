@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Material_Requisition, Material_Requisition_Items
+from .models import MaterialRequisition, MaterialRequisitionItems
 
 
-admin.site.register(Material_Requisition)
-admin.site.register(Material_Requisition_Items)
+admin.site.register(MaterialRequisition)
+admin.site.register(MaterialRequisitionItems)

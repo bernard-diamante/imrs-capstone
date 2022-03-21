@@ -25,8 +25,9 @@ urlpatterns = [
     path('item/', include('item.urls')),
     path('project_site/', include('project_site.urls')),
     path('requisition/', include('requisition.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('', RedirectView.as_view(url='login/')),
+    # path('', RedirectView.as_view(url='login/')),
 
 ]
