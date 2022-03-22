@@ -12,8 +12,10 @@ class RequisitionModelForm(forms.ModelForm):
         fields = (
             'reqDescription',
             'reqDateNeeded',
-            'reqItems'
+            'reqItems',
+            'siteID'
         )
+        exclude = ["siteID"]
         widgets = {
             'reqDateNeeded': forms.DateInput(attrs={'type': 'date'}),
         }

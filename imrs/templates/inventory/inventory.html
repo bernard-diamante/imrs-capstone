@@ -4,6 +4,11 @@
 
 {% block content %}
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+
 <style>
   .active {
     background-color: #3f5f43;
@@ -17,12 +22,12 @@
 <div class="flex space-x-5">
   <div class="flex flex-col space-y-5">
   <table
-    id="inventory-list"
-    class="table-fixed h-full w-full overflow-hidden rounded-lg shadow-lg"
+    id="table"
+    class="border-none table-fixed h-full w-full overflow-hidden rounded-lg shadow-lg"
   >
     <thead class="bg-slate-100 text-gray-600">
       <tr>
-        <th class="w-1/4 p-2 font-medium">Item</th>
+        <th class=" p-2 font-medium">Item</th>
         <th class="p-2 font-medium">Count</th>
         <th class="p-2 font-medium">Category</th>
         <th class="p-2 font-medium">Subcategory</th>
@@ -36,32 +41,31 @@
         data-href="{% url 'inventory:detail-inv-item' item.pk %}"
         class="tableRow row table-row cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
       >
-        <td class="itemName p-2">{{ item.itemID.itemName }}</td>
-        <td class="p-2">{{ item.siteItemCount }}</td>
-        <td class="p-2">{{ item.itemID.itemCategory }}</td>
-        <td class="p-2">{{ item.itemID.itemSubcategory }}</td>
-        <td class="p-2">{{ item.get_siteItemTurnover_display }}</td>
-        <td class="p-2">{{ item.get_siteItemStatus_display }}</td>
+        <td class="itemName  ">{{ item.itemID.itemName }}</td>
+        <td class=" ">{{ item.siteItemCount }}</td>
+        <td class=" ">{{ item.itemID.itemCategory }}</td>
+        <td class=" ">{{ item.itemID.itemSubcategory }}</td>
+        <td class=" ">{{ item.get_siteItemTurnover_display }}</td>
+        <td class=" ">{{ item.get_siteItemStatus_display }}</td>
       </tr>
       {% endfor %}
-      <tr
+      <!-- <tr
         id="no-results"
         style="display: none;"
         class="row table-row bg-white"
       >
         <td id="no-results-td" colspan="6" class="p-2">No results found.</td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
-  <div id="nav" class="flex justify-center space-x-2"></div>
+
+  <!-- <div id="nav" class="flex justify-center space-x-2"></div> -->
 </div>
 
   <!-- Add item and search -->
-  <div
+  <!-- <div
     class="text-gray-200 h-full bg-slate-500 flex flex-col space-y-2 justify-end rounded-lg px-3 pt-2 pb-3 shadow-lg ease-in duration-300 hover:shadow"
   >
-    <!-- FOR MAIN OFFICE ONLY
-      <button class="w-full px-3 py-1 bg-slate-200 cursor-pointer rounded-full">Add Item</button> -->
     <div class="flex text-lg font-medium border-b pb-2">
       Search Options:
     </div>
@@ -80,7 +84,7 @@
         id = "myInput"
         onkeyup = "Search()"
         placeholder="Search"
-      />
+      >
       <a
         class="h-7 w-7 flex justify-center ml-2 bg-gray-300 rounded-lg"
         href=""
@@ -101,8 +105,10 @@
         </svg>
       </a>
     </div>
-  </div>
+  </div> -->
 </div>
+
+
 
 <!-- </div> -->
 

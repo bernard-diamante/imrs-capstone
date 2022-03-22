@@ -25,7 +25,7 @@ class MaterialRequisition(models.Model):
     reqID = models.AutoField(primary_key=True) #change to UUIDField if needed
     siteID = models.ForeignKey("project_site.Site", related_name='destinationSite', on_delete=models.CASCADE)
     originSiteID = models.ForeignKey('project_site.Site', related_name='originSite', on_delete=models.CASCADE, blank=True, null=True) 
-    reqDescription = models.CharField(max_length=1000, blank=True)
+    reqDescription = models.TextField(max_length=1000, blank=True)
     reqDateSubmitted = models.DateTimeField(auto_now=True)
     reqDateNeeded = models.DateField(auto_now=False)
     reqItems = models.ManyToManyField(

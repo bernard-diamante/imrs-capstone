@@ -39,7 +39,12 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
         return reverse("requisition:list-requisition")
 
     def form_valid(self, form):
-        form.save()
+        # Save the validated data of your object
+        self.object = form.save(commit = False)
+        # Update the value of the desired field
+        self.object.siteID = self.request.user.site
+        # Save the object to commit the changes
+        self.object.save()
         return super(RequisitionAddView, self).form_valid(form)
 
     def get_queryset(self):
