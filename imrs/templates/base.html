@@ -8,7 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="text/javascript" src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
     <title>Inventory Management and Requisition System</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet"/>
 </head>
 <body>
     {% if request.user.is_authenticated %}

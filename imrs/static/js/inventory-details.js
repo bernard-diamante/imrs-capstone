@@ -42,7 +42,13 @@ $(document).ready(function () {
   //   }
   // }
 
-  var table = $('#table').DataTable();
+  var table = $('#table').DataTable({
+    responsive: true,
+    "language": {
+      "zeroRecords": "No matching results found.",
+      "emptyTable": "No available records."
+    }
+  });
  
 // #myInput is a <input type="text"> element
     $('#myInput').on( 'keyup', function () {

@@ -12,4 +12,6 @@ urlpatterns = [
     # path('add-item-inv/<int:pk>', ItemAddInvView.as_view(), name='add-item-inv'),
     path('cart/', CartListView.as_view(), name='item-cart'),
     path('cart/<int:pk>/add/', add_to_cart, name='add-to-cart'),
+
+    path('cart/update_item/', updateItem, name='update_item'),
 ]

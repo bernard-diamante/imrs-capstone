@@ -5,6 +5,26 @@
 <!--  -->
 
 {% block content %}
+<script type="text/javascript">
+  var user = '{{request.user}}'
+
+  function getToken(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getToken('csrftoken');
+</script>
 
     <h2 class="font-bold text-4xl pb-10">Items</h2>
 
@@ -37,9 +57,9 @@
                                 <p class="h-7 w-7 justify-center mx-auto text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
                                 >✓</p>
                             {% else %}
-                                <a href="{% url 'item:add-to-cart' item.pk %}"
-                                class="h-7 w-7 justify-center mx-auto text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
-                                >+</a>
+                                <button data-item={{item.itemID}} data-action="add"
+                                class="update-cart h-7 w-7 justify-center mx-auto text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
+                                >+</button>
                             {% endif %}
                         </td>
                     </tr>
@@ -107,6 +127,6 @@
 </div>
 
 
-<script type="text/javascript" src="{% static 'js/item-add-inventory.js' %}" ></script> 
+<script type="text/javascript" src="{% static 'js/cart.js' %}" ></script> 
 
 {% endblock content %}

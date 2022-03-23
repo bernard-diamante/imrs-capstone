@@ -8,15 +8,13 @@
   
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
-
-<style>
+<!-- <style>
   .active {
     background-color: #3f5f43;
     color: white;
   }
 
-</style>
-
+</style> -->
 <h2 class="font-bold text-4xl pb-10">Inventory</h2>
 
 <div class="flex space-x-5">
@@ -27,19 +25,19 @@
   >
     <thead class="bg-slate-100 text-gray-600">
       <tr>
-        <th class=" p-2 font-medium">Item</th>
-        <th class="p-2 font-medium">Count</th>
-        <th class="p-2 font-medium">Category</th>
-        <th class="p-2 font-medium">Subcategory</th>
-        <th class="p-2 font-medium">Turnover</th>
-        <th class="p-2 font-medium">Status</th>
+        <th class="font-medium">Item</th>
+        <th class=" font-medium">Count</th>
+        <th class=" font-medium">Category</th>
+        <th class=" font-medium">Subcategory</th>
+        <th class=" font-medium">Turnover</th>
+        <th class=" font-medium">Status</th>
       </tr>
     </thead>
     <tbody class="text-center">
       {% for item in inventory %}
       <tr
         data-href="{% url 'inventory:detail-inv-item' item.pk %}"
-        class="tableRow row table-row cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+        class="tableRow cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
       >
         <td class="itemName  ">{{ item.itemID.itemName }}</td>
         <td class=" ">{{ item.siteItemCount }}</td>
@@ -49,13 +47,6 @@
         <td class=" ">{{ item.get_siteItemStatus_display }}</td>
       </tr>
       {% endfor %}
-      <!-- <tr
-        id="no-results"
-        style="display: none;"
-        class="row table-row bg-white"
-      >
-        <td id="no-results-td" colspan="6" class="p-2">No results found.</td>
-      </tr> -->
     </tbody>
   </table>
 

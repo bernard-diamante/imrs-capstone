@@ -137,6 +137,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = "media_root"
 STATIC_ROOT = "static_root"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_FINDERS = [
+#     'npm.finders.NpmFinder'
+# ]
 
 AUTH_USER_MODEL = 'dashboard.User'
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
