@@ -1,11 +1,14 @@
 from django.shortcuts import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from .forms import ItemModelForm
 from .models import Item
 from project_site.models import *
 from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import get_object_or_404
+from project_site.models import Cart
+import json
 
 # from inventory.views import InventoryCreateView
 
@@ -92,17 +95,33 @@ class CartListView(LoginRequiredMixin, generic.ListView):
         qs = Site.objects.all()
         return qs
 
-# def user_check(user):
-#     return user.username
+def user_check(user):
+    return user.username
 
-# @user_passes_test(user_check)
-def add_to_cart(request, **kwargs):
-    itemID = Item.objects.filter(id=kwargs.get('itemID', "")).first()
-    cartItems = Site.objects.get_or_create(cartItemID=itemID)
-    if len(cartItems) == 0:
-        # TODO: Show cart is empty
-        pass
-    else:
-        pass
 
-        # for item in cartItems:
+@user_passes_test(user_check) 
+def updateItem(request):
+    data = json.loads(request.body)
+    itemID = data['itemID']
+    action = data['action']
+
+    print('Action: ',action)
+    print('itemID: ',itemID)
+
+    item = Item.objects.get(itemID=itemID)
+    
+    cartItem = Item.objects.get(itemID=itemID)
+    cart,created = Cart.objects.get_or_create(siteID=request.user.site, cartItemID=cartItem)
+    cart.save()
+    return JsonResponse('Item was added', safe=False)
+
+
+    # item = Item.objects.filter(id=kwargs.get('itemID', "")).first()
+    # cartItems = Site.objects.get_or_create(cartItemID=item)
+    # if len(cartItems) == 0:
+    #     # TODO: Show cart is empty
+    #     pass
+    # else:
+    #     pass
+
+    #     # for item in cartItems:

@@ -18,6 +18,8 @@ class RequisitionModelForm(forms.ModelForm):
         exclude = ["siteID"]
         widgets = {
             'reqDateNeeded': forms.DateInput(attrs={'type': 'date'}),
+            'reqDescription':forms.Textarea(attrs={'rows': 5})
+            #TextInput(attrs={'style': 'max-width: 600px;', 'placeholder':'Text', 'rows': '3'})
         }
     def __init__(self, *args, **kwargs):
         super(RequisitionModelForm, self).__init__(*args, **kwargs)
