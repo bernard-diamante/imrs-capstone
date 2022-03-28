@@ -1,4 +1,4 @@
-from django.shortcuts import reverse
+from django.shortcuts import render, reverse
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404
 from project_site.models import Cart
 import json
+from django.http import HttpResponseRedirect
 
 # from inventory.views import InventoryCreateView
 
@@ -19,16 +20,26 @@ class ItemListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         items = Item.objects.all()
+        cart = Cart.objects.all()
+        
         inventory = Inventory.objects.all().values_list()
+        cart_values = Cart.objects.all().values_list()
+
         itemID_list = []
+        cartItemID_list = []
 
         for i in inventory:
             itemID_list.append(i[0])
+        for i in cart_values:
+            cartItemID_list.append(i[0])
 
         qs = { 
             "items": items,
             "itemID_list": itemID_list,
+            "cartItemID_list": cartItemID_list,
+            "cart": cart
             }
+        print(cartItemID_list)
         return qs
         
 
@@ -92,7 +103,7 @@ class CartListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "cart"
 
     def get_queryset(self):
-        qs = Site.objects.all()
+        qs = Cart.objects.all()
         return qs
 
 def user_check(user):
@@ -100,7 +111,7 @@ def user_check(user):
 
 
 @user_passes_test(user_check) 
-def updateItem(request):
+def addCartItem(request):
     data = json.loads(request.body)
     itemID = data['itemID']
     action = data['action']
@@ -116,11 +127,13 @@ def updateItem(request):
     return JsonResponse('Item was added', safe=False)
 
 
-def deleteCartItem(request):
-    itemID = Item.objects.get(pk=itemID)
-    cartItem = Item.objects.get(itemID=itemID)
-    cart,created = Cart.objects.get(siteID=request.user.site, cartItemID=cartItem)
+def deleteCartItem(request, itemID):
+    item = Item.objects.get(pk=itemID)
+    # cartItem = Item.objects.get(pk=itemID)
+    cart = Cart.objects.filter(siteID=request.user.site.siteID, cartItemID=item.itemID)
     cart.delete()
+    return HttpResponseRedirect(reverse('item:item-cart'))
+    
 
     # item = Item.objects.filter(id=kwargs.get('itemID', "")).first()
     # cartItems = Site.objects.get_or_create(cartItemID=item)

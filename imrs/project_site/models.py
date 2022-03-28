@@ -34,12 +34,13 @@ class Site(models.Model):
 class Cart(models.Model):
     siteID = models.ForeignKey(Site, on_delete=models.CASCADE)
     cartItemID = models.ForeignKey('item.Item', on_delete=models.CASCADE)
+
     class Meta:
         unique_together = (('cartItemID', 'siteID'))
 
 class Inventory(models.Model):
     ITEM_STATUS = [
-        (1,'Normal'),
+        (1, 'Normal'),
         (2, 'Low'),
         (3, 'Empty')
     ]
@@ -62,4 +63,6 @@ class Inventory(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['itemID', 'siteID'], name='unique_item_inv')
         ]
+    def __str__(self):
+        return self.itemID.itemName
     

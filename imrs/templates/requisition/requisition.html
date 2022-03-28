@@ -7,25 +7,24 @@
 <!-- IF STATEMENT to check if user is MO or SE -->
 <div class="flex space-x-5">
     <table
-      id="inventory-list"
-      class="table-fixed h-full w-full overflow-hidden rounded-lg shadow-lg"
+      id="table"
+      class="table-fixed w-full overflow-hidden rounded-lg shadow-lg"
     >
-        <thead class="bg-slate-100">
+        <thead class="bg-slate-100 text-gray-600">
             <tr>
-                <th class="w-2/12 p-2 font-medium text-gray-600">Req. ID</th>
-                <th class="p-2 font-medium text-gray-600">Destination</th>
-                <th class="p-2 font-medium text-gray-600">Needed By</th>
-                <th class="p-2 font-medium text-gray-600">Status</th>
-                <!-- <th class="p-2 font-medium text-gray-600"></th> -->
+                <th class="font-medium ">Req. ID</th>
+                <th class="font-medium">Destination</th>
+                <th class="font-medium">Needed By</th>
+                <th class="font-medium">Status</th>
             </tr>
         </thead>
         <tbody class="text-center">
           {% for request in requisition %}
             <tr
             data-href="{% url 'requisition:detail-requisition' request.pk %}"
-            class="tableRow row table-row cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+            class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
             >
-                <td class="p-2">#{{ request.reqID }}</td>
+                <td class="p-2">{{ request.reqID }}</td>
                 <td class="p-2">{{ request.siteID }}</td>
                 <td class="p-2">{{ request.reqDateNeeded }}</td>
                 <td class="p-2">{{ request.get_reqStatus_display }}</td>
@@ -92,6 +91,6 @@
             </div>
 </div>
 
-<script src="{% static 'js/inventory-details.js' %}"></script>
+<script src="{% static 'js/table.js' %}"></script>
 
 {% endblock %}

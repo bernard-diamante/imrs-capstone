@@ -9,6 +9,7 @@ from django.contrib import messages
 class SiteCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = 'project_site/site_create.html'
     form_class = SiteModelForm
+    model = Site
 
     def get_success_url(self):
         return reverse("site-list")
@@ -19,6 +20,7 @@ class SiteCreateView(LoginRequiredMixin, generic.CreateView):
 class SiteDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "project_site/site_detail.html"
     context_object_name = "site"
+    model = Site
 
     def get_queryset(self):
         return Site.objects.filter(pk=self.pk)
@@ -26,6 +28,7 @@ class SiteDetailView(LoginRequiredMixin, generic.DetailView):
 class SiteListView(LoginRequiredMixin, generic.ListView):
     template_name = "project_site/site.html"
     context_object_name = "site"
+    model = Site
 
     def get_queryset(self):
         queryset = Site.objects.all()

@@ -18,7 +18,7 @@ for (i = 0; i < updateBtns.length; i++) {
 function updateUserOrder(itemID, action){
     console.log('User is authenticated, sending data...')
 
-	var url = 'cart/update_item/'
+	var url = 'cart/add/'
 	fetch(url, {
 		method: 'POST',
 		headers:{

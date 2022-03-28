@@ -84,7 +84,6 @@
       </div>
     </div>
 
-
     <table
       class="table-fixed h-full w-full overflow-hidden rounded-lg shadow-lg"
     >
@@ -95,7 +94,8 @@
             </tr>
         </thead>
         <tbody class="text-center">
-          {% for item in object.materialrequisitionitems_set.all %}
+          
+          {% for item in requisition.materialrequisitionitems_set.all %}
             <tr
             class="tableRow row table-row bg-white even:bg-slate-100"
             >
@@ -107,7 +107,7 @@
         </tbody>
     </table>
     <!-- Update button -->
-    <div class="flex justify-end mt-3 ml-auto">
+    <div class="flex justify-end mt-3 ml-auto pb-2.5">
       <div id="buttons" class="flex">
         <a href="{% url 'inventory:update-inv-item' object.pk %}">
           <button

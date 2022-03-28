@@ -48,7 +48,7 @@
           method="post"
           action=""
         > <!-- add url add form -->
-          {% csrf_token %} {{ form.as_p }}
+          {% csrf_token %} {{ form|crispy }}
           <div class="flex justify-end mt-6 ml-auto">
             <div id="buttons" class="flex">
               <input
@@ -56,12 +56,8 @@
                 value="Submit"
                 class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
               />
-              <a href="{% url 'requisition:requisition-list' %"> <!-- add url -->
-                <button
-                  class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded"
-                >
-                  Cancel
-                </button>
+              <a href="{% url 'requisition:list-requisition' %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded">
+                Cancel
               </a>
             </div>
           </div>

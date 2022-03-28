@@ -30,30 +30,34 @@ const csrftoken = getToken('csrftoken');
 
     <div class="flex space-x-5">
 
-        <table id="inventory-list"
-            class="table-fixed h-full w-full overflow-hidden rounded-lg shadow-lg">
-            <thead class="bg-slate-100">
+        <table id="table"
+            class="table-fixed w-full overflow-hidden rounded-lg shadow-lg">
+            <thead class="bg-slate-100 text-gray-600">
                 <tr>
-                    <th class="p-2 font-medium text-gray-600">Item</th>
-                    <th class="p-2 font-medium text-gray-600">Category</th>
-                    <th class="p-2 font-medium text-gray-600">Subcategory</th>
-                    <th class="w-1/12 p-2"></th>
+                    <th class="font-medium ">Item</th>
+                    <th class="font-medium">Category</th>
+                    <th class="font-medium">Subcategory</th>
+                    <th class="w-1/12 font-medium">Add</th>
                 </tr>
             </thead>
+            
+            
             <tbody class="text-center">
                 {% for item in data.items %}
+                
                 <!-- ADD: Conditional to only display items not in site inv -->
-                    <tr id="tableRow" data-href="" 
-                    class="row table-row bg-white hover:bg-slate-200 even:bg-slate-100 ease-in duration-100">
+                    <tr
+                    class="bg-white hover:bg-slate-200 even:bg-slate-100 ease-in duration-100">
                         <td class="p-2">{{ item.itemName }}</td>
                         <td class="p-2">{{ item.itemCategory }}</td>
                         <td class="p-2">{{ item.itemSubcategory }}</td>
-            
                         <td>
-                            {% if item.itemID in data.itemID_list %} <!-- add correct INVENTORY context -->
+                            {% if item.itemID in data.itemID_list %}
                                 <p class="h-7 w-7 justify-center mx-auto text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
                                 >✓</p>
-                            {% elif item in cart.all %} <!-- add correct CART context -->
+                                
+                            {% elif item.itemID in data.cart_set.all %}
+                                
                                 <p class="h-7 w-7 justify-center mx-auto text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
                                 >✓</p>
                             {% else %}
@@ -128,5 +132,6 @@ const csrftoken = getToken('csrftoken');
 
 
 <script type="text/javascript" src="{% static 'js/cart.js' %}" ></script> 
+<script type="text/javascript" src="{% static 'js/table.js' %}" ></script> 
 
 {% endblock content %}

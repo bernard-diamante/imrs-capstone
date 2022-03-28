@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,12 @@
     <script type="text/javascript" src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
     <title>Inventory Management and Requisition System</title>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
+    
+<link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/custom.css' %}" rel="stylesheet"/>
 </head>
 <body>

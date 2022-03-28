@@ -51,14 +51,14 @@
           class="row table-row bg-white hover:bg-slate-200 even:bg-slate-100 ease-in duration-100"
         >
           <td class="p-2">{{ forloop.counter }}</td>
-          <td class="p-2">{{ item.itemName }}</td>
-          <td class="p-2">{{ item.itemCategory }}</td>
-          <td class="p-2">{{ item.itemSubcategory }}</td>
+          <td class="p-2">{{ item.cartItemID.itemName }}</td>
+          <td class="p-2">{{ item.cartItemID.itemCategory }}</td>
+          <td class="p-2">{{ item.cartItemID.itemSubcategory }}</td>
 
           <td>
             <!-- ADD DELETE URL HERE -->
             <a
-              href=""
+              href="{% url 'item:delete-cart-item' item.id%}"
               class="w-7 h-7 justify-center text-sm cursor-pointer flex ml-auto mr-2 text-white bg-red-500 border-0 py-1 px-1 focus:outline-none hover:bg-red-600 rounded-full"
               >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-auto w-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
