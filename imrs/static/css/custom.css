@@ -12,72 +12,42 @@
     border: none;
 }
 
-#table tbody tr {
-    min-height: 35px; /* or whatever height you need to make them all consistent */
-    }
-
-
 .dataTables_length, .dataTables_filter {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
-.dataTables_length select {
-    background-color: red;
-    outline-style: none;
-}
-.dataTables_filter input {
-    background-color: red;
-    outline-style: none;
+.dataTables_info, .dataTables_paginate {
+    margin-top: 1rem;
 }
 
+.dataTables_length select, .dataTables_filter input{
+    background-color: #edf2f7 !important;
+    border: none !important;
+    outline-style: none;
+}
 
 
 /*Pagination Buttons*/
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-    font-weight: 700;
-    /*font-bold*/
-    border-radius: .25rem;
-    /*rounded*/
-    border: 1px solid transparent;
-    /*border border-transparent*/
+    border-radius: 2rem !important;
+    border: none !important;
+    background: #edf2f7;
+    margin-right: 5px;
 }
 
 /*Pagination Buttons - Current selected */
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    color: #fff !important;
-    /*text-white*/
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-    /*shadow*/
-    font-weight: 700;
-    /*font-bold*/
-    border-radius: .25rem;
-    /*rounded*/
-    background: #3f5f43 !important;
-    /*bg-indigo-500*/
-    border: 1px solid transparent;
-    /*border border-transparent*/
-    
-}
-
-.paginate_button.current {
-    pointer-events: none;
     color: white !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+    background: #3f5f43 !important;
+
 }
 
 /*Pagination Buttons - Hover */
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    color: #fff !important;
-    /*text-white*/
+    color: #fff;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-    /*shadow*/
-    font-weight: 700;
-    /*font-bold*/
-    border-radius: .25rem;
-    /*rounded*/
-    background: #edf2f7 !important;
-    /*bg-indigo-500*/
-    border: 1px solid transparent;
-    /*border border-transparent*/
+    background: #c7ccdf !important;
 }
 
 .dataTables_empty {

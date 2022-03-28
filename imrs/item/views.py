@@ -116,6 +116,12 @@ def updateItem(request):
     return JsonResponse('Item was added', safe=False)
 
 
+def deleteCartItem(request):
+    itemID = Item.objects.get(pk=itemID)
+    cartItem = Item.objects.get(itemID=itemID)
+    cart,created = Cart.objects.get(siteID=request.user.site, cartItemID=cartItem)
+    cart.delete()
+
     # item = Item.objects.filter(id=kwargs.get('itemID', "")).first()
     # cartItems = Site.objects.get_or_create(cartItemID=item)
     # if len(cartItems) == 0:

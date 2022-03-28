@@ -47,7 +47,8 @@ $(document).ready(function () {
     "language": {
       "zeroRecords": "No matching results found.",
       "emptyTable": "No available records."
-    }
+    },
+    "lengthMenu": [ 10, 25, 50, 75, 100 ]
   });
  
 // #myInput is a <input type="text"> element
