@@ -1,7 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 
-# Create your models here.
+def validate_capitalized(value):
+    if value != value.capitalize():
+        raise ValidationError('Invalid (not capitalized) value: %(value)s',
+                              code='invalid',
+                              params={'value': value})
+
 class User(AbstractUser):
     USER_ROLE_CHOICES = [
         (0, "Admin"),
@@ -10,13 +16,12 @@ class User(AbstractUser):
         (3, "Site Manager")
     ]
     username = models.CharField(primary_key=True, max_length=3) # USE FOR USER LOGIN
-    userFirstName = AbstractUser.first_name
-    userMiddleName = models.CharField(max_length=50, blank=True)
-    userLastName = AbstractUser.last_name
-    userSuffix = models.CharField(max_length=30, blank=True)
-    userEmail = AbstractUser.email
-    userContactNo = models.CharField(max_length=11) 
-    userRole = models.PositiveSmallIntegerField(default=3, choices=USER_ROLE_CHOICES)
+    first_name = models.CharField(max_length=50, blank=True)
+    middle_name = models.CharField(max_length=50, blank=True)
+    last_name = models.CharField(max_length=50, blank=True)
+    suffix = models.CharField(max_length=30, blank=True)
+    contact_number = models.CharField(max_length=11) 
+    role = models.PositiveSmallIntegerField(default=3, choices=USER_ROLE_CHOICES)
     
     class Meta:
         verbose_name = 'user'
@@ -24,3 +29,4 @@ class User(AbstractUser):
         abstract = False
     def __str__(self):
         return self.username
+

@@ -9,7 +9,7 @@
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">
-    <a href="{% url 'project_site:list-site' %}">
+    <a href="{% url 'users:list-user' %}">
       <button
         class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center"
       >
@@ -25,7 +25,7 @@
             clip-rule="evenodd"
           />
         </svg>
-        Return to Project Sites
+        Return to User Management
       </button>
     </a>
   </div>
@@ -33,20 +33,20 @@
   <div class="w-full px-8 py-6 mb-6 lg:mb-0 shadow-lg rounded pl-7">
     <div class="flex">
       <span class="text-gray-900 text-3xl title-font font-medium mb-4">
-        Add Site Form
+        {{ object.userFirstName }} {{ object.userMiddleName }} {{ object.userLastName }} {{ object.userSuffix }}
       </span>
     </div>
     <div class="flex mb-4">
       <a
         class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1"
-        >Site Details</a
+        >User Details</a
       >
     </div>
 
     <form
       class="form-inline"
       method="post"
-      action="{% url 'project_site:add-site' %}"
+      action="{% url 'users:update-user' object.pk %}"
     >
       {% csrf_token %} {{ form|crispy }}
       <div class="flex justify-end mt-6 ml-auto">
@@ -56,8 +56,12 @@
             value="Submit"
             class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
           />
-          <a href="{% url 'project_site:list-site' %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded">
+          <a href="{% url 'users:list-user' %}">
+            <button
+              class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded"
+            >
               Cancel
+            </button>
           </a>
         </div>
       </div>

@@ -7,7 +7,7 @@
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">
-    <a href="{% url 'requisition:list-requisition' %}">
+    <a href="{% url 'users:list-user' %}">
       <button
         class="flex mr-auto bg-gray-100 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-200 rounded inline-flex items-center justify-center ease-in duration-100"
       >
@@ -23,7 +23,7 @@
             clip-rule="evenodd"
           />
         </svg>
-        Return to Material Requests
+        Return to User Management
       </button>
     </a>
   </div>
@@ -32,95 +32,64 @@
         <div class="flex">
       <div class="flex flex-col">
         <div class="text-gray-900 text-3xl title-font font-medium mb-4">
-          Requisition ID #{{ object.req }}
+          {{ object.first_name }} {{ object.middle_name }} {{ object.last_name }} {{ object.suffix }}
         </div>
         <div class="flex text-lg">
             <span class="text-gray-900 title-font font-medium"
-              >Needed By:
+              >User ID:
             </span>
             <span class="ml-3 text-gray-900"
-              >{{ object.reqDateNeeded }}</span
+              >#{{ object.username }}</span
             >
           </div>
       </div>
-        {% if object.get_reqStatus_display == "For Review" %}
-        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-yellow-500 border-0 py-2 px-5 focus:outline-none rounded-full">
-        {% elif object.get_reqStatus_display == "Awaiting Delivery" %}
-        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none rounded-full">
-        {% elif object.get_reqStatus_display == "Request Denied" %}
-        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-red-500 border-0 py-2 px-5 focus:outline-none rounded-full">
-        {% elif object.get_reqStatus_display == "Delivered" %}
-        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-green-500 border-0 py-2 px-5 focus:outline-none rounded-full">
-        {% endif %}
-          {{ object.get_reqStatus_display }}
-        </span>
     </div>
       
       <div class="flex mb-4">
         <a
           class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
-          >Request Details</a
+          >User Details</a
         >
       </div>
       <div class="flex pb-2">
-        <span class="text-gray-500">Date Submitted</span>
+        <span class="text-gray-500">Role</span>
         <span class="ml-auto text-gray-900"
-          >{{ object.reqDateSubmitted }}</span
+          >{{ object.get_role_display }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500 mr-20">Description</span>
+        <span class="text-gray-500 mr-20">Contact Number</span>
         <span class="ml-auto text-gray-900 text-justify"
-          >{{ object.reqDescription }}</span
+          >{{ object.contact_number }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500">Source Site</span>
-        <span class="ml-auto text-gray-900">{{ object.originSite.siteName }}</span>
-      </div>
-      <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500">Destination Site</span>
-        <span class="ml-auto text-gray-900">{{ object.site.siteName }}</span>
+        <span class="text-gray-500 mr-20">Email Address</span>
+        <span class="ml-auto text-gray-900 text-justify"
+          >{{ object.email }}</span
+        >
       </div>
     </div>
 
-    <table
-      class="table-fixed h-full w-full overflow-hidden rounded-lg shadow-lg"
-    >
-        <thead class="bg-slate-100">
-            <tr>
-                <th class="p-2 font-medium text-gray-600">Item</th>
-                <th class="p-2 font-medium text-gray-600">Quantity</th>
-            </tr>
-        </thead>
-        <tbody class="text-center">
-          
-          {% for item in requisition.materialrequisitionitems_set.all %}
-            <tr
-            class="bg-white even:bg-slate-100"
-            >
-                <td class="p-2">{{ item.item.itemName }}</td>
-                <td class="p-2">{{ item.itemQuantity }}</td>
-                {% comment %} <td class="p-2">{{ item.req.reqDescription }}</td> {% endcomment %}
-            </tr>
-          {% endfor %}
-        </tbody>
-    </table>
     <!-- Update button -->
     <div class="flex justify-end mt-3 ml-auto pb-2.5">
       <div id="buttons" class="flex">
-        <a href="{% url 'requisition:update-requisition' object.pk %}">
+        <a href="{% url 'users:update-user' object.pk %}">
           <button
             class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
           >
             Update
           </button>
         </a>
+        <button
+          class="modal-toggle flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded ease-in duration-100"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>
 </div>
-<!-- </div> -->
 
 <!-- MODAL -->
 <div
@@ -154,10 +123,23 @@
         </div>
       </div>
 
-      <!--Body-->
-
-      <!--Footer-->
+      <p>
+        Are you sure you want to delete user:
+        <span class="italic">{{ object.last_name }}, {{ object.first_name }}</span>
+      </p>
       <div class="flex justify-end pt-4">
+        <form
+          class="form-inline"
+          method="post"
+          action="{% url 'users:delete-user' object.pk %}"
+        >
+          {% csrf_token %}
+          <input
+            type="submit"
+            value="Delete"
+            class="cursor-pointer flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded"
+          />
+        </form>
         <button
           class="modal-toggle flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded"
         >

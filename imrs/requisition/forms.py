@@ -31,6 +31,13 @@ class RequisitionModelForm(forms.ModelForm):
         self.fields['reqDescription'].label = "Description"
         self.fields['reqDateNeeded'].label = "Date Needed"
         self.fields['reqItems'].label = "Requested Items"
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        first_name = cleaned_data['first_name'].title()
+        middle_name = cleaned_data['middle_name'].title()
+        last_name = cleaned_data['last_name'].title()
+        
         
         
         

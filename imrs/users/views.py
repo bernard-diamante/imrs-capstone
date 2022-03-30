@@ -1,59 +1,71 @@
 from django.shortcuts import render, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from django.contrib.auth.forms import UserChangeForm
-from .forms import CustomUserCreationsForm
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import User
 
 
 # Create your views here.
+# class SignupView(generic.CreateView):
+#     template_name = 'user/user_add.html'
+#     form_class = UserCreationForm
+#     def get_success_url(self):
+#         return reverse('login')
 class UserCreateView(LoginRequiredMixin, generic.CreateView):
-    template_name = 'accounts/user_create.html'
-    form_class = CustomUserCreationsForm
+    template_name = 'user/user_add.html'
+    form_class = CustomUserCreationForm
     model = User
 
     def get_success_url(self):
-        return reverse("list-user")
+        return reverse("users:list-user")
 
     def form_valid(self, form):
+        form.clean()
+        form.save()
         return super(UserCreateView, self).form_valid(form)
+    
 
 class UserDetailView(LoginRequiredMixin, generic.DetailView):
-    template_name = "accounts/user_detail.html"
-    context_object_name = "users"
+    template_name = "user/user_detail.html"
     model = User
+    context_object_name = 'users'
 
-    def get_queryset(self):
-        return User.objects.filter(pk=self.pk)
+    def get_success_url(self):
+        return reverse("users:detail-user")
+    # def get_queryset(self):
+    #     return User.objects.get(pk=self.pk)
 
 class UserListView(LoginRequiredMixin, generic.ListView):
-    template_name = "accounts/users.html"
-    context_object_name = "users"
+    template_name = "user/user.html"
     model = User
+    context_object_name = 'users'
 
     def get_queryset(self):
-        queryset = User.objects.all()
+        qs = User.objects.all()
+        return qs
+
 
 class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
-    template_name = 'accounts/user_update.html'
-    form_class = UserChangeForm
+    template_name = 'user/user_update.html'
+    form_class = CustomUserChangeForm
     
     def get_queryset(self):
         user = self.request.user
         return User.objects.all()
 
     def get_success_url(self):
-        return reverse("list-user")
+        return reverse("users:list-user")
 
     def form_valid(self, form):
         form.save()
         return super(UserUpdateView, self).form_valid(form)
 
 class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
-    template_name = "accounts/user_delete.html"
+    template_name = "user/user_delete.html"
 
     def get_success_url(self):
-        return reverse("list-user")
+        return reverse("users:list-user")
 
     def get_queryset(self):
         user = self.request.user

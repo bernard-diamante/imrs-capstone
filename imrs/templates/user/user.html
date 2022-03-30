@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% load tailwind_filters %} {% load static %} 
+
+<!--  -->
+
+{% block content %}
+
+<h2 class="font-bold text-4xl pb-10">User Management</h2>
+
+<div class="flex space-x-5">
+  <div class="w-full">
+  <table
+    id="table"
+    class="overflow-hidden rounded-lg shadow-lg"
+    style="width:100%;"
+  >
+    <thead class="bg-slate-100 text-gray-600">
+      <tr>
+        <th class="w-2/12 font-medium">User ID</th>
+        <th class="font-medium">Name</th>
+        <th class="font-medium">Role</th>
+        <th class="font-medium">Contact No.</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      {% for user in users %}
+      <tr
+        data-href="{% url 'users:detail-user' user.pk %}"
+        class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+      >
+        <td class="p-2">{{ user.username }}</td>
+        <td class="p-2">{{ user.last_name }}, {{ user.first_name }} {% if user.middle_name %} {{ user.middle_name|make_list|first }}. {% endif %}</td>
+        <td class="p-2">{{ user.get_role_display }}</td>
+        <td class="p-2">{{ user.contact_number }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <div id="page-button" class="ml-auto">
+    <a href="{% url 'users:add-user' %}" class="mx-auto flex justify-center w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
+        Add a User
+    </a>
+  </div>
+</div>
+
+<script src="{% static 'js/table.js' %}"></script>
+
+{% endblock %}
