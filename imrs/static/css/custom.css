@@ -4,12 +4,9 @@
   }
 
 /* DataTables */
+
 #table, #table thead th {
     border: none;
-}
-
-.dataTables_length, .dataTables_filter {
-    margin-bottom: 1.5rem;
 }
 
 .dataTables_info, .dataTables_paginate {
@@ -20,10 +17,20 @@
     background-color: #edf2f7 !important;
     border: none !important;
     outline-style: none;
+    color: black;
 }
 
-.dataTables_wrapper .dataTables_filter input {
-    margin-left: 10px;
+#table_filter input, #table_length select {
+    border-radius: 0.25rem;
+}
+
+#table_filter input {
+  padding-left: 10px;
+  margin-right: 25px;
+}
+
+#table_length select {
+  margin-left: 5px;
 }
 
 /*Pagination Buttons*/

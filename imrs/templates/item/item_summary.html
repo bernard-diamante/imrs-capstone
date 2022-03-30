@@ -10,7 +10,7 @@
 
 <!-- Return to Items -->
 <div class="flex w-full mb-5">
-  <a href="{% url 'item:item-list' %}">
+  <a href="{% url 'item:list-item' %}">
     <button
       class="flex mr-auto bg-gray-100 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-200 rounded inline-flex items-center justify-center ease-in duration-100"
     >
@@ -56,9 +56,8 @@
           <td class="p-2">{{ item.cartItemID.itemSubcategory }}</td>
 
           <td>
-            <!-- ADD DELETE URL HERE -->
             <a
-              href="{% url 'item:delete-cart-item' item.id%}"
+              href="{% url 'item:delete-cart' item.id %}"
               class="w-7 h-7 justify-center text-sm cursor-pointer flex ml-auto mr-2 text-white bg-red-500 border-0 py-1 px-1 focus:outline-none hover:bg-red-600 rounded-full"
               >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-auto w-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

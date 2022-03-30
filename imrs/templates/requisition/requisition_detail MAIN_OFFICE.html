@@ -3,12 +3,11 @@
 <!--  -->
 
 {% block content %}
-
-<h2 class="font-bold text-black text-4xl pb-10">Inventory</h2>
+<h2 class="font-bold text-black text-4xl pb-10">Material Requests</h2>
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">
-    <a href="{% url 'inventory:inventory-list' %}">
+    <a href="{% url 'requisition:list-requisition' %}">
       <button
         class="flex mr-auto bg-gray-100 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-200 rounded inline-flex items-center justify-center ease-in duration-100"
       >
@@ -24,53 +23,93 @@
             clip-rule="evenodd"
           />
         </svg>
-        Return to Inventory
+        Return to Material Requests
       </button>
     </a>
   </div>
   <div class="flex flex-col space-y-5 w-4/5 mx-auto">
     <div class="w-full px-8 pt-6 pb-3 shadow-lg rounded pl-7">
-      <div class="flex">
-        <span class="text-gray-900 text-3xl title-font font-medium mb-4">
-          {{ object.item.itemName }}
-        </span>
-        <span class="ml-auto text-gray-900 text-3xl title-font font-medium mb-4"
-          >QTY:
-        </span>
-        <span class="ml-3 text-gray-900 text-3xl mb-4"
-          >{{ object.siteItemCount }}</span
-        >
+        <div class="flex">
+      <div class="flex flex-col">
+        <div class="text-gray-900 text-3xl title-font font-medium mb-4">
+          Requisition ID #{{ object.req }}
+        </div>
+        <div class="flex text-lg">
+            <span class="text-gray-900 title-font font-medium"
+              >Needed By:
+            </span>
+            <span class="ml-3 text-gray-900"
+              >{{ object.reqDateNeeded }}</span
+            >
+          </div>
       </div>
+        {% if object.get_reqStatus_display == "For Review" %}
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-yellow-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        {% elif object.get_reqStatus_display == "Awaiting Delivery" %}
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        {% elif object.get_reqStatus_display == "Request Denied" %}
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-red-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        {% elif object.get_reqStatus_display == "Delivered" %}
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-green-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        {% endif %}
+          {{ object.get_reqStatus_display }}
+        </span>
+    </div>
+      
       <div class="flex mb-4">
         <a
           class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
-          >Item Details</a
+          >Request Details</a
         >
       </div>
       <div class="flex pb-2">
-        <span class="text-gray-500">Category</span>
+        <span class="text-gray-500">Date Submitted</span>
         <span class="ml-auto text-gray-900"
-          >{{ object.item.itemCategory }}</span
+          >{{ object.reqDateSubmitted }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500">Subcategory</span>
-        <span class="ml-auto text-gray-900"
-          >{{ object.item.itemSubcategory }}</span
+        <span class="text-gray-500 mr-20">Description</span>
+        <span class="ml-auto text-gray-900 text-justify"
+          >{{ object.reqDescription }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500">Turnover</span>
-        <span class="ml-auto text-gray-900">{{ object.get_siteItemTurnover_display }}</span>
+        <span class="text-gray-500">Source Site</span>
+        <span class="ml-auto text-gray-900">{{ object.originSite.siteName }}</span>
       </div>
       <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500">Status</span>
-        <span class="ml-auto text-gray-900">{{ object.get_siteItemStatus_display }}</span>
+        <span class="text-gray-500">Destination Site</span>
+        <span class="ml-auto text-gray-900">{{ object.site.siteName }}</span>
       </div>
     </div>
-    <div class="flex justify-end mt-3 ml-auto">
+
+    <table
+      class="table-fixed h-full w-full overflow-hidden rounded-lg shadow-lg"
+    >
+        <thead class="bg-slate-100">
+            <tr>
+                <th class="p-2 font-medium text-gray-600">Item</th>
+                <th class="p-2 font-medium text-gray-600">Quantity</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+          
+          {% for item in requisition.materialrequisitionitems_set.all %}
+            <tr
+            class="tableRow row table-row bg-white even:bg-slate-100"
+            >
+                <td class="p-2">{{ item.item.itemName }}</td>
+                <td class="p-2">{{ item.itemQuantity }}</td>
+                {% comment %} <td class="p-2">{{ item.req.reqDescription }}</td> {% endcomment %}
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    <!-- Update button -->
+    <div class="flex justify-end mt-3 ml-auto pb-2.5">
       <div id="buttons" class="flex">
-        <a href="{% url 'inventory:update-inv-item' object.pk %}">
+        <a href="{% url 'requisition:update-requisition' object.pk %}">
           <button
             class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
           >
@@ -131,7 +170,7 @@
         <form
           class="form-inline"
           method="post"
-          action="{% url 'inventory:delete-inv-item' object.pk %}"
+          action="{% url 'requisition:delete-requisition' object.pk %}"
         >
           {% csrf_token %}
           <input

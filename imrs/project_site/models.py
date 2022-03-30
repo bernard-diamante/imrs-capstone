@@ -4,18 +4,18 @@ from imrs import settings
 
 
 class Site(models.Model):
-    siteID = models.AutoField(primary_key=True) 
-    userID = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    site = models.AutoField(primary_key=True) 
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
     siteCart = models.ManyToManyField(
         'item.Item',
         through='Cart',
-        through_fields=('siteID', 'cartItemID'),
+        through_fields=('site', 'cartItem'),
         blank=True,
         related_name='siteCart')
     inventory_items = models.ManyToManyField(
         'item.Item',
         through='Inventory',
-        through_fields=('siteID', 'itemID'),
+        through_fields=('site', 'item'),
         blank=True,
         related_name='inventory_items'
         )
@@ -32,11 +32,11 @@ class Site(models.Model):
         return self.siteName
 
 class Cart(models.Model):
-    siteID = models.ForeignKey(Site, on_delete=models.CASCADE)
-    cartItemID = models.ForeignKey('item.Item', on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    cartItem = models.ForeignKey('item.Item', on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = (('cartItemID', 'siteID'))
+        unique_together = (('cartItem', 'site'))
 
 class Inventory(models.Model):
     ITEM_STATUS = [
@@ -50,8 +50,8 @@ class Inventory(models.Model):
         ('N', 'Normal'),
         ('F', 'Fast'),
     ]
-    itemID = models.ForeignKey('item.Item', on_delete=models.CASCADE)
-    siteID = models.ForeignKey(Site, on_delete=models.CASCADE)
+    item = models.ForeignKey('item.Item', on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
     
     siteItemCount = models.PositiveIntegerField(default=0)
     siteItemStatus = models.PositiveSmallIntegerField(default=1, choices=ITEM_STATUS)
@@ -59,10 +59,10 @@ class Inventory(models.Model):
     siteItemMinThreshold = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
-        # unique_together = (('itemID', 'siteID'))
+        # unique_together = (('item', 'site'))
         constraints = [
-            models.UniqueConstraint(fields=['itemID', 'siteID'], name='unique_item_inv')
+            models.UniqueConstraint(fields=['item', 'site'], name='unique_item_inv')
         ]
     def __str__(self):
-        return self.itemID.itemName
+        return self.item.itemName
     

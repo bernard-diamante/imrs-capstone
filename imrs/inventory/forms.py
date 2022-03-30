@@ -6,18 +6,18 @@ from project_site.models import *
 #     class Meta:
 #         model = Material_Transfer
 #         fields = (
-#             'originSiteID',
+#             'originSite',
 #         )
 
 class AddSiteItemInventoryModelForm(forms.ModelForm):
     model = Inventory
     fields = (
-        'itemID'
+        'item'
     )
 
     def __init__(self, *args, **kwargs):
         super(AddSiteItemInventoryModelForm,self).__init__(*args, **kwargs)
-        self.fields['itemID'].label = "Item ID"
+        self.fields['item'].label = "Item "
 
 class SiteItemInventoryModelForm(forms.ModelForm):
     class Meta:

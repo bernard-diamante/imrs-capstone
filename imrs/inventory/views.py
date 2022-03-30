@@ -26,7 +26,7 @@ class InventoryUpdateView(LoginRequiredMixin, generic.UpdateView):
         return Inventory.objects.all()
     
     def get_success_url(self):
-        return reverse("inventory:detail-inv-item", args=[self.object.pk])
+        return reverse("inventory:detail-inventory", args=[self.object.pk])
     
     def form_valid(self,form):
         form.save()
@@ -37,14 +37,14 @@ class InventoryDetailView(LoginRequiredMixin, generic.DetailView):
     model = Inventory
     template_name = "inventory/inventory_detail.html"
     def get_success_url(self):
-        return reverse("inventory:detail-inv-item")
+        return reverse("inventory:detail-inventory")
 
 
 class InventoryCreateView(LoginRequiredMixin, generic.CreateView):
     model = Inventory
 
     def get_success_url(self):
-        return reverse("inventory:inventory-list")
+        return reverse("inventory:list-inventory")
 
     def get_queryset(self):
         user = self.request.user
@@ -54,8 +54,9 @@ class InventoryDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Inventory
 
     def get_success_url(self):
-        return reverse("inventory:inventory-list")
+        return reverse("inventory:list-inventory")
 
     def get_queryset(self):
         user = self.request.user
         return Inventory.objects.all()
+

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django_select2',
 
     # Local apps
+    'users',
     'inventory',
     'item',
     'project_site',
@@ -141,7 +142,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #     'npm.finders.NpmFinder'
 # ]
 
-AUTH_USER_MODEL = 'dashboard.User'
+AUTH_USER_MODEL = 'users.User'
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 LOGIN_REDIRECT_URL = "/dashboard"
 LOGIN_URL = "/login"

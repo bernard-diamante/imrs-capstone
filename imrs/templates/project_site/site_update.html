@@ -9,7 +9,7 @@
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">
-    <a href="{% url 'inventory:inventory-list' %}">
+    <a href="{% url 'project_site:site-list' %}">
       <button
         class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center"
       >
@@ -29,10 +29,11 @@
       </button>
     </a>
   </div>
+  <div class="flex flex-col space-y-5 w-4/5 mx-auto">
   <div class="w-full px-8 py-6 mb-6 lg:mb-0 shadow-lg rounded pl-7">
     <div class="flex">
       <span class="text-gray-900 text-3xl title-font font-medium mb-4">
-        Add a Project Site <!-- add project site name -->
+        {{ object.siteName }}
       </span>
     </div>
     <div class="flex mb-4">
@@ -45,7 +46,7 @@
     <form
       class="form-inline"
       method="post"
-      action="{% url 'inventory:update-inv-item' object.pk %}"
+      action="{% url 'project_site:update-site' object.pk %}"
     >
       {% csrf_token %} {{ form|crispy }}
       <div class="flex justify-end mt-6 ml-auto">
@@ -55,7 +56,7 @@
             value="Submit"
             class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
           />
-          <a href="{% url 'inventory:detail-inv-item' object.pk %}">
+          <a href="{% url 'project_site:site-list' object.pk %}">
             <button
               class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded"
             >
@@ -66,6 +67,7 @@
       </div>
     </form>
   </div>
+</div>
 </div>
 
 <script src="{% static 'js/inventory-buttons.js' %}"></script>

@@ -6,9 +6,9 @@ app_name = 'inventory'
 
 urlpatterns = [
     # inventory
-    path('', InventoryListView.as_view(), name='inventory-list'),
-    path('<int:pk>/update/', InventoryUpdateView.as_view(), name='update-inv-item'),
-    path('<int:pk>/', InventoryDetailView.as_view(), name='detail-inv-item'),
-    path('add/', InventoryCreateView.as_view(), name='add-inv-item'), # TEST
-    path('<int:pk>/delete/', InventoryDeleteView.as_view(), name='delete-inv-item'),
+    path('', InventoryListView.as_view(), name='list-inventory'),
+    path('<int:pk>/update/', InventoryUpdateView.as_view(), name='update-inventory'),
+    path('<int:pk>/', InventoryDetailView.as_view(), name='detail-inventory'),
+    path('add/', InventoryCreateView.as_view(), name='add-inventory'), # TEST
+    path('<int:pk>/delete/', InventoryDeleteView.as_view(), name='delete-inventory'),
 ]

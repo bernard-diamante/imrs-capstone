@@ -13,9 +13,9 @@ class RequisitionModelForm(forms.ModelForm):
             'reqDescription',
             'reqDateNeeded',
             'reqItems',
-            'siteID'
+            'originSite'
         )
-        exclude = ["siteID"]
+        exclude = ('site',)
         widgets = {
             'reqDateNeeded': forms.DateInput(attrs={'type': 'date'}),
             'reqDescription':forms.Textarea(attrs={'rows': 3})
@@ -23,6 +23,7 @@ class RequisitionModelForm(forms.ModelForm):
         }
     def __init__(self, *args, **kwargs):
         super(RequisitionModelForm, self).__init__(*args, **kwargs)
+        self.fields['originSite'].required = True
         self.fields['reqItems'] = forms.ModelMultipleChoiceField(
             queryset=Inventory.objects.all(),
             widget=forms.CheckboxSelectMultiple,
@@ -30,6 +31,7 @@ class RequisitionModelForm(forms.ModelForm):
         self.fields['reqDescription'].label = "Description"
         self.fields['reqDateNeeded'].label = "Date Needed"
         self.fields['reqItems'].label = "Requested Items"
+        
         
         
     # reqform_Description = forms.CharField(label="Reason for Material Requisition", max_length=1000)

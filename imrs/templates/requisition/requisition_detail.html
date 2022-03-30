@@ -32,7 +32,7 @@
         <div class="flex">
       <div class="flex flex-col">
         <div class="text-gray-900 text-3xl title-font font-medium mb-4">
-          Requisition ID #{{ object.reqID }}
+          Requisition ID #{{ object.req }}
         </div>
         <div class="flex text-lg">
             <span class="text-gray-900 title-font font-medium"
@@ -76,11 +76,11 @@
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Source Site</span>
-        <span class="ml-auto text-gray-900">{{ object.originSiteID.siteName }}</span>
+        <span class="ml-auto text-gray-900">{{ object.originSite.siteName }}</span>
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Destination Site</span>
-        <span class="ml-auto text-gray-900">{{ object.siteID.siteName }}</span>
+        <span class="ml-auto text-gray-900">{{ object.site.siteName }}</span>
       </div>
     </div>
 
@@ -99,9 +99,9 @@
             <tr
             class="tableRow row table-row bg-white even:bg-slate-100"
             >
-                <td class="p-2">{{ item.itemID.itemName }}</td>
+                <td class="p-2">{{ item.item.itemName }}</td>
                 <td class="p-2">{{ item.itemQuantity }}</td>
-                {% comment %} <td class="p-2">{{ item.reqID.reqDescription }}</td> {% endcomment %}
+                {% comment %} <td class="p-2">{{ item.req.reqDescription }}</td> {% endcomment %}
             </tr>
           {% endfor %}
         </tbody>
@@ -109,18 +109,13 @@
     <!-- Update button -->
     <div class="flex justify-end mt-3 ml-auto pb-2.5">
       <div id="buttons" class="flex">
-        <a href="{% url 'inventory:update-inv-item' object.pk %}">
+        <a href="{% url 'requisition:update-requisition' object.pk %}">
           <button
             class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
           >
             Update
           </button>
         </a>
-        <button
-          class="modal-toggle flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded ease-in duration-100"
-        >
-          Delete
-        </button>
       </div>
     </div>
   </div>
@@ -160,25 +155,9 @@
       </div>
 
       <!--Body-->
-      <p>
-        Are you sure you want to delete item:
-        <span class="italic">{{ object.itemID.itemName }}</span>
-      </p>
 
       <!--Footer-->
       <div class="flex justify-end pt-4">
-        <form
-          class="form-inline"
-          method="post"
-          action="{% url 'inventory:delete-inv-item' object.pk %}"
-        >
-          {% csrf_token %}
-          <input
-            type="submit"
-            value="Delete"
-            class="cursor-pointer flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded"
-          />
-        </form>
         <button
           class="modal-toggle flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded"
         >

@@ -6,7 +6,7 @@ class SiteModelForm(forms.ModelForm):
         model = Site
         fields = (
             'siteName',
-            'userID',
+            'user',
             'siteStreetNumber',
             'siteStreet',
             'siteBarangay',

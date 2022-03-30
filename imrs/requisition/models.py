@@ -1,4 +1,5 @@
 from django.db.models import UniqueConstraint
+from django.core.exceptions import ValidationError
 from item.models import Item
 from django.db import models
 
@@ -8,12 +9,12 @@ class MaterialRequisitionItems(models.Model):
         ('U', 'Unfilled'),
         ('F', 'Filled')
     ]
-    reqID = models.ForeignKey("MaterialRequisition", on_delete=models.CASCADE)
-    itemID = models.ForeignKey('item.Item', on_delete=models.CASCADE)
+    requisition = models.ForeignKey("MaterialRequisition", on_delete=models.CASCADE)
+    item = models.ForeignKey('item.Item', on_delete=models.CASCADE)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default="U")
     itemQuantity = models.PositiveIntegerField(default=0, null=True)
     class Meta:
-        UniqueConstraint(fields = ['reqID', 'itemID'], name = 'req_item_unique')
+        UniqueConstraint(fields = ['requisition', 'item'], name = 'req_item_unique')
 
 class MaterialRequisition(models.Model):
     REQ_STATUS = [
@@ -22,22 +23,28 @@ class MaterialRequisition(models.Model):
         (2, 'Request Denied'),
         (3, 'Delivered'),
     ]
-    reqID = models.AutoField(primary_key=True) #change to UUIDField if needed
-    siteID = models.ForeignKey("project_site.Site", related_name='destinationSite', on_delete=models.CASCADE)
-    originSiteID = models.ForeignKey('project_site.Site', related_name='originSite', on_delete=models.CASCADE, blank=True, null=True) 
+    requisition = models.AutoField(primary_key=True) #change to UUField if needed
+    site = models.ForeignKey("project_site.Site", related_name='destinationSite', on_delete=models.CASCADE)
+    originSite = models.ForeignKey('project_site.Site', related_name='originSite', on_delete=models.CASCADE) 
     reqDescription = models.TextField(max_length=1000, blank=True)
     reqDateSubmitted = models.DateTimeField(auto_now=True)
     reqDateNeeded = models.DateField(auto_now=False)
     reqItems = models.ManyToManyField(
         Item,
         through="MaterialRequisitionItems",
-        through_fields=('reqID', 'itemID'),
+        through_fields=('requisition', 'item'),
         related_name="mat_req_items"
         )
-    # reqItemsID = models.ForeignKey(Material_Requisition_Items, on_delete=models.CASCADE, related_name="req_items", blank=True, null=True)
+    def clean(self):
+        if self.site_id == self.originSite:
+            raise ValidationError("Site cannot send item to themselves.")
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+    # reqItems = models.ForeignKey(Material_Requisition_Items, on_delete=models.CASCADE, related_name="req_items", blank=True, null=True)
     # If error, look up backwards relation
     
 
     reqStatus = models.PositiveSmallIntegerField(choices=REQ_STATUS, default=0)
     class Meta:
-        UniqueConstraint(fields = ['reqID', 'siteID'], name = 'req_site_unique')
+        UniqueConstraint(fields = ['requisition', 'site'], name = 'req_site_unique')

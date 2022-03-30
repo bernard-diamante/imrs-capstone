@@ -42,7 +42,7 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
         # Save the validated data of your object
         self.object = form.save(commit = False)
         # Update the value of the desired field
-        self.object.siteID = self.request.user.site
+        self.object.site = self.request.user.site
         # Save the object to commit the changes
         self.object.save()
         return super(RequisitionAddView, self).form_valid(form)
@@ -53,7 +53,7 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
 
 
 class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView): #for main office
-    template_name = "html file"
+    template_name = "requisition/requisition_update.html"
     form_class = RequisitionModelForm
 
     def get_queryset(self):
@@ -74,7 +74,7 @@ class RequisitionDetailView(LoginRequiredMixin, generic.DetailView): #for main o
     template_name = "requisition/requisition_detail.html"
     context_object_name = "requisition"
     queryset = MaterialRequisition.objects.prefetch_related(
-        Prefetch('materialrequisitionitems_set', MaterialRequisitionItems.objects.select_related('itemID'))
+        Prefetch('materialrequisitionitems_set', MaterialRequisitionItems.objects.select_related('item'))
     )
 
     def get_success_url(self):

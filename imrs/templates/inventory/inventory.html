@@ -7,10 +7,11 @@
 <h2 class="font-bold text-4xl pb-10">Inventory</h2>
 
 <div class="flex space-x-5">
-  <div class="flex flex-col space-y-5">
+  <div class="w-full">
     <table
       id="table"
       class="border-none table-fixed w-full overflow-hidden rounded-lg shadow-lg"
+      style="width:100%;"
     >
       <thead class="bg-slate-100 text-gray-600">
         <tr>
@@ -25,13 +26,13 @@
       <tbody class="text-center">
         {% for item in inventory %}
         <tr
-          data-href="{% url 'inventory:detail-inv-item' item.pk %}"
+          data-href="{% url 'inventory:detail-inventory' item.pk %}"
           class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
         >
-          <td class="itemName">{{ item.itemID.itemName }}</td>
+          <td class="itemName">{{ item.item.itemName }}</td>
           <td class=" ">{{ item.siteItemCount }}</td>
-          <td class=" ">{{ item.itemID.itemCategory }}</td>
-          <td class=" ">{{ item.itemID.itemSubcategory }}</td>
+          <td class=" ">{{ item.item.itemCategory }}</td>
+          <td class=" ">{{ item.item.itemSubcategory }}</td>
           <td class=" ">{{ item.get_siteItemTurnover_display }}</td>
           <td class=" ">{{ item.get_siteItemStatus_display }}</td>
         </tr>

@@ -57,7 +57,7 @@ class ItemAddView(LoginRequiredMixin, generic.CreateView):
     form_class = ItemModelForm
     
     def get_success_url(self):
-        return reverse("item-list")
+        return reverse("list-item")
 
     def form_valid(self, form):
         return super(ItemAddView, self).form_valid(form)
@@ -72,7 +72,7 @@ class ItemUpdateView(LoginRequiredMixin, generic.UpdateView):
         return Item.objects.all()
 
     def get_success_url(self):
-        return reverse("item-list")
+        return reverse("list-item")
     
     def form_valid(self, form):
         form.save()
@@ -83,7 +83,7 @@ class ItemDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "url"
 
     def get_success_url(self):
-        return reverse("item-list")
+        return reverse("list-item")
 
     def get_queryset(self):
         user = self.request.user
@@ -91,7 +91,7 @@ class ItemDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class ItemDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "html file"
-    context_object_name = "item"
+    context_object_name = "data"
 
     def get_queryset(self):
         return Item.objects.filter(pk=self.pk)
@@ -113,30 +113,30 @@ def user_check(user):
 @user_passes_test(user_check) 
 def addCartItem(request):
     data = json.loads(request.body)
-    itemID = data['itemID']
+    itemID = data['item']
     action = data['action']
 
     print('Action: ',action)
-    print('itemID: ',itemID)
+    print('item: ',item)
 
-    item = Item.objects.get(itemID=itemID)
+    item = Item.objects.get(item=item)
     
-    cartItem = Item.objects.get(itemID=itemID)
-    cart,created = Cart.objects.get_or_create(siteID=request.user.site, cartItemID=cartItem)
+    cartItem = Item.objects.get(item=item)
+    cart,created = Cart.objects.get_or_create(site=request.user.site, cartItem=cartItem)
     cart.save()
     return JsonResponse('Item was added', safe=False)
 
 
-def deleteCartItem(request, itemID):
-    item = Item.objects.get(pk=itemID)
-    # cartItem = Item.objects.get(pk=itemID)
-    cart = Cart.objects.filter(siteID=request.user.site.siteID, cartItemID=item.itemID)
+def deleteCartItem(request, item):
+    item = Item.objects.get(pk=item)
+    # cartItem = Item.objects.get(pk=item)
+    cart = Cart.objects.filter(site=request.user.site.site, cartItem=item.item)
     cart.delete()
     return HttpResponseRedirect(reverse('item:item-cart'))
     
 
-    # item = Item.objects.filter(id=kwargs.get('itemID', "")).first()
-    # cartItems = Site.objects.get_or_create(cartItemID=item)
+    # item = Item.objects.filter(id=kwargs.get('item', "")).first()
+    # cartItems = Site.objects.get_or_create(cartItem=item)
     # if len(cartItems) == 0:
     #     # TODO: Show cart is empty
     #     pass

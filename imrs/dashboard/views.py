@@ -27,3 +27,5 @@ class LandingPageView(generic.TemplateView, LoginRequiredMixin): #Checking if us
             return redirect("dashboard:dashboard")
         else:
             return redirect("login")
+
+
