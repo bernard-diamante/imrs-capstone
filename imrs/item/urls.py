@@ -9,9 +9,9 @@ urlpatterns = [
     path('add/', ItemAddView.as_view(), name='add-item'),
     path('<int:pk>/update/', ItemUpdateView.as_view(), name='update-item'),
     path('<int:pk>/', ItemDetailView.as_view(), name='detail-item'),
-    
+    path('<int:pk>/delete/', ItemDeleteView.as_view(), name='delete-item'),
     # path('add-item-inv/<int:pk>', ItemAddInvView.as_view(), name='add-item-inv'),
-    path('cart/', CartListView.as_view(), name='item-cart'),
+    path('cart/', CartListView.as_view(), name='list-cart'),
     # path('cart/<int:pk>/add/', add_to_cart, name='add-to-cart'),
     
     path('cart/add/', addCartItem, name='add-cart'),

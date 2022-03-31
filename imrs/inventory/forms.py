@@ -24,12 +24,14 @@ class SiteItemInventoryModelForm(forms.ModelForm):
         model = Inventory
         fields = (
             'siteItemCount',
-            'siteItemTurnover'
+            'siteItemTurnover',
+            'siteItemMinThreshold'
         )
 
     def __init__(self, *args, **kwargs):
         super(SiteItemInventoryModelForm, self).__init__(*args, **kwargs)
-        self.fields['siteItemCount'].label = "Item Count"
-        self.fields['siteItemTurnover'].label = "Item Turnover"
+        self.fields['siteItemCount'].label = "Count"
+        self.fields['siteItemTurnover'].label = "Turnover"
+        self.fields['siteItemMinThreshold'].label = "Minimum Threshold"
 ################################
 # renewal_date = forms.DateField(help_text="Enter a date between now and 4 weeks (default 3).")

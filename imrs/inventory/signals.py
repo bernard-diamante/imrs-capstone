@@ -22,4 +22,5 @@ def calculate_item_status(sender, instance, **kwargs):
             instance.siteItemStatus = 2
         else:
             instance.siteItemStatus = 3
+        return instance.siteItemStatus
 

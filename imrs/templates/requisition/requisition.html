@@ -38,9 +38,11 @@
   </table>
   </div>
   <div id="page-button" class="ml-auto">
-    <a href="{% url 'requisition:add-requisition' %}" class="mx-auto flex justify-center w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
-        Make a Request
-    </a>
+    {% if request.user.role == 3 %}
+      <a href="{% url 'requisition:add-requisition' %}" class="mx-auto flex justify-center w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
+          Make a Request
+      </a>
+    {% endif %}
   </div>
 </div>
 

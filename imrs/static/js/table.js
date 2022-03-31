@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  $(".row-href").click(function () {
+  $('#table').on("click", ".row-href", function () {
     window.location = $(this).data("href");
     return false;
   });
@@ -12,7 +12,6 @@ var table = $("#table").DataTable({
     $('#table_length').appendTo($('#table-top'))
     $('#table_filter').addClass('flex flex-row justify-start')
     $('#page-button').appendTo($('#table-top'))
-    
   },
   responsive: true,
   language: {

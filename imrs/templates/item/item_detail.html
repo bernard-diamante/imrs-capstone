@@ -3,12 +3,12 @@
 <!--  -->
 
 {% block content %}
-<h2 class="font-bold text-black text-4xl pb-10">Project Site</h2>
+
+<h2 class="font-bold text-black text-4xl pb-10">Items</h2>
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">
-    {% if request.user.role <= 1 %}
-    <a href="{% url 'project_site:list-site' %}">
+    <a href="{% url 'item:list-item' %}">
       <button
         class="flex mr-auto bg-gray-100 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-200 rounded inline-flex items-center justify-center ease-in duration-100"
       >
@@ -24,67 +24,52 @@
             clip-rule="evenodd"
           />
         </svg>
-        Return to Project Sites
+        Return to Items
       </button>
     </a>
-    {% endif %}
   </div>
   <div class="flex flex-col space-y-5 w-4/5 mx-auto">
     <div class="w-full px-8 pt-6 pb-3 shadow-lg rounded pl-7">
       <div class="flex">
         <div class="flex flex-col">
           <div class="text-gray-900 text-3xl title-font font-medium mb-4">
-            {{ request.user.site.siteName }}
+            {{ object.itemName }}
           </div>
-          <div class="flex text-lg">
-              <span class="text-gray-900 title-font font-medium"
-                >Site Manager:
-              </span>
-              <span class="ml-3 text-gray-900"
-                >{{ request.user.last_name }}, {{ request.user.first_name }}</span
-              >
-            </div>
         </div>
       </div>
       <div class="flex mb-4">
         <a
           class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
-          >Site Details</a
+          >Item Details</a
         >
       </div>
       <div class="flex pb-2">
-        <span class="text-gray-500">Street/Barangay/City</span>
+        <span class="text-gray-500">Category</span>
         <span class="ml-auto text-gray-900"
-          >{{ request.user.site.siteStreetNumber }} {{ request.user.site.siteStreet }}, {{ request.user.site.siteBarangay }}, {{ request.user.site.siteCity }}</span
+          >{{ object.itemCategory }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500">Province/Region/Zip Code</span>
+        <span class="text-gray-500">Subcategory</span>
         <span class="ml-auto text-gray-900"
-          >{{ request.user.site.siteProvince }},  {{ request.user.site.siteRegion }}, {{ request.user.site.siteZip }}</span
+          >{{ object.itemSubcategory }}</span
         >
-      </div>
-      <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500">Contact Number</span>
-        <span class="ml-auto text-gray-900">{{ request.user.site.siteContactNo }}</span>
       </div>
     </div>
     <div class="flex justify-end mt-3 ml-auto">
       <div id="buttons" class="flex">
-        <a href="{% url 'project_site:update-site' request.user.site.pk %}">
+        <a href="{% url 'item:update-item' object.pk %}">
           <button
             class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
           >
             Update
           </button>
         </a>
-        {% if request.user.role <= 1 %}
         <button
           class="modal-toggle flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded ease-in duration-100"
         >
           Delete
         </button>
-        {% endif %}
       </div>
     </div>
   </div>
@@ -126,7 +111,7 @@
       <!--Body-->
       <p>
         Are you sure you want to delete item:
-        <span class="italic">{{ request.user.site.siteName }}</span>
+        <span class="italic">{{ object.itemName }}</span>
       </p>
 
       <!--Footer-->
@@ -134,7 +119,7 @@
         <form
           class="form-inline"
           method="post"
-          action="{% url 'project_site:delete-site' request.user.site.pk %}"
+          action="{% url 'item:delete-item' object.pk %}"
         >
           {% csrf_token %}
           <input

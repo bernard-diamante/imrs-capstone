@@ -107,7 +107,7 @@
         </tbody>
     </table>
     <!-- Update button -->
-    <div class="flex justify-end mt-3 ml-auto pb-2.5">
+    <div class="flex justify-end mt-3 ml-auto">
       <div id="buttons" class="flex">
         <a href="{% url 'requisition:update-requisition' object.pk %}">
           <button
@@ -156,6 +156,11 @@
 
       <!--Body-->
 
+      <p>
+        Are you sure you want to delete requisition:
+        <span class="italic">Requisition #{{ object.req }}</span>
+      </p>
+
       <!--Footer-->
       <div class="flex justify-end pt-4">
         <button
@@ -169,7 +174,7 @@
 
   <!-- </section> -->
 
-  <script src="{% static 'js/inventory-buttons.js' %}"></script>
+  <script src="{% static 'js/modal.js' %}"></script>
 
   {% endblock content %}
 </div>

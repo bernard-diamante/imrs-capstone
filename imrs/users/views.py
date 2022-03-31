@@ -1,9 +1,11 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import User
+from django.views.generic.base import View
 
 
 # Create your views here.
@@ -11,14 +13,14 @@ from .models import User
 #     template_name = 'user/user_add.html'
 #     form_class = UserCreationForm
 #     def get_success_url(self):
-#         return reverse('login')
+#         return reverse_lazy('login')
 class UserCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = 'user/user_add.html'
     form_class = CustomUserCreationForm
     model = User
 
     def get_success_url(self):
-        return reverse("users:list-user")
+        return reverse_lazy("users:list-user")
 
     def form_valid(self, form):
         form.clean()
@@ -32,9 +34,16 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
     context_object_name = 'users'
 
     def get_success_url(self):
-        return reverse("users:detail-user")
+        return reverse_lazy("users:detail-user")
     # def get_queryset(self):
     #     return User.objects.get(pk=self.pk)
+
+class UserDispatchView(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.role >= 2:
+            return render(request, 'user/user_detail.html', context={'object': request.user, })
+        else:
+            return UserListView.as_view()(request)
 
 class UserListView(LoginRequiredMixin, generic.ListView):
     template_name = "user/user.html"
@@ -55,7 +64,7 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
         return User.objects.all()
 
     def get_success_url(self):
-        return reverse("users:list-user")
+        return reverse_lazy("users:list-user")
 
     def form_valid(self, form):
         form.save()
@@ -65,7 +74,7 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "user/user_delete.html"
 
     def get_success_url(self):
-        return reverse("users:list-user")
+        return reverse_lazy("users:list-user")
 
     def get_queryset(self):
         user = self.request.user

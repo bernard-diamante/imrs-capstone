@@ -5,7 +5,7 @@ app_name = 'project_site'
 
 urlpatterns = [
     # project_site
-    path('', SiteListView.as_view(), name='list-site'),
+    path('', SiteDispatchView.as_view(), name='list-site'),
     path('add/', SiteCreateView.as_view(), name='add-site'),
     path('<int:pk>/update/', SiteUpdateView.as_view(), name='update-site'),
     path('<int:pk>/', SiteDetailView.as_view(), name='detail-site'),

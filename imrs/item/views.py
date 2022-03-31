@@ -1,8 +1,9 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from .forms import ItemModelForm
+from .forms import AddItemModelForm, UpdateItemModelForm
 from .models import Item
 from project_site.models import *
 from django.contrib.auth.decorators import user_passes_test
@@ -39,62 +40,60 @@ class ItemListView(LoginRequiredMixin, generic.ListView):
             "cartItemID_list": cartItemID_list,
             "cart": cart
             }
-        print(cartItemID_list)
         return qs
         
 
 # class AddItemInvView(generic.CreateView):
 #     form_class = AddItemForm
 #     def get_success_url(self):
-#         return reverse("item-list")
+#         return reverse_lazy("item-list")
 
 #     def form_valid(self, form):
 #         return super(AddItemInvView, self).form_valid(form)
 
 
 class ItemAddView(LoginRequiredMixin, generic.CreateView):
-    template_name = "item.html"
-    form_class = ItemModelForm
+    template_name = "item/item_add.html"
+    form_class = AddItemModelForm
     
     def get_success_url(self):
-        return reverse("list-item")
+        return reverse_lazy("item:list-item")
 
     def form_valid(self, form):
         return super(ItemAddView, self).form_valid(form)
 
 
 class ItemUpdateView(LoginRequiredMixin, generic.UpdateView):
-    template_name = "html file"
-    form_class = ItemModelForm
+    template_name = "item/item_update.html"
+    form_class = UpdateItemModelForm
     
     def get_queryset(self):
         user = self.request.user
         return Item.objects.all()
 
     def get_success_url(self):
-        return reverse("list-item")
+        return reverse_lazy("item:list-item")
     
     def form_valid(self, form):
         form.save()
-        messages.info(self.request, "Item has been updated")
         return super(ItemUpdateView, self).form_valid(form)
 
 class ItemDeleteView(LoginRequiredMixin, generic.DeleteView):
-    template_name = "url"
+    template_name = "item/item_delete.html"
 
     def get_success_url(self):
-        return reverse("list-item")
+        return reverse_lazy("item:list-item")
 
     def get_queryset(self):
         user = self.request.user
         return Item.objects.all()
 
 class ItemDetailView(LoginRequiredMixin, generic.DetailView):
-    template_name = "html file"
-    context_object_name = "data"
+    template_name = "item/item_detail.html"
+    model = Item
 
-    def get_queryset(self):
-        return Item.objects.filter(pk=self.pk)
+    def get_success_url(self):
+        return reverse_lazy("item:detail-item")
 
 
 # Cart Functions
@@ -116,9 +115,6 @@ def addCartItem(request):
     itemID = data['item']
     action = data['action']
 
-    print('Action: ',action)
-    print('item: ',item)
-
     item = Item.objects.get(item=item)
     
     cartItem = Item.objects.get(item=item)
@@ -132,7 +128,7 @@ def deleteCartItem(request, item):
     # cartItem = Item.objects.get(pk=item)
     cart = Cart.objects.filter(site=request.user.site.site, cartItem=item.item)
     cart.delete()
-    return HttpResponseRedirect(reverse('item:item-cart'))
+    return HttpResponseRedirect(reverse_lazy('item:item-cart'))
     
 
     # item = Item.objects.filter(id=kwargs.get('item', "")).first()

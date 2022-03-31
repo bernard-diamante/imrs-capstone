@@ -3,10 +3,11 @@
 <!--  -->
 
 {% block content %}
-<h2 class="font-bold text-black text-4xl pb-10">Material Requests</h2>
+<h2 class="font-bold text-black text-4xl pb-10">User Management</h2>
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">
+    {% if request.user.role <= 1 %}
     <a href="{% url 'users:list-user' %}">
       <button
         class="flex mr-auto bg-gray-100 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-200 rounded inline-flex items-center justify-center ease-in duration-100"
@@ -26,6 +27,7 @@
         Return to User Management
       </button>
     </a>
+    {% endif %}
   </div>
   <div class="flex flex-col space-y-5 w-4/5 mx-auto">
     <div class="w-full px-8 pt-6 pb-3 shadow-lg rounded pl-7">
@@ -81,11 +83,13 @@
             Update
           </button>
         </a>
+        {% if request.user.role <= 1 %}
         <button
           class="modal-toggle flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded ease-in duration-100"
         >
           Delete
         </button>
+        {% endif %}
       </div>
     </div>
   </div>

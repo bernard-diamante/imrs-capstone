@@ -4,12 +4,12 @@
 
 {% block content %}
 
-<h2 class="font-bold text-black text-4xl pb-10">User Management</h2>
+<h2 class="font-bold text-black text-4xl pb-10">Items</h2>
 <!-- Div indent -->
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">
-    <a href="{% url 'users:list-user' %}">
+    <a href="{% url 'item:list-item' %}">
       <button
         class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center"
       >
@@ -25,7 +25,7 @@
             clip-rule="evenodd"
           />
         </svg>
-        Return to User Management
+        Return to Items
       </button>
     </a>
   </div>
@@ -33,20 +33,20 @@
   <div class="w-full px-8 py-6 mb-6 lg:mb-0 shadow-lg rounded pl-7">
     <div class="flex">
       <span class="text-gray-900 text-3xl title-font font-medium mb-4">
-        {{ object.userFirstName }} {{ object.userMiddleName }} {{ object.userLastName }} {{ object.userSuffix }}
+        Add Item Form
       </span>
     </div>
     <div class="flex mb-4">
       <a
         class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1"
-        >User Details</a
+        >Item Details</a
       >
     </div>
 
     <form
       class="form-inline"
       method="post"
-      action="{% url 'users:update-user' object.pk %}"
+      action="{% url 'item:add-item' %}"
     >
       {% csrf_token %} {{ form|crispy }}
       <div class="flex justify-end mt-6 ml-auto">
@@ -56,7 +56,7 @@
             value="Submit"
             class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 cursor-pointer focus:outline-none hover:bg-indigo-600 rounded"
           />
-          <a href="{% url 'users:detail-user' object.pk %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded">
+          <a href="{% url 'item:list-item' %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded">
               Cancel
           </a>
         </div>
@@ -66,6 +66,6 @@
 </div>
 </div>
 
-<script src="{% static 'js/modal.js' %}"></script>
+<script src="{% static 'js/inventory-buttons.js' %}"></script>
 
 {% endblock content %}

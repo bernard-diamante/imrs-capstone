@@ -1,7 +1,21 @@
 from django import forms
 from .models import Item
 
-class ItemModelForm(forms.ModelForm):
+class UpdateItemModelForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = (
+            'itemCategory',
+            'itemSubcategory',
+        )
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateItemModelForm, self).__init__(*args, **kwargs)
+        self.fields['itemCategory'].label = "Category"
+        self.fields['itemSubcategory'].label = "Subcategory"
+
+class AddItemModelForm(forms.ModelForm):
+    # item = forms.IntegerField(min_value=0)
     class Meta:
         model = Item
         fields = (
@@ -11,10 +25,7 @@ class ItemModelForm(forms.ModelForm):
         )
 
     def __init__(self, *args, **kwargs):
-        super(ItemModelForm, self).__init__(*args, **kwargs)
-        self.fields['itemName'].label = "Item Name"
-        self.fields['itemCategory'].label = "Item Category"
-        self.fields['itemSubcategory'].label = "Item Subcategory"
-
-class AddItemForm(forms.Form):
-    item = forms.IntegerField(min_value=0)
+        super(AddItemModelForm, self).__init__(*args, **kwargs)
+        self.fields['itemName'].label = "Name"
+        self.fields['itemCategory'].label = "Category"
+        self.fields['itemSubcategory'].label = "Subcategory"

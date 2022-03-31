@@ -19,7 +19,7 @@ class Site(models.Model):
         blank=True,
         related_name='inventory_items'
         )
-    siteName = models.CharField(max_length=50, blank=True)
+    siteName = models.CharField(max_length=50, blank=True) #REMOVE BLANK=TRUE TO MAKE THIS REQUIRED
     siteStreetNumber = models.CharField(max_length=30, blank=True)
     siteStreet = models.CharField(max_length=30, blank=True)
     siteBarangay = models.CharField(max_length=30)

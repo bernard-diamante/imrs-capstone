@@ -57,12 +57,8 @@
                 value="Submit"
                 class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
               />
-              <a href="{% url 'requisition:requisition-list' %"> <!-- add url -->
-                <button
-                  class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded"
-                >
+              <a href="{% url 'requisition:detail-requisition' object.pk %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded">
                   Cancel
-                </button>
               </a>
             </div>
           </div>
@@ -71,7 +67,7 @@
     </div>
   </div>
     
-    <script src="{% static 'js/inventory-buttons.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
 
 
 {% endblock %}
