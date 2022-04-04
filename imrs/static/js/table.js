@@ -12,6 +12,7 @@ var table = $("#table").DataTable({
     $('#table_length').appendTo($('#table-top'))
     $('#table_filter').addClass('flex flex-row justify-start')
     $('#page-button').appendTo($('#table-top'))
+    
   },
   responsive: true,
   language: {
@@ -24,9 +25,20 @@ var table = $("#table").DataTable({
   lengthMenu: [10, 25, 50],
 });
 
+// Inventory Select dropdown
+$(document).ready(function() {
+  $('.search-select').select2({
+    placeholder: "Select a site",
+    language: {
+      "noResults": function() {
+        return "No results found."
+      }
+    }
+  });
+});
 
-
-// #myInput is a <input type="text"> element
-// $('#myInput').on( 'keyup', function () {
-//     table.search( this.value ).draw();
-// } );
+$(document).ready(function() {
+  $('#table_length select').select2({
+    minimumResultsForSearch: -1
+  });
+});

@@ -57,12 +57,12 @@
 
 <div id="page-button" class="flex flex-row ml-auto">
     {% if request.user.role == 3 %}
-        <a href="{% url 'item:list-cart' %}" class="mx-auto flex text-center justify-center w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
+        <a href="{% url 'item:list-cart' %}" class="mx-auto flex text-center justify-center h-full w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
             View Item Summary
         </a>
     {% endif %}
     {% if request.user.role < 3 %}
-        <a href="{% url 'item:add-item' %}" class="mx-auto flex text-center justify-center w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
+        <a href="{% url 'item:add-item' %}" class="mx-auto flex text-center justify-center h-full w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
             Add an Item
         </a>
     {% endif %}

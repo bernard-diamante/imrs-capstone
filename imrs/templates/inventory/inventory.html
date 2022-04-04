@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody class="text-center">
-        {% for item in inventory %}
+        {% for item in data.inventory %}
         <tr
           data-href="{% url 'inventory:detail-inventory' item.pk %}"
           class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
@@ -40,6 +40,20 @@
       </tbody>
     </table>
   </div>
+</div>
+{{data}}
+<div id="page-button" class="flex flex-row ml-auto">
+  {% if request.user.role <= 2 %}
+    <span class="whitespace-nowrap mr-2 my-auto">View Project Site: </span>
+    <select class="search-select" name="sites">
+      <option></option>
+      {% for site in data.project_sites %}
+      <a href="{% url 'inventory:list-inventory' site.pk %}">
+        <option value="AL">{{ site.siteName }}</option>
+      </a>
+      {% endfor %}
+    </select>
+  {% endif %}
 </div>
 
 <script src="{% static 'js/table.js' %}"></script>

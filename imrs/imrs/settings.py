@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'project_site',
     'requisition',
     'dashboard',
+    'transfer',
 
 ]
 
