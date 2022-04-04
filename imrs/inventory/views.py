@@ -5,17 +5,26 @@ from django.views import generic
 from project_site.models import Inventory
 from .forms import *
 from django.contrib import messages
+from project_site.models import Site
 
 
 class InventoryListView(LoginRequiredMixin, generic.ListView):
     template_name = "inventory/inventory.html"
-    context_object_name = "inventory"
+    context_object_name = "data"
     model = Inventory
+    # Display list of items
     def get_queryset(self):
-        qs = Inventory.objects.all()
+        qs = { 
+            "inventory": Inventory.objects.filter(id=self.request.GET.get('site.pk')),
+            # "inventory": Inventory.objects.all(),
+            "project_sites": Site.objects.all(),
+            }
         return qs
         
-        #Conditionals
+    # def get_context_data(self, **kwargs):
+    #     data = super().get_context_data(**kwargs)
+    #     data['inventory'] = Inventory.objects.filter(id=self.request.GET.get('pk'))
+    #     return data
 
 class InventoryUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'inventory/inventory_update.html'
