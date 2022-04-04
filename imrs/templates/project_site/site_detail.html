@@ -34,14 +34,14 @@
       <div class="flex">
         <div class="flex flex-col">
           <div class="text-gray-900 text-3xl title-font font-medium mb-4">
-            {{ request.user.site.siteName }}
+            {{ project_sites.siteName }}
           </div>
           <div class="flex text-lg">
               <span class="text-gray-900 title-font font-medium"
                 >Site Manager:
               </span>
               <span class="ml-3 text-gray-900"
-                >{{ request.user.last_name }}, {{ request.user.first_name }}</span
+                >{{ project_sites.user.last_name }}, {{ project_sites.user.first_name }} {% if project_sites.user.middle_name %} {{ project_sites.user.middle_name|make_list|first }}. {% endif %}</span
               >
             </div>
         </div>
@@ -54,19 +54,19 @@
       </div>
       <div class="flex pb-2">
         <span class="text-gray-500">Street/Barangay/City</span>
-        <span class="ml-auto text-gray-900"
-          >{{ request.user.site.siteStreetNumber }} {{ request.user.site.siteStreet }}, {{ request.user.site.siteBarangay }}, {{ request.user.site.siteCity }}</span
+        <span class="w-1/2 text-right ml-auto text-gray-900"
+          >{{ project_sites.siteStreetNumber }} {{ project_sites.siteStreet }}, {{ project_sites.siteBarangay }}, {{ project_sites.siteCity }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Province/Region/Zip Code</span>
-        <span class="ml-auto text-gray-900"
-          >{{ request.user.site.siteProvince }},  {{ request.user.site.siteRegion }}, {{ request.user.site.siteZip }}</span
+        <span class="w-1/2 text-right ml-auto text-gray-900"
+          >{{ project_sites.siteProvince }},  {{ project_sites.siteRegion }}, {{ project_sites.siteZip }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Contact Number</span>
-        <span class="ml-auto text-gray-900">{{ request.user.site.siteContactNo }}</span>
+        <span class="w-1/2 text-right ml-auto text-gray-900">{{ project_sites.siteContactNo }}</span>
       </div>
     </div>
     <div class="flex justify-end mt-3 ml-auto">

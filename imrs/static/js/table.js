@@ -42,3 +42,14 @@ $(document).ready(function() {
     minimumResultsForSearch: -1
   });
 });
+
+// TESTING
+
+var url="{% url 'inventory:list-inventory' %}"
+var siteInput=$('#site-select').val()
+
+function siteSelect() {
+  var data = {'site':siteInput, 'csrfmiddlewaretoken': '{{ csrf_token }}'}
+  $.post(data);
+  // window.location.replace(url);
+}

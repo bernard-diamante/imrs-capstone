@@ -15,7 +15,7 @@ class SiteModelForm(forms.ModelForm):
             'siteRegion',
             'siteZip',
             'siteContactNo'
-                )
+            )
 
     def __init__(self, *args, **kwargs):
         super(SiteModelForm, self).__init__(*args, **kwargs)

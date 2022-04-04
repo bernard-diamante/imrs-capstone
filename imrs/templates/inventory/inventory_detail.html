@@ -49,33 +49,29 @@
       </div>
       <div class="flex pb-2">
         <span class="text-gray-500">Category</span>
-        <span class="ml-auto text-gray-900"
+        <span class="w-1/2 text-right ml-auto text-gray-900"
           >{{ object.item.itemCategory }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Subcategory</span>
-        <span class="ml-auto text-gray-900"
+        <span class="w-1/2 text-right ml-auto text-gray-900"
           >{{ object.item.itemSubcategory }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Turnover</span>
-        <span class="ml-auto text-gray-900">{{ object.get_siteItemTurnover_display }}</span>
+        <span class="w-1/2 text-right ml-auto text-gray-900">{{ object.get_siteItemTurnover_display }}</span>
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Status</span>
-        <span class="ml-auto text-gray-900">{{ object.get_siteItemStatus_display }}</span>
+        <span class="w-1/2 text-right ml-auto text-gray-900">{{ object.get_siteItemStatus_display }}</span>
       </div>
     </div>
     <div class="flex justify-end mt-3 ml-auto">
       <div id="buttons" class="flex">
-        <a href="{% url 'inventory:update-inventory' object.pk %}">
-          <button
-            class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
-          >
+        <a href="{% url 'inventory:update-inventory' object.pk %}" class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 cursor-hover focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100">
             Update
-          </button>
         </a>
         <button
           class="modal-toggle flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded ease-in duration-100"

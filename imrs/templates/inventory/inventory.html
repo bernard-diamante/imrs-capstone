@@ -45,14 +45,17 @@
 <div id="page-button" class="flex flex-row ml-auto">
   {% if request.user.role <= 2 %}
     <span class="whitespace-nowrap mr-2 my-auto">View Project Site: </span>
-    <select class="search-select" name="sites">
+    <select id="site-select" class="search-select" name="sites">
       <option></option>
       {% for site in data.project_sites %}
-      <a href="{% url 'inventory:list-inventory' site.pk %}">
-        <option value="AL">{{ site.siteName }}</option>
+      <a href="{% url 'inventory:list-inventory' %}">
+        <option value="{{ site.site }}">{{ site.siteName }}</option>
       </a>
       {% endfor %}
     </select>
+    <button onclick="siteSelect()">
+      hello
+    </button>
   {% endif %}
 </div>
 

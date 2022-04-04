@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'django_select2',
+    'django_filters',
 
     # Local apps
     'users',

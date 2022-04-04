@@ -6,25 +6,39 @@ from project_site.models import Inventory
 from .forms import *
 from django.contrib import messages
 from project_site.models import Site
+from .filters import InventoryFilter
 
+
+# class InventoryDispatchListView(generic.ListView):
+#     def dispatch(self, request, *args, **kwargs):
+        
 
 class InventoryListView(LoginRequiredMixin, generic.ListView):
     template_name = "inventory/inventory.html"
     context_object_name = "data"
     model = Inventory
     # Display list of items
+
+    def get_site_id(request):
+        site = request.POST.get('site')
+        return site
+
     def get_queryset(self):
         qs = { 
-            "inventory": Inventory.objects.filter(id=self.request.GET.get('site.pk')),
+            "inventory": Inventory.objects.filter(id=self.request.user.site.pk),
+            "inventory-admin": Inventory.objects.filter(id=self.request.POST.get('data.site')),
             # "inventory": Inventory.objects.all(),
             "project_sites": Site.objects.all(),
+            # "inv_filter": InventoryFilter(self.request.GET, queryset=Inventory.objects.all())
             }
         return qs
         
     # def get_context_data(self, **kwargs):
-    #     data = super().get_context_data(**kwargs)
-    #     data['inventory'] = Inventory.objects.filter(id=self.request.GET.get('pk'))
-    #     return data
+    #     context = super().get_context_data(**kwargs)
+    #     context['filter'] = InventoryFilter(self.request.GET, queryset=self.get_queryset())
+    #     return context
+    # #     data['inventory'] = Inventory.objects.filter(id=self.request.GET.get('pk'))
+    # #     return data
 
 class InventoryUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'inventory/inventory_update.html'

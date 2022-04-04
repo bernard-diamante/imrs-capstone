@@ -78,7 +78,7 @@ class RequisitionDetailView(LoginRequiredMixin, generic.DetailView): #for main o
     )
 
     def get_success_url(self):
-        return reverse("requisition:requisition-detail")
+        return reverse("requisition:detail-requisition")
 
     # def get_queryset(self):
     #     reqItems = Material_Requisition.objects.all()
