@@ -1,7 +1,6 @@
 from django import forms
 from .models import *
 from project_site.models import Inventory
-from item.models import Item
 # from django_select2.forms import Select2MultipleWidget
 
 
@@ -13,7 +12,7 @@ class RequisitionModelForm(forms.ModelForm):
             'reqDescription',
             'reqDateNeeded',
             'reqItems',
-            'originSite'
+            # 'originSite'
         )
         exclude = ('site',)
         widgets = {
@@ -23,7 +22,7 @@ class RequisitionModelForm(forms.ModelForm):
         }
     def __init__(self, *args, **kwargs):
         super(RequisitionModelForm, self).__init__(*args, **kwargs)
-        self.fields['originSite'].required = True
+        # self.fields['originSite'].required = True
         self.fields['reqItems'] = forms.ModelMultipleChoiceField(
             queryset=Inventory.objects.all(),
             widget=forms.CheckboxSelectMultiple,
@@ -33,8 +32,7 @@ class RequisitionModelForm(forms.ModelForm):
         self.fields['reqItems'].label = "Requested Items"
 
         
-        
-        
+       
         
     # reqform_Description = forms.CharField(label="Reason for Material Requisition", max_length=1000)
     # reqform_DateSubmitted = forms.

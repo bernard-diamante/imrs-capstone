@@ -18,14 +18,15 @@ class MaterialRequisitionItems(models.Model):
 
 class MaterialRequisition(models.Model):
     REQ_STATUS = [
+        # Unfilled
         (0,'For Review'),
+        # Filled
         (1, 'Awaiting Delivery'),
         (2, 'Request Denied'),
         (3, 'Delivered'),
     ]
     requisition = models.AutoField(primary_key=True) #change to UUField if needed
-    site = models.ForeignKey("project_site.Site", related_name='destinationSite', on_delete=models.CASCADE)
-    originSite = models.ForeignKey('project_site.Site', related_name='originSite', on_delete=models.CASCADE) 
+    site = models.ForeignKey("project_site.Site", on_delete=models.CASCADE) 
     reqDescription = models.TextField(max_length=1000, blank=True)
     reqDateSubmitted = models.DateTimeField(auto_now=True)
     reqDateNeeded = models.DateField(auto_now=False)
@@ -36,7 +37,7 @@ class MaterialRequisition(models.Model):
         related_name="mat_req_items"
         )
     def clean(self):
-        if self.site_id == self.originSite:
+        if self.site_id == self.site:
             raise ValidationError("Site cannot send item to themselves.")
     def save(self, *args, **kwargs):
         self.full_clean()
