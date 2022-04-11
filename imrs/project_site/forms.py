@@ -1,5 +1,6 @@
 from django import forms
 from .models import Site
+from users.models import User
 
 class SiteModelForm(forms.ModelForm):
     class Meta:
@@ -19,6 +20,7 @@ class SiteModelForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(SiteModelForm, self).__init__(*args, **kwargs)
+        self.fields['user'].queryset = User.objects.filter(role=3)
         self.fields['siteName'].label = "Name"
         self.fields['siteStreetNumber'].label = "Street Number"
         self.fields['siteStreet'].label = "Street"

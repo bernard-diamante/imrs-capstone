@@ -4,56 +4,116 @@
 
 {% block content %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+<div>
+    <h2 class="font-bold text-4xl pb-10">Dashboard</h2>
+</div>
 
-<h2 class="font-bold text-4xl pb-10">Dashboard</h2>
+<div class="flex-col space-y-5">
+<div class="grid grid-cols-4 gap-4">
 
-<div class="">
-    <header>
-        
-    </header>
-    <main>
-        <div class="grid grid-cols-4 gap-8">
-            <div class="flex justify-between bg-slate-200 rounded-sm p-4">
-                <div class="">
-                    <h1 class="text-5xl font-bold">54</h1>
-                    <span class="">Customers<span>
-                </div>
-                <div class="">
-                    <span class="material-icons-outlined" style="font-size:60px;">person</span>
-                </div>
-            </div>
-
-            <div class="flex justify-between bg-slate-200 rounded-sm p-4">
-                <div class="">
-                    <h1 class="text-5xl font-bold">20</h1>
-                    <span>Projects<span>
-                </div>
-                <div class="">
-                    <span class="material-icons-outlined" style="font-size:60px;">insert_drive_file</span>
-                </div>
-            </div>
-
-            <div class="flex justify-between bg-slate-200 rounded-sm p-4">
-                <div class="">
-                    <h1 class="text-5xl font-bold">33</h1>
-                    <span>Requests<span>
-                </div>
-                <div class="">
-                    <span class="material-icons-outlined" style="font-size:60px;">article</span>
-                </div>
-            </div>
-
-            <div class="flex justify-between bg-slate-200 rounded-sm p-4">
-                <div class="">
-                    <h1 class="text-5xl font-bold">88</h1>
-                    <span>Transfer<span>
-                </div>
-                <div class="">
-                    <span class="material-icons-outlined" style="font-size:60px;">autorenew</span>
-                </div>
-            </div>
+    <div class="flex justify-between bg-slate-200 rounded-sm p-4">
+        <div class="text-center m-auto sm:m-0 sm:text-left">
+            <h1 class="text-5xl font-bold">{{ data.requisition.count }}</h1>
+            <span>Requests</span>
         </div>
-    </main>
+        <div class="hidden sm:inline-block my-auto">
+            <span class="material-icons-outlined my-auto hidden lg:inline-block" style="font-size:40px;">article</span>
+        </div>
+    </div>
+
+    <div class="flex justify-between bg-slate-200 rounded-sm p-4">
+        <div class="text-center m-auto sm:m-0 sm:text-left">
+            <h1 class="text-5xl font-bold">69</h1>
+            <span>Transfers<span>
+        </div>
+        <div class="hidden sm:inline-block my-auto">
+            <span class="material-icons-outlined" style="font-size:40px;">autorenew</span>
+        </div>
+    </div>
+
+    <div class="flex justify-between bg-slate-200 rounded-sm p-4">
+        <div class="text-center m-auto sm:m-0 sm:text-left">
+            <h1 class="text-5xl font-bold">{{ data.inventory.count }}</h1>
+            <span>Customers<span>
+        </div>
+        <div class="hidden sm:inline-block my-auto">
+            <span class="material-icons-outlined my-auto" style="font-size:40px;">person</span>
+        </div>
+    </div>
+
+    <div class="flex justify-between bg-slate-200 rounded-sm p-4">
+        <div class="text-center m-auto sm:m-0 sm:text-left">
+            <h1 class="text-5xl font-bold">69</h1>
+            <span>Projects<span>
+        </div>
+        <div class="hidden sm:inline-block my-auto">
+            <span class="material-icons-outlined my-auto" style="font-size:40px;">insert_drive_file</span>
+        </div>
+    </div>
+</div>
+
+<div class="sm:flex flex-wrap gap-4">
+    <div class="flex-row sm:w-1/2">
+        <h4 class="font-bold text-2xl pb-2">Material Requests</h4>
+        <div class="w-full">
+            <table
+            id="table"
+            class="overflow-hidden rounded-lg shadow-lg"
+            style="width:100%;"
+            >
+                <thead class="bg-slate-100 text-gray-600">
+                    <th class="py-2 font-medium">Req. ID</th>
+                    <th class="py-2 font-medium">Destination</th>
+                    <th class="py-2 font-medium">Needed By</th>
+                    <th class="py-2 font-medium">Status</th>
+                </thead>
+                <tbody class="text-center">
+                    {% for request in data.requisition %}
+                    <tr
+                    data-href="{% url 'requisition:detail-requisition' request.pk %}"
+                    class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+                    >
+                        <td class="p-2">{{ request.requisition }}</td>
+                        <td class="p-2">{{ request.site }}</td>
+                        <td class="p-2">{{ request.reqDateNeeded }}</td>
+                        <td class="p-2">{{ request.get_reqStatus_display }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="flex-col grow">
+        <h4 class="font-bold text-2xl pb-2">Inventory Alerts</h4>
+        <div class="w-full">
+        <table
+        id="table"
+        class="overflow-hidden rounded-lg shadow-lg"
+        style="width:100%;"
+        >
+        <thead class="bg-slate-100 text-gray-600">
+            <th class="py-2 font-medium">Item</th>
+            <th class="py-2 font-medium">Count</th>
+            <th class="py-2 font-medium">Status</th>
+        </thead>
+        <tbody class="text-center">
+            {% for item in data.inventory %}
+                {% if item.siteItemStatus == 2 or item.siteItemStatus == 3 %}
+                    <tr
+                    data-href="{% url 'inventory:detail-inventory' item.pk %}"
+                    class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+                    >
+                        <td class="p-2">{{ item }}</td>
+                        <td class="p-2">{{ item.siteItemCount }}</td>
+                        <td class="p-2">{{ item.get_siteItemStatus_display }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+        </table>
+        </div>
+    </div>
+</div>
 </div>
 
 {% endblock content %}

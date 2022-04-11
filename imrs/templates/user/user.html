@@ -18,6 +18,7 @@
         <th class="w-2/12 font-medium">User ID</th>
         <th class="font-medium">Name</th>
         <th class="font-medium">Role</th>
+        <th class="font-medium">Site Owned</th>
         <th class="font-medium">Contact No.</th>
       </tr>
     </thead>
@@ -30,6 +31,7 @@
         <td class="p-2">{{ user.username }}</td>
         <td class="p-2">{{ user.last_name }}, {{ user.first_name }} {% if user.middle_name %} {{ user.middle_name|make_list|first }}. {% endif %}</td>
         <td class="p-2">{{ user.get_role_display }}</td>
+        <td class="p-2">{% if user.site.siteName %} {{ user.site.siteName }} {% else %} -- {% endif %}</td>
         <td class="p-2">{{ user.contact_number }}</td>
       </tr>
       {% endfor %}

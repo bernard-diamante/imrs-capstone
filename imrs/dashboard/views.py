@@ -5,12 +5,16 @@ from django.contrib.auth.views import LoginView
 
 
 from item.models import Item
+from project_site.models import Inventory
+from requisition.models import MaterialRequisition
+
 class DashboardListView(generic.ListView):
     template_name = "dashboard.html"
+    context_object_name = "data"
 
     def get_context_data(self, **kwargs):
         context = super(DashboardListView, self).get_context_data(**kwargs)
-
+    
         user = self.request.user
 
         # Add dashboard contents
@@ -18,8 +22,12 @@ class DashboardListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        items = Item.objects.all()
-        return items
+        qs = {
+            'inventory': Inventory.objects.all(),
+            'requisition': MaterialRequisition.objects.all(),
+            # '': Item.objects.all(),
+        }
+        return qs
             
 class LandingPageView(generic.TemplateView, LoginRequiredMixin): #Checking if user is logged in
     def dispatch(self, request, *args, **kwargs):

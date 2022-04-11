@@ -21,35 +21,23 @@ class ItemListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         items = Item.objects.all()
-        cart = Cart.objects.all()
-        
-        inventory = Inventory.objects.all().values_list()
-        cart_values = Cart.objects.all().values_list()
 
-        itemID_list = []
-        cartItemID_list = []
-
-        for i in inventory:
-            itemID_list.append(i[0])
-        for i in cart_values:
-            cartItemID_list.append(i[0])
+        cartItemID_list = list(Item.objects.filter(cart__site=self.request.user.site).values_list('item', flat=True)) #Find the items stored in a site
+        cartItemID_list = list(Item.objects.in_bulk(cartItemID_list).keys()) #Convert the list into a dictionary and extract the keys from the dictionary
+        # items_in_cart = Cart.objects.filter()
 
         qs = { 
             "items": items,
-            "itemID_list": itemID_list,
             "cartItemID_list": cartItemID_list,
-            "cart": cart
             }
+
+        # If site manager or warehouse manager:
+        if self.request.user.role >= 2:
+            cart = Cart.objects.filter(site=self.request.user.site)
+            inventory = Inventory.objects.filter(site__site=self.request.user.site.site).values_list('item__item', flat=True)
+            qs.update({"cart": cart, "inventory": inventory})
         return qs
         
-
-# class AddItemInvView(generic.CreateView):
-#     form_class = AddItemForm
-#     def get_success_url(self):
-#         return reverse_lazy("item-list")
-
-#     def form_valid(self, form):
-#         return super(AddItemInvView, self).form_valid(form)
 
 
 class ItemAddView(LoginRequiredMixin, generic.CreateView):
@@ -102,33 +90,31 @@ class CartListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "cart"
 
     def get_queryset(self):
-        qs = Cart.objects.all()
+        qs = Cart.objects.filter(site=self.request.user.site)
         return qs
 
 def user_check(user):
     return user.username
 
 
-@user_passes_test(user_check) 
+@user_passes_test(user_check)
 def addCartItem(request):
     data = json.loads(request.body)
-    itemID = data['item']
+    item = data['item']
     action = data['action']
 
-    item = Item.objects.get(item=item)
+    item = Item.objects.get(pk=item)
     
-    cartItem = Item.objects.get(item=item)
+    cartItem = Item.objects.get(item=item.item)
     cart,created = Cart.objects.get_or_create(site=request.user.site, cartItem=cartItem)
     cart.save()
     return JsonResponse('Item was added', safe=False)
 
 
 def deleteCartItem(request, item):
-    item = Item.objects.get(pk=item)
-    # cartItem = Item.objects.get(pk=item)
-    cart = Cart.objects.filter(site=request.user.site.site, cartItem=item.item)
+    cart = Cart.objects.get(pk=item)
     cart.delete()
-    return HttpResponseRedirect(reverse_lazy('item:item-cart'))
+    return HttpResponseRedirect(reverse_lazy('item:list-cart'))
     
 
     # item = Item.objects.filter(id=kwargs.get('item', "")).first()

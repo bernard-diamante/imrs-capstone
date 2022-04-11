@@ -68,6 +68,15 @@
     vertical-align: middle;
 }
 
+.select-width {
+    min-width: 200px !important;
+}
+
+.select-width label {
+  vertical-align: middle;
+    margin-right: 10px !important;
+}
+
 .selection .select2-selection {
   background:  #edf2f7 !important;
   border: none;

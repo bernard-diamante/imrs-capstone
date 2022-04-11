@@ -21,7 +21,7 @@ class SiteCreateView(LoginRequiredMixin, generic.CreateView):
 
 class SiteDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "project_site/site_detail.html"
-    context_object_name = "project_sites"
+    context_object_name = "site"
     model = Site
 
     def get_success_url(self):
@@ -29,10 +29,10 @@ class SiteDetailView(LoginRequiredMixin, generic.DetailView):
 
 class SiteDispatchView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
+        # If the user is warehouse manager/site engineer
         if request.user.role >= 2:
-            # return SiteDetailView.as_view()(request, self.request.user.site)
             # return reverse_lazy("project_site:detail-site", kwargs={'site_pk': 'self.request.user.site'})
-            return render(request, 'project_site/site_detail.html', context={'object': request.user, })
+            return render(request, 'project_site/site_detail.html', context={'site': request.user.site, })
         else:
             return SiteListView.as_view()(request)
 
@@ -43,8 +43,8 @@ class SiteListView(LoginRequiredMixin, generic.ListView):
     model = Site
 
     def get_queryset(self):
-        queryset = Site.objects.all()
-        return queryset
+        qs = Site.objects.all()
+        return qs
 
 class SiteUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'project_site/site_update.html'

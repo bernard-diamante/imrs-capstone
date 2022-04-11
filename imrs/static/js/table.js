@@ -27,8 +27,9 @@ var table = $("#table").DataTable({
 
 // Inventory Select dropdown
 $(document).ready(function() {
-  $('.search-select').select2({
+  $('#id_sites').select2({
     placeholder: "Select a site",
+    width: '100%',
     language: {
       "noResults": function() {
         return "No results found."
@@ -45,11 +46,34 @@ $(document).ready(function() {
 
 // TESTING
 
-var url="{% url 'inventory:list-inventory' %}"
-var siteInput=$('#site-select').val()
+// var url="{% url 'inventory:list-inventory' %}";
+// var siteInput
 
-function siteSelect() {
-  var data = {'site':siteInput, 'csrfmiddlewaretoken': '{{ csrf_token }}'}
-  $.post(data);
-  // window.location.replace(url);
-}
+// function siteSelect() {
+//   siteInput = $('#site-select option:selected').val();
+//   // var data = {'site':siteInput, 'csrfmiddlewaretoken': '{{ csrf_token }}'}
+//   // $.post(url,data);
+
+//   jQuery.ajax({
+//     type: 'GET',
+//     url: url,
+//     data: { 
+//         ids: siteInput,
+//                 },
+//     success: function(data) {},
+//     error: function(xhr, textStatus, error) {
+//         console.log(error);  
+//     } 
+//   });
+
+//   table.ajax.reload();
+// };
+
+// var url="{% url 'inventory:list-inventory' %}"
+// var siteInput=$('#site-select').val()
+
+// function siteSelect() {
+//   var data = {'site':siteInput, 'csrfmiddlewaretoken': '{{ csrf_token }}'}
+//   $.post(url,data);
+//   // window.location.replace(url);
+// }

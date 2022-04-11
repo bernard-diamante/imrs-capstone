@@ -10,7 +10,7 @@
     <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
       <a href="{% url 'dashboard:dashboard' %}" class="mr-5 hover:text-gray-300 ">Dashboard</a>
       <a href="{% url 'inventory:list-inventory' %}" class="mr-5 hover:text-gray-300">Inventory</a>
-      <a class="mr-5 hover:text-gray-300">Schedule</a>
+      <a href="" class="mr-5 hover:text-gray-300">Schedule</a>
       <a href="{% url 'item:list-item' %}" class="mr-5 hover:text-gray-300">Items</a>
       <br>
       <a href="{% url 'requisition:list-requisition' %}" class="mr-5 hover:text-gray-300">Material Requests</a>
@@ -24,11 +24,11 @@
         <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
           <div class="flex flex-col px-2 py-2 bg-white rounded-md shadow text-gray-600 text-sm">
             {% if request.user.role <= 2  %}
-            <a href="{% url 'project_site:list-site' %}" class="px-4 py-2 rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">Project Sites</a>
             <a href="{% url 'users:list-user' %}" class="px-4 py-2 rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">User Management</a>
+            <a href="{% url 'project_site:list-site' %}" class="px-4 py-2 rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">Project Sites</a>
             {% else %}
-            <a href="{% url 'project_site:list-site' %}" class="px-4 py-2 rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">Site Information</a>
             <a href="{% url 'users:list-user' %}" class="px-4 py-2 rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">User Profile</a>
+            <a href="{% url 'project_site:list-site' %}" class="px-4 py-2 rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">Site Information</a>
             {% endif %}
             
           </div>

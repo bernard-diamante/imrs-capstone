@@ -38,13 +38,13 @@
                         {% if request.user.role == 3 %}
                             <td>
                                 {% if item.item in data.inventory %}
-                                    <p id="" class="h-7 w-7 justify-center text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
+                                    <p class="h-7 w-7 justify-center text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
                                     >✓</p>
                                 {% elif item.item in data.cartItemID_list %}
                                     <p class="h-7 w-7 justify-center text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
                                     >✓</p>
                                 {% else %}
-                                    <button data-item="{{ item.item }}" data-action="add"
+                                    <button id="cart-check" data-item="{{ item.item }}" data-action="add"
                                     class="update-cart h-7 w-7 justify-center text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-blue-500 border-0 py-1 px-1 focus:outline-none hover:bg-blue-600 rounded-full"
                                     >+</button>
                                 {% endif %}

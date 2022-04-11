@@ -34,14 +34,14 @@
       <div class="flex">
         <div class="flex flex-col">
           <div class="text-gray-900 text-3xl title-font font-medium mb-4">
-            {{ project_sites.siteName }}
+            {{ site.siteName }}
           </div>
           <div class="flex text-lg">
               <span class="text-gray-900 title-font font-medium"
                 >Site Manager:
               </span>
               <span class="ml-3 text-gray-900"
-                >{{ project_sites.user.last_name }}, {{ project_sites.user.first_name }} {% if project_sites.user.middle_name %} {{ project_sites.user.middle_name|make_list|first }}. {% endif %}</span
+                >{{ site.user.last_name }}, {{ site.user.first_name }} {% if site.user.middle_name %} {{ site.user.middle_name|make_list|first }}. {% endif %}</span
               >
             </div>
         </div>
@@ -55,23 +55,23 @@
       <div class="flex pb-2">
         <span class="text-gray-500">Street/Barangay/City</span>
         <span class="w-1/2 text-right ml-auto text-gray-900"
-          >{{ project_sites.siteStreetNumber }} {{ project_sites.siteStreet }}, {{ project_sites.siteBarangay }}, {{ project_sites.siteCity }}</span
+          >{{ site.siteStreetNumber }} {{ site.siteStreet }}, {{ site.siteBarangay }}, {{ site.siteCity }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Province/Region/Zip Code</span>
         <span class="w-1/2 text-right ml-auto text-gray-900"
-          >{{ project_sites.siteProvince }},  {{ project_sites.siteRegion }}, {{ project_sites.siteZip }}</span
+          >{{ site.siteProvince }},  {{ site.siteRegion }}, {{ site.siteZip }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Contact Number</span>
-        <span class="w-1/2 text-right ml-auto text-gray-900">{{ project_sites.siteContactNo }}</span>
+        <span class="w-1/2 text-right ml-auto text-gray-900">{{ site.siteContactNo }}</span>
       </div>
     </div>
     <div class="flex justify-end mt-3 ml-auto">
       <div id="buttons" class="flex">
-        <a href="{% url 'project_site:update-site' request.user.site.pk %}">
+        <a href="{% url 'project_site:update-site' site.pk %}">
           <button
             class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
           >
@@ -126,7 +126,7 @@
       <!--Body-->
       <p>
         Are you sure you want to delete item:
-        <span class="italic">{{ request.user.site.siteName }}</span>
+        <span class="italic">{{ site.siteName }}</span>
       </p>
 
       <!--Footer-->
@@ -134,7 +134,7 @@
         <form
           class="form-inline"
           method="post"
-          action="{% url 'project_site:delete-site' request.user.site.pk %}"
+          action="{% url 'project_site:delete-site' site.pk %}"
         >
           {% csrf_token %}
           <input

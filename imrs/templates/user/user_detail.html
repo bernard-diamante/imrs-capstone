@@ -3,7 +3,13 @@
 <!--  -->
 
 {% block content %}
+
+{% if request.user.role <= 1 %}
 <h2 class="font-bold text-black text-4xl pb-10">User Management</h2>
+{% else %}
+<h2 class="font-bold text-black text-4xl pb-10">User Profile</h2>
+{% endif %}
+
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">

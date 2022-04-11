@@ -1,5 +1,6 @@
 from django import forms
 from project_site.models import *
+from .models import *
 
 
 # class TransferModelForm(forms.ModelForm):
@@ -33,5 +34,10 @@ class SiteItemInventoryModelForm(forms.ModelForm):
         self.fields['siteItemCount'].label = "Count"
         self.fields['siteItemTurnover'].label = "Turnover"
         self.fields['siteItemMinThreshold'].label = "Minimum Threshold"
-################################
-# renewal_date = forms.DateField(help_text="Enter a date between now and 4 weeks (default 3).")
+        
+
+class SiteModelForm(forms.ModelForm):
+    sites = forms.ModelChoiceField(queryset = Site.objects.all().order_by('site'))
+    class Meta:
+        model = Site
+        fields = []

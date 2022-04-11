@@ -4,7 +4,22 @@
 
 {% block content %}
 
+
+
+{% if request.user.role <= 2 %}
+<h2 class="font-bold text-4xl pb-3">Inventory</h2>
+
+<div class="flex flex-row">
+  <h3 class="text-gray-700 text-xl pb-10 mr-2">Selected Site: </h3>
+  {% if data.selected_site == None %}
+    <h3 class="text-gray-500 text-xl pb-10">None</h3>
+  {% else %}
+    <h3 class="text-gray-500 text-xl pb-10">{{ data.selected_site.siteName }}</h3>
+  {% endif %}
+</div>
+{% else %}
 <h2 class="font-bold text-4xl pb-10">Inventory</h2>
+{% endif %}
 
 <div class="flex space-x-5">
   <div class="w-full">
@@ -24,7 +39,7 @@
         </tr>
       </thead>
       <tbody class="text-center">
-        {% for item in data.inventory %}
+        {% for item in data.selected_inventory %}
         <tr
           data-href="{% url 'inventory:detail-inventory' item.pk %}"
           class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
@@ -41,24 +56,53 @@
     </table>
   </div>
 </div>
-{{data}}
 <div id="page-button" class="flex flex-row ml-auto">
   {% if request.user.role <= 2 %}
-    <span class="whitespace-nowrap mr-2 my-auto">View Project Site: </span>
+    <!-- <span class="whitespace-nowrap mr-2 my-auto">View Project Site: </span>
     <select id="site-select" class="search-select" name="sites">
       <option></option>
-      {% for site in data.project_sites %}
-      <a href="{% url 'inventory:list-inventory' %}">
+      {% comment %} {% for site in data.project_sites %} 
         <option value="{{ site.site }}">{{ site.siteName }}</option>
-      </a>
-      {% endfor %}
+      {% endfor %} {% endcomment %}
     </select>
     <button onclick="siteSelect()">
       hello
-    </button>
+    </button> -->
+    <form method="get" action="{% url 'inventory:list-inventory' %}">
+      <div class="flex flex-row">
+        <div class="flex select-width">
+      {{ data.sites_list }}
+        </div>
+      <input type="submit" value="Filter Site" class="ml-5 h-full text-white bg-indigo-500 border-0 px-3 py-1 cursor-pointer focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
+    </div>
+    </form>
   {% endif %}
 </div>
 
 <script src="{% static 'js/table.js' %}"></script>
+
+<!-- <script>
+  var url="{% url 'inventory:list-inventory' %}";
+var siteInput
+
+function siteSelect() {
+  siteInput = $('#site-select option:selected').val();
+
+  jQuery.ajax({
+    type: 'GET',
+    url: url,
+    data: { 
+        ids: siteInput,
+                },
+    success: function(data) {},
+    error: function(xhr, textStatus, error) {
+        console.log(error);  
+    } 
+  });
+
+  table.clear().draw();
+  };
+  
+</script> -->
 
 {% endblock content %}
