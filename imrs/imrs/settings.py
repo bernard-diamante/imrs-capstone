@@ -59,6 +59,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    },
+
+    "select2": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
+        # "OPTIONS": {
+        #     "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        # }
+    }    
+}
+
+SELECT2_CACHE_BACKEND = "select2"
+
 ROOT_URLCONF = 'imrs.urls'
 
 TEMPLATES = [

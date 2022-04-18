@@ -1,18 +1,20 @@
 {% extends 'base.html' %} 
 {% load tailwind_filters %} 
 {% load static %} 
+{% load crispy_forms_tags %}
+{{ form.media.css }}
 
 {% block content %}
 
 <h2 class="font-bold text-4xl pb-10">Material Requests</h2>
 
     <!-- Div indent -->
-    <div class="lg:w-4/5 mx-auto flex flex-wrap">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap mb-48">
       <!-- Return Button -->
       <div class="flex w-full mb-5">
         <a href="{% url 'requisition:list-requisition' %}">
           <button
-            class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center"
+            class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center ease-in duration-100"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,30 +44,77 @@
             >Request Details</a
           >
         </div>
-    
+        
         <form
+          id="reqForm"
           class="form-inline"
           method="post"
-          action="{% url 'requisition:add-requisition' %}"
+          action=""
         > <!-- add url add form -->
-          {% csrf_token %} {{ form|crispy }}
+          {% csrf_token %}
+          {{ form.reqDescription|as_crispy_field }}
+          {{ form.reqDateNeeded|as_crispy_field }}
+
+          {{ inlines.management_form }}
+          <div class="flex mb-5">
+            <a
+              class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
+              >Items Requested</a
+            >
+          </div>
+          <div id="form_set">
+            {% for form in inlines.forms %}
+            <div class="flex flex-row">
+                <div class='w-full grid grid-cols-2 gap-5 no_error'>
+                    {{ form|crispy }}
+                </div>
+                <input class="delete cursor-pointer ml-5 my-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-rose-500 hover:bg-rose-600 ease-in duration-100 border-0 py-1 px-3 focus:outline-none rounded-full" value="Delete" type="button" formnovalidate></input>
+          </div>
+            {% endfor %}
+          </div>
+          
+          <input class="flex mt-3 mx-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-slate-500 hover:bg-slate-600 ease-in duration-100 border-0 py-2 px-5 focus:outline-none rounded-full" type="button" value="Add an Item +" id="add_more">
+
+          <div id="empty_form" style="display:none">
+            <div class="flex flex-row">
+                <div class='w-full grid grid-cols-2 gap-5 no_error'>
+                    {{ inlines.empty_form|crispy }}
+                    <!-- <input type="submit" value="Delete" class="del"></input> -->
+                    
+                </div>
+                <input class="delete cursor-pointer ml-5 my-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-rose-500 hover:bg-rose-600 ease-in duration-100 border-0 py-1 px-3 focus:outline-none rounded-full" value="Delete" type="button" formnovalidate></input>
+          </div>
+        </div>
+
           <div class="flex justify-end mt-6 ml-auto">
             <div id="buttons" class="flex">
               <input
                 type="submit"
                 value="Submit"
-                class="flex ml-3 text-white bg-indigo-500 cursor-pointer border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                class="flex ml-3 text-white bg-indigo-500 cursor-pointer border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
               />
-              <a href="{% url 'requisition:list-requisition' %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded">
+              <a href="{% url 'requisition:list-requisition' %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded ease-in duration-100">
                 Cancel
               </a>
             </div>
           </div>
         </form>
+        
       </div>
     </div>
-    
-    <script src="{% static 'js/inventory-buttons.js' %}"></script>
+    <script>
+      $('#add_more').click(function() {
+          var form_idx = $('#id_form-TOTAL_FORMS').val();
+          $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+          $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+      });
+
+      $(document).on("click", ".delete", function() {
+        $(this).parent().remove(); 
+});
+  </script>
+
+{{ form.media.js }}
 
 
 {% endblock %}

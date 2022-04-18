@@ -21,21 +21,20 @@ class ItemListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         items = Item.objects.all()
-
-        cartItemID_list = list(Item.objects.filter(cart__site=self.request.user.site).values_list('item', flat=True)) #Find the items stored in a site
-        cartItemID_list = list(Item.objects.in_bulk(cartItemID_list).keys()) #Convert the list into a dictionary and extract the keys from the dictionary
+        
         # items_in_cart = Cart.objects.filter()
 
         qs = { 
             "items": items,
-            "cartItemID_list": cartItemID_list,
             }
 
         # If site manager or warehouse manager:
         if self.request.user.role >= 2:
             cart = Cart.objects.filter(site=self.request.user.site)
             inventory = Inventory.objects.filter(site__site=self.request.user.site.site).values_list('item__item', flat=True)
-            qs.update({"cart": cart, "inventory": inventory})
+            cartItemID_list = list(Item.objects.filter(cart__site=self.request.user.site).values_list('item', flat=True)) #Find the items stored in a site
+            cartItemID_list = list(Item.objects.in_bulk(cartItemID_list).keys()) #Convert the list into a dictionary and extract the keys from the dictionary
+            qs.update({"cart": cart, "inventory": inventory, "cartItemID_list": cartItemID_list})
         return qs
         
 
@@ -47,8 +46,8 @@ class ItemAddView(LoginRequiredMixin, generic.CreateView):
     def get_success_url(self):
         return reverse_lazy("item:list-item")
 
-    def form_valid(self, form):
-        return super(ItemAddView, self).form_valid(form)
+    # def form_valid(self, form):
+    #     return super(ItemAddView, self).form_valid(form)
 
 
 class ItemUpdateView(LoginRequiredMixin, generic.UpdateView):

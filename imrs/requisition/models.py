@@ -36,9 +36,9 @@ class MaterialRequisition(models.Model):
         through_fields=('requisition', 'item'),
         related_name="mat_req_items"
         )
-    def clean(self):
-        if self.site_id == self.site:
-            raise ValidationError("Site cannot send item to themselves.")
+    # def clean(self):
+    #     if self.site_id == self.site:
+    #         raise ValidationError("Site cannot send item to themselves.")
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)

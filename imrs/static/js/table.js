@@ -36,12 +36,18 @@ $(document).ready(function() {
       }
     }
   });
-});
 
-$(document).ready(function() {
   $('#table_length select').select2({
     minimumResultsForSearch: -1
   });
+});
+
+$(function(){
+  if($('.dataTables_empty')[0]) {
+      $('#submit').addClass('hidden');
+  } else {
+      $('#submit').removeClass('hidden');
+  }
 });
 
 // TESTING

@@ -11,54 +11,54 @@
 <div class="flex-col space-y-5">
 <div class="grid grid-cols-4 gap-4">
 
-    <div class="flex justify-between bg-slate-200 rounded-sm p-4">
+    <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
         <div class="text-center m-auto sm:m-0 sm:text-left">
             <h1 class="text-5xl font-bold">{{ data.requisition.count }}</h1>
-            <span>Requests</span>
+            <span class="text-slate-700">Requests</span>
         </div>
         <div class="hidden sm:inline-block my-auto">
-            <span class="material-icons-outlined my-auto hidden lg:inline-block" style="font-size:40px;">article</span>
+            <span class="material-icons-outlined my-auto hidden lg:inline-block" style="font-size:40px; color:gray;">article</span>
         </div>
     </div>
 
-    <div class="flex justify-between bg-slate-200 rounded-sm p-4">
+    <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
         <div class="text-center m-auto sm:m-0 sm:text-left">
             <h1 class="text-5xl font-bold">69</h1>
-            <span>Transfers<span>
+            <span class="text-slate-700">Transfers<span>
         </div>
         <div class="hidden sm:inline-block my-auto">
-            <span class="material-icons-outlined" style="font-size:40px;">autorenew</span>
+            <span class="material-icons-outlined" style="font-size:40px; color:gray;">autorenew</span>
         </div>
     </div>
 
-    <div class="flex justify-between bg-slate-200 rounded-sm p-4">
+    <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
         <div class="text-center m-auto sm:m-0 sm:text-left">
             <h1 class="text-5xl font-bold">{{ data.inventory.count }}</h1>
-            <span>Customers<span>
+            <span class="text-slate-700">Customers<span>
         </div>
         <div class="hidden sm:inline-block my-auto">
-            <span class="material-icons-outlined my-auto" style="font-size:40px;">person</span>
+            <span class="material-icons-outlined my-auto" style="font-size:40px; color:gray;">person</span>
         </div>
     </div>
 
-    <div class="flex justify-between bg-slate-200 rounded-sm p-4">
+    <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
         <div class="text-center m-auto sm:m-0 sm:text-left">
             <h1 class="text-5xl font-bold">69</h1>
-            <span>Projects<span>
+            <span class="text-slate-700">Projects<span>
         </div>
         <div class="hidden sm:inline-block my-auto">
-            <span class="material-icons-outlined my-auto" style="font-size:40px;">insert_drive_file</span>
+            <span class="material-icons-outlined my-auto" style="font-size:40px; color:gray;">insert_drive_file</span>
         </div>
     </div>
 </div>
 
-<div class="sm:flex flex-wrap gap-4">
-    <div class="flex-row sm:w-1/2">
+<div class="grid grid-cols-2 gap-5 ">
+    <div class="flex-col grow">
         <h4 class="font-bold text-2xl pb-2">Material Requests</h4>
         <div class="w-full">
             <table
             id="table"
-            class="overflow-hidden rounded-lg shadow-lg"
+            class="table overflow-hidden rounded-lg shadow-lg"
             style="width:100%;"
             >
                 <thead class="bg-slate-100 text-gray-600">
@@ -88,7 +88,7 @@
         <div class="w-full">
         <table
         id="table"
-        class="overflow-hidden rounded-lg shadow-lg"
+        class="table overflow-hidden rounded-lg shadow-lg"
         style="width:100%;"
         >
         <thead class="bg-slate-100 text-gray-600">
@@ -115,5 +115,7 @@
     </div>
 </div>
 </div>
+
+<script src="{% static 'js/dash-table.js' %}"></script>
 
 {% endblock content %}

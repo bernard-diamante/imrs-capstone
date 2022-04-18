@@ -76,12 +76,6 @@
             </a>
           </td>
         </tr>
-        {% empty %}
-        <tr
-          class="row table-row cursor-pointer bg-white hover:bg-gray-100 even:bg-gray-200 even:hover:bg-gray-300 ease-in duration-100"
-        >
-          <td colspan="5" class="p-2">No items have been added.</td>
-        </tr>
         {% endfor %}
       </tbody>
     </table>
@@ -93,7 +87,7 @@
     <!-- ADD SUBMIT ORDER URL -->
     {% csrf_token %}
     <button
-      class="mx-auto flex text-center justify-center h-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100"
+      id="submit" class="mx-auto flex text-center justify-center h-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100"
     >
       Submit
     </button>
