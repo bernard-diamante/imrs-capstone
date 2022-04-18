@@ -1,4 +1,4 @@
-from django.shortcuts import reverse, render, redirect
+from django.shortcuts import reverse, render, redirect, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import MaterialRequisition, MaterialRequisitionItems
 from .models import Item
@@ -8,7 +8,7 @@ from .forms import RequisitionModelForm
 from django.contrib import messages
 from django.views import generic
 from django.db.models import Prefetch
-
+from .forms import RequisitionInlineFormSet, RequisitionItemsModelForm, ReqItemModelForm
 
 # Create your views here.
 
@@ -34,23 +34,63 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
     template_name = "requisition/requisition_add.html"
     form_class = RequisitionModelForm
     model = MaterialRequisition
-
+    context_object_name = "req_items"
     def get_success_url(self):
         return reverse("requisition:list-requisition")
 
+    # def form_invalid(self, form):
+    #     print(form.data['reqDateNeeded']) 
+    #     return HttpResponseRedirect(self.get_success_url())
+    
     def form_valid(self, form):
-        # Save the validated data of your object
-        self.object = form.save(commit = False)
-        # Update the value of the desired field
-        self.object.site = self.request.user.site
+        print("IT GOES HERE")
+        print(form.data)
+        ctx = self.get_context_data()
+        inlines = ctx['inlines']
+        
+        # form.instance.site = self.request.user.site
+        if inlines.is_valid() and form.is_valid():
+            req = form.save(commit = False)
+            req.site = self.request.user.site
+            req.save()
+            for form in fo
         # Save the object to commit the changes
-        self.object.save()
+        
+        # MaterialRequisition.objects.create(
+        #     site = self.request.user.site,
+        #     reqItems = req.reqItems.set(),
+        #     reqDescription = req.reqDescription,
+        #     reqDateNeeded = req.reqDateNeeded
+        # )
+        # else:
+        # return self.render_to_response(self.get_context_data(form=form))
         return super(RequisitionAddView, self).form_valid(form)
 
     def get_queryset(self):
         user = self.request.user
         return MaterialRequisition.objects.all()
+    
+    def get_context_data(self, **kwargs):
+        ctx=super(RequisitionAddView,self).get_context_data(**kwargs)
+        ctx['item_list'] = ReqItemModelForm()
+        if self.request.POST:
+            ctx['form']=RequisitionModelForm(self.request.POST)
+            ctx['inlines']=RequisitionInlineFormSet(self.request.POST)
+        else:
+            ctx['form']=RequisitionModelForm()
+            ctx['inlines']=RequisitionInlineFormSet()
+        return ctx
 
+    def get_initial(self):
+        initial = super(RequisitionAddView, self).get_initial()
+        initial["site"] = self.request.user.site
+        return initial
+        # 
+        # context['form_class'] = self.form_class
+        # context['form_class'].fields["site"].initial = self.request.user.site
+        # return context
+    
+    
 
 class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView): #for main office
     template_name = "requisition/requisition_update.html"

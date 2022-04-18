@@ -35,3 +35,25 @@ function updateUserOrder(item, action){
         console.log('data: ', data)
     })
 }
+
+$(document).ready(function ()
+    {
+        ClickHand();
+    });
+
+    function setClickHandlers() {
+
+        var cells = document.querySelectorAll('#switchboard-container td');
+
+        Array.prototype.forEach.call(cells, function (td) {
+            td.addEventListener('click', changeCell);
+        });
+    }
+
+    function changeCell() {
+        
+        $(".switch").text("Off");
+        this.textContent = "Up";
+
+    }
+
