@@ -12,7 +12,7 @@
       <div class="flex w-full mb-5">
         <a href="{% url 'requisition:list-requisition' %}">
           <button
-            class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center"
+            class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center ease-in duration-100"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,7 @@
         </div>
         <div class="flex mb-4">
           <a
-            class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1"
+            class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
             >Item Details</a
           >
         </div>
@@ -49,15 +49,15 @@
           method="post"
           action=""
         > <!-- add url add form -->
-          {% csrf_token %} {{ form.as_p }}
+          {% csrf_token %} {{ form|crispy }}
           <div class="flex justify-end mt-6 ml-auto">
             <div id="buttons" class="flex">
               <input
                 type="submit"
                 value="Submit"
-                class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 cursor-pointer focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
               />
-              <a href="{% url 'requisition:detail-requisition' object.pk %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded">
+              <a href="{% url 'requisition:detail-requisition' object.pk %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded ease-in duration-100">
                   Cancel
               </a>
             </div>

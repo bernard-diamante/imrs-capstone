@@ -91,6 +91,22 @@ class CartListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         qs = Cart.objects.filter(site=self.request.user.site)
         return qs
+# class CartListView(LoginRequiredMixin, generic.CreateView):
+#     template_name = "item/item_summary.html"
+#     context_object_name = "cart"
+#     model = Inventory
+#     form_class = 
+
+#     def get_queryset(self):
+#         qs = {
+#             "cart_items":Cart.objects.filter(site=self.request.user.site)
+#         }
+#         return qs
+
+#     def form_valid(self, form):
+
+
+
 
 def user_check(user):
     return user.username
@@ -115,6 +131,16 @@ def deleteCartItem(request, item):
     cart.delete()
     return HttpResponseRedirect(reverse_lazy('item:list-cart'))
     
+def sendCart(request,site):
+    cart = Cart.objects.filter(site=request.user.site)
+
+    for item in cart:
+        inv_item = Inventory.objects.get_or_create(
+            site=request.user.site,
+            item__item=item.cartItem__item,
+            siteItemCount = item.cartItemCount
+            )
+        inv_item.save()
 
     # item = Item.objects.filter(id=kwargs.get('item', "")).first()
     # cartItems = Site.objects.get_or_create(cartItem=item)

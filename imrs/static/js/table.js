@@ -42,6 +42,7 @@ $(document).ready(function() {
   });
 });
 
+// Item Summary Conditional
 $(function(){
   if($('.dataTables_empty')[0]) {
       $('#submit').addClass('hidden');

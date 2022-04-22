@@ -17,6 +17,7 @@ class RequisitionModelForm(forms.ModelForm):
         fields = (
             'reqDescription',
             'reqDateNeeded',
+            'reqStatus'
         )
         widgets = {
             'reqDateNeeded': forms.DateInput(attrs={'type': 'date'}),

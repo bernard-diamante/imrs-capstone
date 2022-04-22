@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.views import generic
 from django.db.models import Prefetch
 from .forms import RequisitionInlineFormSet, RequisitionItemsModelForm, ReqItemModelForm
+from django.views.generic.base import View
 
 # Create your views here.
 
@@ -43,7 +44,6 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
     #     return HttpResponseRedirect(self.get_success_url())
     
     def form_valid(self, form):
-        print("IT GOES HERE")
         print(form.data)
         ctx = self.get_context_data()
         inlines = ctx['inlines']
@@ -53,7 +53,8 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
             req = form.save(commit = False)
             req.site = self.request.user.site
             req.save()
-            for form in fo
+            for form in inlines:
+                form.save()
         # Save the object to commit the changes
         
         # MaterialRequisition.objects.create(
@@ -90,7 +91,8 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
         # context['form_class'].fields["site"].initial = self.request.user.site
         # return context
     
-    
+
+
 
 class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView): #for main office
     template_name = "requisition/requisition_update.html"
@@ -101,7 +103,7 @@ class RequisitionUpdateView(LoginRequiredMixin, generic.UpdateView): #for main o
         return MaterialRequisition.objects.all()
 
     def get_success_url(self):
-        return reverse("requisition-list")
+        return reverse("requisition:list-requisition")
 
     def form_valid(self, form):
         form.save()

@@ -24,13 +24,13 @@
             </thead>
             <tbody class="text-center">
                 {% for item in data.items %}
-                    {% if request.user.role <= 1 %}
+                    {% if request.user.role == 1 %}
+                    <tr
+                    class="bg-white even:bg-slate-100 ease-in duration-100">
+                    {% else  %}
                     <tr
                     data-href="{% url 'item:detail-item' item.pk %}"
                     class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 ease-in duration-100">
-                    {% else  %}
-                    <tr
-                    class=" bg-white  even:bg-slate-100 ease-in duration-100">
                     {% endif %}
                         <td class="p-2">{{ item.itemName }}</td>
                         <td class="p-2">{{ item.itemCategory }}</td>
@@ -38,10 +38,10 @@
                         {% if request.user.role == 3 %}
                             <td>
                                 {% if item.item in data.inventory %}
-                                    <p class="h-7 w-7 justify-center text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
+                                    <p class="h-7 w-7 justify-center cursor-default text-sm font-bold flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
                                     >✓</p>
                                 {% elif item.item in data.cartItemID_list %}
-                                    <p class="h-7 w-7 justify-center text-sm font-bold cursor-pointer flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
+                                    <p class="h-7 w-7 justify-center cursor-default text-sm font-bold flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
                                     >✓</p>
                                 {% else %}
                                     <button id="cart-check" data-item="{{ item.item }}" data-action="add"

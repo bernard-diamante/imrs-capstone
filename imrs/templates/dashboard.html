@@ -8,13 +8,13 @@
     <h2 class="font-bold text-4xl pb-10">Dashboard</h2>
 </div>
 
-<div class="flex-col space-y-5">
+<div class="flex-col space-y-7">
 <div class="grid grid-cols-4 gap-4">
 
     <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
         <div class="text-center m-auto sm:m-0 sm:text-left">
             <h1 class="text-5xl font-bold">{{ data.requisition.count }}</h1>
-            <span class="text-slate-700">Requests</span>
+            <span class="text-slate-700">Pending Requests</span>
         </div>
         <div class="hidden sm:inline-block my-auto">
             <span class="material-icons-outlined my-auto hidden lg:inline-block" style="font-size:40px; color:gray;">article</span>
@@ -44,21 +44,21 @@
     <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
         <div class="text-center m-auto sm:m-0 sm:text-left">
             <h1 class="text-5xl font-bold">69</h1>
-            <span class="text-slate-700">Projects<span>
+            <span class="text-slate-700">Incoming Deliveries<span>
         </div>
         <div class="hidden sm:inline-block my-auto">
-            <span class="material-icons-outlined my-auto" style="font-size:40px; color:gray;">insert_drive_file</span>
+            <span class="material-icons-outlined my-auto" style="font-size:40px; color:gray;">local_shipping</span>
         </div>
     </div>
 </div>
 
-<div class="grid grid-cols-2 gap-5 ">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div class="flex-col grow">
-        <h4 class="font-bold text-2xl pb-2">Material Requests</h4>
+        <h4 class="font-bold text-2xl pb-3">Material Requests</h4>
         <div class="w-full">
             <table
             id="table"
-            class="table overflow-hidden rounded-lg shadow-lg"
+            class="req-table table overflow-hidden rounded-lg shadow-lg"
             style="width:100%;"
             >
                 <thead class="bg-slate-100 text-gray-600">
@@ -84,11 +84,11 @@
         </div>
     </div>
     <div class="flex-col grow">
-        <h4 class="font-bold text-2xl pb-2">Inventory Alerts</h4>
+        <h4 class="font-bold text-2xl pb-3">Inventory Alerts</h4>
         <div class="w-full">
         <table
         id="table"
-        class="table overflow-hidden rounded-lg shadow-lg"
+        class="inv-table table overflow-hidden rounded-lg shadow-lg"
         style="width:100%;"
         >
         <thead class="bg-slate-100 text-gray-600">

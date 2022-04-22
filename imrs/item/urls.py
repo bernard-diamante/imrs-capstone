@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import *
 
 app_name = 'item'
@@ -16,4 +16,5 @@ urlpatterns = [
     
     path('cart/add/', addCartItem, name='add-cart'),
     path('cart/<int:item>/delete', deleteCartItem, name='delete-cart'),
+    path("select2/", include("django_select2.urls")),
 ]

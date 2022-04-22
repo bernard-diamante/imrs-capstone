@@ -1,6 +1,10 @@
 /* General */
-.scdc-green {
+.scdc-bg {
     background-color: #3f5f43;
+  }
+
+.scdc-text {
+    color: #3f5f43;
   }
 
 /* DataTables */
@@ -9,8 +13,12 @@
     border: none;
 }
 
+#table, #table thead th {
+    border: none;
+}
+
 .dataTables_info, .dataTables_paginate {
-    margin-top: 1rem;
+    margin-top: 0.75rem;
 }
 
 .dataTables_length select, .dataTables_filter input{

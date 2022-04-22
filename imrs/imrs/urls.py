@@ -28,6 +28,7 @@ urlpatterns = [
     path('requisition/', include('requisition.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('users/', include('users.urls')),
+    path('transfer/', include('transfer.urls')),
     path('', LandingPageView.as_view(), name='landing-page'),
     path('login/', LoginView.as_view(redirect_authenticated_user=True), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

@@ -36,16 +36,12 @@ class MaterialRequisition(models.Model):
         through_fields=('requisition', 'item'),
         related_name="mat_req_items"
         )
+    reqStatus = models.PositiveSmallIntegerField(choices=REQ_STATUS, default=0)
     # def clean(self):
     #     if self.site_id == self.site:
     #         raise ValidationError("Site cannot send item to themselves.")
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
-    # reqItems = models.ForeignKey(Material_Requisition_Items, on_delete=models.CASCADE, related_name="req_items", blank=True, null=True)
-    # If error, look up backwards relation
-    
-
-    reqStatus = models.PositiveSmallIntegerField(choices=REQ_STATUS, default=0)
     class Meta:
         UniqueConstraint(fields = ['requisition', 'site'], name = 'req_site_unique')
