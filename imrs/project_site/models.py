@@ -1,7 +1,7 @@
 from django.db import models
 # from inventory.models import CartItem
 from imrs import settings
-
+from item.models import Item
 
 class Site(models.Model):
     site = models.AutoField(primary_key=True) 
@@ -33,7 +33,7 @@ class Site(models.Model):
 
 class Cart(models.Model):
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
-    cartItem = models.ForeignKey('item.Item', on_delete=models.CASCADE)
+    cartItem = models.ForeignKey(Item, on_delete=models.CASCADE)
     cartItemCount = models.PositiveIntegerField(default=0)
 
     class Meta:

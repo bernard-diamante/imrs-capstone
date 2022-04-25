@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<h2 class="font-bold text-4xl pb-10">Material Requests</h2>
+<h2 class="font-bold text-4xl pb-10">Material Transfers</h2>
 
     <!-- Div indent -->
     <div class="lg:w-4/5 mx-auto flex flex-wrap mb-48">
@@ -28,20 +28,20 @@
                 clip-rule="evenodd"
               />
             </svg>
-            Return to Material Requests
+            Return to Material Transfers
           </button>
         </a>
       </div>
       <div class="w-full px-8 py-6 mb-6 lg:mb-0 shadow-lg rounded pl-7">
         <div class="flex">
           <span class="text-gray-900 text-3xl title-font font-medium mb-4">
-            Material Request Form
+            Material Transfer Form
           </span>
         </div>
         <div class="flex mb-4">
           <a
             class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
-            >Request Details</a
+            >Transfer Details</a
           >
         </div>
         
@@ -65,11 +65,11 @@
           <div id="form_set">
             {% for form in inlines.forms %}
             <div class="flex flex-row">
-                <div class='w-full grid grid-cols-2 gap-5 no_error'>
+                <div id="item-{{ forloop.counter0 }}" class='w-full grid grid-cols-2 gap-5 no_error'>
                     {{ form|crispy }}
                 </div>
-                <!-- <input class="delete cursor-pointer ml-5 my-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-rose-500 hover:bg-rose-600 ease-in duration-100 border-0 py-1 px-3 focus:outline-none rounded-full" value="Delete" type="button" formnovalidate></input> -->
-          </div>
+                <input class="delete cursor-pointer ml-5 my-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-rose-500 hover:bg-rose-600 ease-in duration-100 border-0 py-1 px-3 focus:outline-none rounded-full" value="Delete" type="button" formnovalidate></input>
+            </div>
             {% endfor %}
           </div>
           
@@ -79,6 +79,8 @@
             <div class="flex flex-row">
                 <div class='w-full grid grid-cols-2 gap-5 no_error'>
                     {{ inlines.empty_form|crispy }}
+                    <!-- <input type="submit" value="Delete" class="del"></input> -->
+                    
                 </div>
                 <input class="delete cursor-pointer ml-5 my-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-rose-500 hover:bg-rose-600 ease-in duration-100 border-0 py-1 px-3 focus:outline-none rounded-full" value="Delete" type="button" formnovalidate></input>
           </div>
@@ -101,29 +103,23 @@
       </div>
     </div>
     <script>
-      // $('#add_more').click(function() {
-      //     var form_idx = $('#id_form-TOTAL_FORMS').val();
-      //     $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
-      //     $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
-      // });
-
-      // $(document).on("click", ".delete", function() {
-      //   $(this).parent().remove(); 
-      // });
-
       $('#add_more').click(function(ev) {
+          // var form_idx = $('#id_form-TOTAL_FORMS').val();
+          // $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+          // $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
         ev.preventDefault();
         var count = $('#form_set').children().length;
         var tmplMarkup = $('#empty_form').html();
         var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
         $('div#form_set').append(compiledTmpl);
-        $('#id_materialrequisitionitems_set-TOTAL_FORMS').attr('value', count+1);
-      });
+
+        // update form count
+        $('#id_form-TOTAL_FORMS').attr('value', count+1);
+        });
+      // });
 
       $(document).on("click", ".delete", function() {
-        var delcount = $('#form_set').children().length;
-        $('#id_materialrequisitionitems_set-TOTAL_FORMS').attr('value', delcount-1);
-        $(this).parent().remove();
+        $(this).parent().remove(); 
       });
     </script>
 

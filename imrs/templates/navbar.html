@@ -3,7 +3,7 @@
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
 <header class="text-gray-100 font-medium scdc-bg h-30 shadow-lg">
-  <div class="container mx-auto flex items-center content-center justify-between h-20">
+  <div class="container mx-auto flex content-center justify-center h-20">
     <a class="hidden lg:flex items-center mb-4 md:mb-0">
       <img class="mx-auto h-20" src="{% static 'images/logo-white.png' %}"/>
     </a>
@@ -13,18 +13,19 @@
       <a href="" class="mr-5 hover:text-gray-300">Schedule</a>
       <a href="{% url 'item:list-item' %}" class="mr-5 hover:text-gray-300">Items</a>
       <a href="{% url 'requisition:list-requisition' %}" class="mr-5 hover:text-gray-300">Requests</a>
-      <a href="{% url 'requisition:list-requisition' %}" class="mr-5 hover:text-gray-300">Transfers</a>
+      <a href="{% url 'transfer:list-transfer' %}" class="mr-5 hover:text-gray-300">Transfers</a>
       
       <!-- Admin -->
       <div @click.away="open = false" class="relative" x-data="{ open: false }">
-        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-gray-100 rounded-lg md:w-auto md:inline md:mt-0 md:ml-4 text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline ease-in duration-100">
+        <button @click="open = !open" class="items-center w-auto px-4 py-2 mt-0 text-sm font-semibold text-left bg-gray-100 rounded-lg inline md:ml-4 text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline ease-in duration-100">
+        <!-- <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-gray-100 rounded-lg md:w-auto md:inline md:mt-0 md:ml-4 text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline ease-in duration-100"> -->
           <!-- <span>Other</span> -->
           <!-- <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg> -->
           <svg xmlns="http://www.w3.org/2000/svg" :class="{'rotate-90': open, 'rotate-0': !open}" class="h-6 w-6 text-gray-600 transition-transform duration-200 transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
+        <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-48 mt-2 origin-top-right rounded-md shadow-lg">
           <div class="flex flex-col px-2 py-2 space-y-1 bg-white rounded-md shadow text-gray-600 text-sm">
             {% if request.user.role <= 2  %}
             <a href="{% url 'users:list-user' %}" class="px-4 py-2 rounded-lg hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline ease-in duration-100">User Management</a>

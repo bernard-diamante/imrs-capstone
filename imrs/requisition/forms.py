@@ -6,6 +6,8 @@ from django_select2.forms import Select2Widget
 from django.forms import formset_factory
 from item.models import Item
 from project_site.models import Site
+from django.db import transaction
+from crispy_forms.helper import FormHelper
 # from crispy_forms.helper import FormHelper
 # from django_select2.forms import Select2MultipleWidget
 
@@ -17,7 +19,7 @@ class RequisitionModelForm(forms.ModelForm):
         fields = (
             'reqDescription',
             'reqDateNeeded',
-            'reqStatus'
+            # 'reqStatus'
         )
         widgets = {
             'reqDateNeeded': forms.DateInput(attrs={'type': 'date'}),
@@ -25,9 +27,40 @@ class RequisitionModelForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        # self.request = kwargs.pop('request')
-        super(RequisitionModelForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         
+        self.requisition_formset = RequisitionInlineFormSet(
+            data=kwargs.get('data'), instance=self.instance
+        )
+        self.helper = FormHelper()
+        self.form_tag = False
+        
+        self.fields['reqDescription'].label = "Description"
+        self.fields['reqDateNeeded'].label = "Date Needed"
+
+    # def save(self, **kwargs):
+    #     with transaction.atomic():
+    #         saved_req = super().save(**kwargs)
+    #         self.requisition_formset.instance = saved_req
+    #         self.requisition_formset.save()
+    #         return saved_req
+
+    # def clean(self):
+    #     self.requisition_formset.clean()
+    #     super().clean()
+    #     return self.cleaned_data
+
+    # def is_valid(self):
+    #     is_valid = True
+    #     is_valid &= self.requisition_formset.is_valid()
+    #     is_valid &= super().is_valid()
+    #     return is_valid
+
+    # def has_changed(self):
+    #     has_changed = False
+    #     has_changed |= self.requisition_formset.has_changed()
+    #     has_changed |= super().has_changed
+    #     return has_changed
         # kwargs.update({
         #     'initial': {
         #         'site': self.request.user.site
@@ -41,8 +74,6 @@ class RequisitionModelForm(forms.ModelForm):
         #         'data-options': '{"format":"Y-m-d H:i", "timepicker":"true"}'
         #     })
 
-        self.fields['reqDescription'].label = "Description"
-        self.fields['reqDateNeeded'].label = "Date Needed"
 
 class RequisitionItemsModelForm(forms.ModelForm):
     class Meta:
@@ -60,9 +91,9 @@ class RequisitionItemsModelForm(forms.ModelForm):
         self.fields['item'].label = "Item"
         self.fields['requisition'].label = "Requisition ID"
         self.fields['itemQuantity'].label = "Quantity"
-    # reqform_Description = forms.CharField(label="Reason for Material Requisition", max_length=1000)
-    # reqform_DateSubmitted = forms.
-
+        self.helper = FormHelper()
+        self.form_tag = False
+            
 RequisitionInlineFormSet = forms.inlineformset_factory(
     MaterialRequisition,
     MaterialRequisitionItems,
@@ -73,6 +104,13 @@ RequisitionInlineFormSet = forms.inlineformset_factory(
     )
 
 
+# class ValidRequisitionFormSet(RequisitionInlineFormSet):
+#     def clean(self):
+#         if 
+#             for form in self.forms:
+#                 form.clean()
+
+
 
 class ReqItemModelForm(forms.ModelForm):
     # items = forms.ModelChoiceField(queryset = Item.objects.all().order_by('item'))
@@ -81,7 +119,6 @@ class ReqItemModelForm(forms.ModelForm):
         fields = ['item']
         widgets = {
             'item': Select2Widget
-
         }
 
 # RequisitionItemsFormset = forms.modelformset_factory(

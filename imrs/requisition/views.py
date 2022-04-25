@@ -35,26 +35,31 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
     template_name = "requisition/requisition_add.html"
     form_class = RequisitionModelForm
     model = MaterialRequisition
-    context_object_name = "req_items"
+    
     def get_success_url(self):
         return reverse("requisition:list-requisition")
 
+
     # def form_invalid(self, form):
-    #     print(form.data['reqDateNeeded']) 
+    #     print('INVALID')
+    #     print('INVALID')
+    #     print(form.data) 
     #     return HttpResponseRedirect(self.get_success_url())
     
     def form_valid(self, form):
+        print('VALID')
         print(form.data)
         ctx = self.get_context_data()
         inlines = ctx['inlines']
         
         # form.instance.site = self.request.user.site
         if inlines.is_valid() and form.is_valid():
-            req = form.save(commit = False)
-            req.site = self.request.user.site
-            req.save()
-            for form in inlines:
-                form.save()
+            # req = form.save(commit = False)
+            form.instance.site = self.request.user.site
+            # req.site = self.request.user.site
+            req = form.save()
+            inlines.instance = req
+            inlines.save()
         # Save the object to commit the changes
         
         # MaterialRequisition.objects.create(
@@ -74,7 +79,7 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         ctx=super(RequisitionAddView,self).get_context_data(**kwargs)
         ctx['item_list'] = ReqItemModelForm()
-        if self.request.POST:
+        if self.request.method == 'POST':
             ctx['form']=RequisitionModelForm(self.request.POST)
             ctx['inlines']=RequisitionInlineFormSet(self.request.POST)
         else:
@@ -86,7 +91,7 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
         initial = super(RequisitionAddView, self).get_initial()
         initial["site"] = self.request.user.site
         return initial
-        # 
+        
         # context['form_class'] = self.form_class
         # context['form_class'].fields["site"].initial = self.request.user.site
         # return context

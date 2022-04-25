@@ -82,32 +82,7 @@ class ItemDetailView(LoginRequiredMixin, generic.DetailView):
     def get_success_url(self):
         return reverse_lazy("item:detail-item")
 
-
 # Cart Functions
-class CartListView(LoginRequiredMixin, generic.ListView):
-    template_name = "item/item_summary.html"
-    context_object_name = "cart"
-
-    def get_queryset(self):
-        qs = Cart.objects.filter(site=self.request.user.site)
-        return qs
-# class CartListView(LoginRequiredMixin, generic.CreateView):
-#     template_name = "item/item_summary.html"
-#     context_object_name = "cart"
-#     model = Inventory
-#     form_class = 
-
-#     def get_queryset(self):
-#         qs = {
-#             "cart_items":Cart.objects.filter(site=self.request.user.site)
-#         }
-#         return qs
-
-#     def form_valid(self, form):
-
-
-
-
 def user_check(user):
     return user.username
 
@@ -131,23 +106,58 @@ def deleteCartItem(request, item):
     cart.delete()
     return HttpResponseRedirect(reverse_lazy('item:list-cart'))
     
-def sendCart(request,site):
+def sendCart(request):
     cart = Cart.objects.filter(site=request.user.site)
 
+    # item is an Cart item
     for item in cart:
-        inv_item = Inventory.objects.get_or_create(
+        inv_item = Inventory.objects.create(
             site=request.user.site,
-            item__item=item.cartItem__item,
+            # Item ID = Cart Item's Item ID
+            item=item.cartItem,
             siteItemCount = item.cartItemCount
             )
         inv_item.save()
+        item.delete()
+    return HttpResponseRedirect(reverse_lazy('item:list-item'))
 
-    # item = Item.objects.filter(id=kwargs.get('item', "")).first()
-    # cartItems = Site.objects.get_or_create(cartItem=item)
-    # if len(cartItems) == 0:
-    #     # TODO: Show cart is empty
-    #     pass
-    # else:
-    #     pass
+class CartListView(LoginRequiredMixin, generic.ListView):
+    template_name = "item/item_summary.html"
+    context_object_name = "cart"
 
-    #     # for item in cartItems:
+    def get_queryset(self):
+        qs = Cart.objects.filter(site=self.request.user.site)
+        return qs
+
+    # def post(self, request, *args, **kwargs):
+    #     sendCart(request)
+        
+    # def get_success_url(self):
+    #     return reverse_lazy("item:list-item")
+
+        # cart = Cart.objects.filter(site=request.user.site)
+
+        # for item in cart:
+        #     inv_item = Inventory.objects.get_or_create(
+        #         site=request.user.site,
+        #         item__item=item.cartItem__item,
+        #         siteItemCount = item.cartItemCount
+        #         )
+        #     inv_item.save()
+    #     qs = Cart.objects.filter(site=self.request.user.site)
+    #     for item in qs:
+            
+
+# class CartListView(LoginRequiredMixin, generic.CreateView):
+#     template_name = "item/item_summary.html"
+#     context_object_name = "cart"
+#     model = Inventory
+#     form_class = 
+
+#     def get_queryset(self):
+#         qs = {
+#             "cart_items":Cart.objects.filter(site=self.request.user.site)
+#         }
+#         return qs
+
+#     def form_valid(self, form):

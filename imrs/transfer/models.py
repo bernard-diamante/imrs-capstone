@@ -36,5 +36,5 @@ class MaterialTransfer(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
-    class Meta:
-        UniqueConstraint(fields = ['transfer', 'requisition'], name = 'tran_req_unique')
+    # class Meta:
+    #     UniqueConstraint(fields = ['transfer', 'requisition'], name = 'tran_req_unique')
