@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'theme',
     'django_select2',
     'django_filters',
+    # 'select2'
 
     # Local apps
     'users',

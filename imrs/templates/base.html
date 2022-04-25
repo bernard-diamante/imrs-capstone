@@ -15,26 +15,24 @@
     <link href="{% static 'css/select2.min.css' %}" rel="stylesheet">
     <script src="{% static 'js/select2.min.js' %}"></script>
 
-    {{ form.media.css }}
-
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
     
     <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/custom.css' %}" rel="stylesheet"/>
+
 </head>
 <body>
     {% if request.user.is_authenticated %}
         {% include 'navbar.html' %}
     {% endif %}
-    <div class="max-w-7xl mx-auto">
-        <div class="items-start container mx-auto mt-20">
+    <div class="max-w-7xl mx-auto px-5">
+        <div class="items-start  mx-auto mt-20">
         {% block content %}
         {% endblock content %}
         </div>
     </div>
     {% include "scripts.html" %}
 
-    {{ form.media.js }}
 </body>
 </html>

@@ -8,6 +8,7 @@ from item.models import Item
 from project_site.models import Site
 from django.db import transaction
 from crispy_forms.helper import FormHelper
+# import select2
 # from crispy_forms.helper import FormHelper
 # from django_select2.forms import Select2MultipleWidget
 
@@ -37,6 +38,7 @@ class RequisitionModelForm(forms.ModelForm):
         
         self.fields['reqDescription'].label = "Description"
         self.fields['reqDateNeeded'].label = "Date Needed"
+        
 
     # def save(self, **kwargs):
     #     with transaction.atomic():
@@ -86,6 +88,11 @@ class RequisitionItemsModelForm(forms.ModelForm):
         widgets = {
             'item': Select2Widget
         }
+
+    # item = select2.fields.ChoiceField(
+    #     choices=Item.objects.as_choices(),
+    #     overlay="Select an Item")
+
     def __init__(self,*args, **kwargs):
         super(RequisitionItemsModelForm, self).__init__(*args, **kwargs)
         self.fields['item'].label = "Item"
@@ -93,7 +100,14 @@ class RequisitionItemsModelForm(forms.ModelForm):
         self.fields['itemQuantity'].label = "Quantity"
         self.helper = FormHelper()
         self.form_tag = False
-            
+        self.fields['item'].queryset = self.fields['item'].queryset.order_by('itemName')
+
+    @property
+    def media(self):
+        return forms.Media(css={'all': ('pretty.css',)},
+                           js=('animations.js', 'actions.js'))
+        
+
 RequisitionInlineFormSet = forms.inlineformset_factory(
     MaterialRequisition,
     MaterialRequisitionItems,
@@ -114,6 +128,8 @@ RequisitionInlineFormSet = forms.inlineformset_factory(
 
 class ReqItemModelForm(forms.ModelForm):
     # items = forms.ModelChoiceField(queryset = Item.objects.all().order_by('item'))
+    
+
     class Meta:
         model = Item
         fields = ['item']

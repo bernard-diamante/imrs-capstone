@@ -2,7 +2,6 @@
 {% load tailwind_filters %} 
 {% load static %} 
 {% load crispy_forms_tags %}
-{{ form.media.css }}
 
 {% block content %}
 
@@ -101,16 +100,6 @@
       </div>
     </div>
     <script>
-      // $('#add_more').click(function() {
-      //     var form_idx = $('#id_form-TOTAL_FORMS').val();
-      //     $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
-      //     $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
-      // });
-
-      // $(document).on("click", ".delete", function() {
-      //   $(this).parent().remove(); 
-      // });
-
       $('#add_more').click(function(ev) {
         ev.preventDefault();
         var count = $('#form_set').children().length;
@@ -126,8 +115,5 @@
         $(this).parent().remove();
       });
     </script>
-
-{{ form.media.js }}
-
 
 {% endblock %}

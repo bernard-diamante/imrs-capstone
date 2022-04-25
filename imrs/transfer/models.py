@@ -3,7 +3,7 @@ from item.models import Item
 from django.db.models import UniqueConstraint
 from django.core.exceptions import ValidationError
 
-# Create your models here.
+
 class MaterialTransferItems(models.Model):
     transfer = models.ForeignKey("MaterialTransfer", on_delete=models.CASCADE)
     item = models.ForeignKey('item.Item', on_delete=models.CASCADE)
@@ -20,7 +20,9 @@ class MaterialTransfer(models.Model):
         (3, 'Transfer Accomplished'),
     ]
     transfer = models.AutoField(primary_key=True)
+    # destination site accessed through requisition forms
     requisition = models.ForeignKey("requisition.MaterialRequisition", on_delete = models.CASCADE)
+    # origin site
     site = models.ForeignKey('project_site.Site', on_delete=models.CASCADE)
     transferItems = models.ManyToManyField(
         Item,
@@ -36,5 +38,3 @@ class MaterialTransfer(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
-    # class Meta:
-    #     UniqueConstraint(fields = ['transfer', 'requisition'], name = 'tran_req_unique')

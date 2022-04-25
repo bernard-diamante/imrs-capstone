@@ -16,35 +16,30 @@
   >
     <thead class="bg-slate-100 text-gray-600">
       <tr>
-        <th class="w-2/12 font-medium">Req. ID</th>
+        <!-- <th class="w-2/12 font-medium">Req. ID</th> -->
         <th class="w-2/12 font-medium">Tran. ID</th>
-        <th class="font-medium">Origin Site</th>
-        <th class="font-medium">Delivery By</th>
+        <th class="font-medium">Origin</th>
+        <th class="font-medium">Destination</th>
+        <th class="font-medium">Deliver By</th>
         <th class="font-medium">Status</th>
       </tr>
     </thead>
     <tbody class="text-center">
-      {% for trans in transfer %}
+      {% for trans in transfer.transfers %}
       <tr
-        data-href="{% url 'requisition:detail-requisition' request.pk %}"
+        data-href="{% url 'transfer:detail-transfer' trans.pk %}"
         class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
       >
         <!-- <td class="p-2">{{ trans.requisition }}</td> -->
         <td class="p-2">{{ trans.transfer }}</td>
         <td class="p-2">{{ trans.site }}</td>
-        <td class="p-2">{{ trans.reqDateNeeded }}</td>
-        <td class="p-2">{{ trans.get_reqStatus_display }}</td>
+        <td class="p-2">{{ trans.requisition.site }}</td>
+        <td class="p-2">{{ trans.requisition.reqDateNeeded }}</td>
+        <td class="p-2">{{ trans.get_transferStatus_display }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  </div>
-  <div id="page-button" class="ml-auto">
-    {% if request.user.role != 3 %}
-      <a href="{% url 'transfer:add-transfer' %}" class="mx-auto flex justify-center h-full w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
-          Make a Transfer
-      </a>
-    {% endif %}
   </div>
 </div>
 

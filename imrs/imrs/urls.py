@@ -33,5 +33,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(redirect_authenticated_user=True), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path("select2/", include("django_select2.urls")),
+    # path("select2/", include("select2.urls")),
     # path('', RedirectView.as_view(url='login/')),
 ]

@@ -109,6 +109,15 @@
       </div>
     </div>
   </div>
+
+  <div id="page-button" class="ml-auto">
+    {% if request.user.role <= 2 %}
+      <a href="{% url 'transfer:add-transfer' %}" class="mx-auto flex justify-center h-full w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
+          Make a Transfer
+      </a>
+    {% endif %}
+  </div>
+
 </div>
 
   <script src="{% static 'js/table.js' %}"></script>

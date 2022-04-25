@@ -38,17 +38,8 @@ class RequisitionAddView(LoginRequiredMixin, generic.CreateView):
     
     def get_success_url(self):
         return reverse("requisition:list-requisition")
-
-
-    # def form_invalid(self, form):
-    #     print('INVALID')
-    #     print('INVALID')
-    #     print(form.data) 
-    #     return HttpResponseRedirect(self.get_success_url())
     
     def form_valid(self, form):
-        print('VALID')
-        print(form.data)
         ctx = self.get_context_data()
         inlines = ctx['inlines']
         
