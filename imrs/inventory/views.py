@@ -43,49 +43,6 @@ class InventoryListView(LoginRequiredMixin, generic.ListView):
         return qs
         
 
-    # Display list of items
-
-    # def get(self, request, *args, **kwargs):
-    #     try:
-    #         _ids_list =  json.loads(request.GET.get('ids', None))
-    #         _ids = [int(i) for i in _ids_list]
-    #         return _ids
-    #     except:
-    #         return super().get(request, *args, **kwargs)
-    
-
-    # def get_queryset(self, *args, **kwargs):
-    #     try:
-    #         _ids_list =  json.loads(self.request.GET.get('ids', None))
-    #         _ids = [int(i) for i in _ids_list]
-    #         qs = {
-    #             # "inventory": super(InventoryListView, self).get_queryset().filter(id__in=_ids),
-    #             "inventory": Inventory.objects.filter(id=_ids),
-    #             "project_sites": Site.objects.all(),
-    #         }
-    #         return qs
-    #     except:
-    #         qs = {
-    #             "project_sites": Site.objects.all(),
-    #         }
-    #         return qs
-        
-
-        # qs = { 
-        #     "inventory": Inventory.objects.filter(id=self.request.user.site.pk),
-        #     "inventory-admin": Inventory.objects.filter(id=self.request.POST.get('data.site')),
-        #     # "inventory": Inventory.objects.all(),
-        #     "project_sites": Site.objects.all(),
-        #     # "inv_filter": InventoryFilter(self.request.GET, queryset=Inventory.objects.all())
-        #     }
-        # return qs
-        
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['filter'] = InventoryFilter(self.request.GET, queryset=self.get_queryset())
-    #     return context
-    # #     data['inventory'] = Inventory.objects.filter(id=self.request.GET.get('pk'))
-    # #     return data
 
 class InventoryUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'inventory/inventory_update.html'

@@ -34,21 +34,19 @@
       <div class="w-full px-8 py-6 mb-6 lg:mb-0 shadow-lg rounded pl-7">
         <div class="flex">
           <span class="text-gray-900 text-3xl title-font font-medium mb-4">
-            {{ object.item.itemName }}
+            Requisition #{{ object.requisition }}
           </span>
         </div>
         <div class="flex mb-4">
           <a
             class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
-            >Item Details</a
+            >Request Details</a
           >
         </div>
     
         <form
           class="form-inline"
-          method="post"
-          action=""
-        > <!-- add url add form -->
+          method="post">
           {% csrf_token %} {{ form|crispy }}
           <div class="flex justify-end mt-6 ml-auto">
             <div id="buttons" class="flex">

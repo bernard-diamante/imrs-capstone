@@ -11,7 +11,7 @@
     <div class="lg:w-4/5 mx-auto flex flex-wrap mb-48">
       <!-- Return Button -->
       <div class="flex w-full mb-5">
-        <a href="{% url 'requisition:list-requisition' %}">
+        <a href="{% url 'transfer:list-transfer' %}">
           <button
             class="flex mr-auto bg-gray-200 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-300 rounded inline-flex items-center justify-center ease-in duration-100"
           >
@@ -31,18 +31,20 @@
           </button>
         </a>
       </div>
+      <div class="flex flex-col space-y-5 w-4/5 mx-auto">
       <div class="w-full px-8 py-6 mb-6 lg:mb-0 shadow-lg rounded pl-7">
         <div class="flex flex-col">
-          <span class="text-gray-900 text-3xl title-font font-medium mb-4">
+          <div class="text-gray-900 text-3xl title-font font-medium mb-4">
             Material Transfer Form
-          </span>
-          <div class="flex text-xl">
-            <span class="text-gray-900 title-font font-medium"
-              >Requisition
-            </span>
-            <span class="ml-3 text-gray-900"
-              >#{{ object.requisition }}</span
-            >
+          </div>
+
+          <div class="flex">
+            <div class="text-gray-900 text-xl title-font font-medium"
+                >Requisition ID:
+            </div>
+            <div class="text-xl ml-3 text-gray-900">
+              #{{ req }}
+            </div>
           </div>
         </div>
         <div class="flex mb-4">
@@ -53,13 +55,12 @@
         </div>
         
         <form
-          id="reqForm"
           class="form-inline"
           method="post"
           action=""
         > <!-- add url add form -->
           {% csrf_token %}
-
+          {{ form.transferStatus.as_hidden }}
           {{ form.site|as_crispy_field }}
 
           {{ inlines.management_form }}
@@ -107,6 +108,7 @@
         
       </div>
     </div>
+  </div>
     <script>
       $('#add_more').click(function(ev) {
         ev.preventDefault();
@@ -114,12 +116,12 @@
         var tmplMarkup = $('#empty_form').html();
         var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
         $('div#form_set').append(compiledTmpl);
-        $('#id_materialrequisitionitems_set-TOTAL_FORMS').attr('value', count+1);
+        $('#id_materialtransferitems_set-TOTAL_FORMS').attr('value', count+1);
       });
 
       $(document).on("click", ".delete", function() {
         var delcount = $('#form_set').children().length;
-        $('#id_materialrequisitionitems_set-TOTAL_FORMS').attr('value', delcount-1);
+        $('#id_materialtransferitems_set-TOTAL_FORMS').attr('value', delcount-1);
         $(this).parent().remove();
       });
     </script>

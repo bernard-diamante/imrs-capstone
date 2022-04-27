@@ -44,13 +44,15 @@
           </div>
       </div>
         {% if object.get_reqStatus_display == "For Review" %}
-        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-yellow-500 border-0 py-2 px-5 focus:outline-none rounded-full">
-        {% elif object.get_reqStatus_display == "Awaiting Delivery" %}
-        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full flex justify-end text-white bg-orange-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        {% elif object.get_reqStatus_display == "Partially Filled" %}
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full flex justify-end text-white bg-yellow-500 border-0 py-2 px-5 focus:outline-none rounded-full">
         {% elif object.get_reqStatus_display == "Request Denied" %}
-        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-red-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full flex justify-end text-white bg-red-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        {% elif object.get_reqStatus_display == "Filled" %}
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full flex justify-end text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none rounded-full">
         {% elif object.get_reqStatus_display == "Delivered" %}
-        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-green-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full flex justify-end text-white bg-green-500 border-0 py-2 px-5 focus:outline-none rounded-full">
         {% endif %}
           {{ object.get_reqStatus_display }}
         </span>
@@ -80,7 +82,7 @@
     </div>
 
     <table id="table"
-      class="w-full overflow-hidden rounded-lg shadow-lg"
+      class="w-full overflow-hidden rounded-lg shadow-lg" style="width:100%;"
     >
         <thead class="bg-slate-100">
             <tr>
@@ -112,7 +114,7 @@
 
   <div id="page-button" class="ml-auto">
     {% if request.user.role <= 2 %}
-      <a href="{% url 'transfer:add-transfer' %}" class="mx-auto flex justify-center h-full w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
+      <a href="{% url 'transfer:add-transfer' req=object.requisition %}" class="mx-auto flex justify-center h-full w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
           Make a Transfer
       </a>
     {% endif %}

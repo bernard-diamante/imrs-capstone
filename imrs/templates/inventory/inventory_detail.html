@@ -29,8 +29,37 @@
     </a>
   </div>
   <div class="flex flex-col space-y-5 w-4/5 mx-auto">
+    
     <div class="w-full px-8 pt-6 pb-3 shadow-lg rounded pl-7">
       <div class="flex">
+        <div class="flex flex-col">
+          <div class="text-gray-900 text-3xl title-font font-medium mb-4">
+            {{ object.item.itemName }}
+          </div>
+          <div class="flex text-lg">
+              <span class="text-gray-900 title-font font-medium"
+                >Quantity:
+              </span>
+              <span class="ml-3 text-gray-900"
+                >{{ object.siteItemCount }}</span
+              >
+            </div>
+        </div>
+          {% if object.get_siteItemStatus_display == "Above Threshold" %}
+          <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-green-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+          {% elif object.get_siteItemStatus_display == "Moderate" %}
+          <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-yellow-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+          {% elif object.get_siteItemStatus_display == "Low" %}
+          <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-orange-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+          {% elif object.get_siteItemStatus_display == "Critical" %}
+          <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-red-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+          {% elif object.get_siteItemStatus_display == "Empty" %}
+          <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-gray-500 border-0 py-2 px-5 focus:outline-none rounded-full">
+          {% endif %}
+          {{ object.get_siteItemStatus_display }}
+          </span>
+      </div>
+      <!-- <div class="flex">
         <span class="text-gray-900 text-3xl title-font font-medium mb-4">
           {{ object.item.itemName }}
         </span>
@@ -40,7 +69,7 @@
         <span class="ml-3 text-gray-900 text-3xl mb-4"
           >{{ object.siteItemCount }}</span
         >
-      </div>
+      </div> -->
       <div class="flex mb-4">
         <a
           class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
@@ -64,8 +93,8 @@
         <span class="w-1/2 text-right ml-auto text-gray-900">{{ object.get_siteItemTurnover_display }}</span>
       </div>
       <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500">Status</span>
-        <span class="w-1/2 text-right ml-auto text-gray-900">{{ object.get_siteItemStatus_display }}</span>
+        <span class="text-gray-500">Min. Threshold</span>
+        <span class="w-1/2 text-right ml-auto text-gray-900">{{ object.siteItemMinThreshold }}</span>
       </div>
     </div>
     <div class="flex justify-end mt-3 ml-auto">

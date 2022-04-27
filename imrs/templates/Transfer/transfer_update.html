@@ -34,7 +34,7 @@
       <div class="w-full px-8 py-6 mb-6 lg:mb-0 shadow-lg rounded pl-7">
         <div class="flex">
           <span class="text-gray-900 text-3xl title-font font-medium mb-4">
-            {{ object.item.itemName }}
+            Material Transfer #{{ object.transfer }}
           </span>
         </div>
         <div class="flex mb-4">
@@ -44,11 +44,10 @@
           >
         </div>
     
-        <form
+        <!-- <form
           class="form-inline"
           method="post"
-          action=""
-        > <!-- add url add form -->
+          action="">
           {% csrf_token %} {{ form|crispy }}
           <div class="flex justify-end mt-6 ml-auto">
             <div id="buttons" class="flex">
@@ -62,12 +61,75 @@
               </a>
             </div>
           </div>
+        </form> -->
+
+        <form class="form-inline" method="post">
+          {% csrf_token %}
+
+          {{ form.site|as_crispy_field }}
+          {{ form.transferStatus|as_crispy_field }}
+
+          {{ inlines.management_form }}
+          <div class="flex mb-5">
+            <a
+              class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
+              >Items Requested</a>
+          </div>
+          <div id="form_set">
+            {% for form in inlines.forms %}
+            <div class="flex flex-row">
+                <div class='w-full grid grid-cols-2 gap-5 no_error'>
+                    {{ form|crispy }}
+                </div>
+          </div>
+            {% endfor %}
+          </div>
+          
+          <input class="flex mt-3 mx-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-slate-500 hover:bg-slate-600 ease-in duration-100 border-0 py-2 px-5 focus:outline-none rounded-full" type="button" value="Add an Item +" id="add_more">
+
+          <div id="empty_form" style="display:none">
+            <div class="flex flex-row">
+                <div class='w-full grid grid-cols-2 gap-5 no_error'>
+                    {{ inlines.empty_form|crispy }}
+                </div>
+                <input class="delete cursor-pointer ml-5 my-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-rose-500 hover:bg-rose-600 ease-in duration-100 border-0 py-1 px-3 focus:outline-none rounded-full" value="Delete" type="button" formnovalidate></input>
+          </div>
+        </div>
+
+          <div class="flex justify-end mt-6 ml-auto">
+            <div id="buttons" class="flex">
+              <input
+                type="submit"
+                value="Submit"
+                class="flex ml-3 text-white bg-indigo-500 cursor-pointer border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
+              />
+              <a href="{% url 'transfer:detail-transfer' object.pk %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded ease-in duration-100">
+                Cancel
+              </a>
+            </div>
+          </div>
         </form>
+
       </div>
     </div>
   </div>
-    
     <script src="{% static 'js/modal.js' %}"></script>
+    <script>
+      $('#add_more').click(function(ev) {
+        ev.preventDefault();
+        var count = $('#form_set').children().length;
+        var tmplMarkup = $('#empty_form').html();
+        var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+        $('div#form_set').append(compiledTmpl);
+        $('#id_materialtransferitems_set-TOTAL_FORMS').attr('value', count+1);
+      });
+
+      $(document).on("click", ".delete", function() {
+        var delcount = $('#form_set').children().length;
+        $('#id_materialtransferitems_set-TOTAL_FORMS').attr('value', delcount-1);
+        $(this).parent().remove();
+      });
+    </script>
 
 
 {% endblock %}

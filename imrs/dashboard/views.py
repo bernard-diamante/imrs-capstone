@@ -7,6 +7,7 @@ from django.contrib.auth.views import LoginView
 from item.models import Item
 from project_site.models import Inventory
 from requisition.models import MaterialRequisition
+from transfer.models import MaterialTransfer
 
 class DashboardListView(generic.ListView):
     template_name = "dashboard.html"
@@ -25,6 +26,8 @@ class DashboardListView(generic.ListView):
         qs = {
             'inventory': Inventory.objects.all(),
             'requisition': MaterialRequisition.objects.all(),
+            'transfer': MaterialTransfer.objects.all(),
+            'delivery': MaterialTransfer.objects.filter(transferStatus=0),
             # '': Item.objects.all(),
         }
         return qs

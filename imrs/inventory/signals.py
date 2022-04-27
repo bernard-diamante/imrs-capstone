@@ -16,7 +16,7 @@ def calculate_item_status_pre_save(sender, instance, **kwargs):
         elif instance.siteItemTurnover == 'S':
             mult = 1
         # instance.siteItemMinThreshold *= mult
-            
+
         if instance.siteItemCount >= (instance.siteItemMinThreshold * mult):
             instance.siteItemStatus = 1
         elif (instance.siteItemCount < (instance.siteItemMinThreshold * mult)) and (instance.siteItemCount > 0):

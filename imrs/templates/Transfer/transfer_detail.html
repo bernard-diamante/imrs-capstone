@@ -7,7 +7,7 @@
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">
-    <a href="{% url 'requisition:list-requisition' %}">
+    <a href="{% url 'transfer:list-transfer' %}">
       <button
         class="flex mr-auto bg-gray-100 border-0 py-2 pl-4 pr-6 focus:outline-none hover:bg-gray-200 rounded inline-flex items-center justify-center ease-in duration-100"
       >
@@ -23,13 +23,13 @@
             clip-rule="evenodd"
           />
         </svg>
-        Return to Transfers
+        Return to Material Transfers
       </button>
     </a>
   </div>
   <div class="flex flex-col space-y-5 w-4/5 mx-auto">
     <div class="w-full px-8 pt-6 pb-3 shadow-lg rounded pl-7">
-        <div class="flex">
+      <div class="flex">
       <div class="flex flex-col">
         <div class="text-gray-900 text-3xl title-font font-medium mb-4">
           Transfer ID #{{ object.transfer }}
@@ -39,49 +39,45 @@
               >Needed By:
             </span>
             <span class="ml-3 text-gray-900"
-              >{{ object.reqDateNeeded }}</span
+              >{{ object.requisition.reqDateNeeded }}</span
             >
           </div>
       </div>
-        {% if object.get_reqStatus_display == "For Review" %}
+        {% if object.get_transferStatus_display == "Awaiting Delivery" %}
         <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-yellow-500 border-0 py-2 px-5 focus:outline-none rounded-full">
-        {% elif object.get_reqStatus_display == "Awaiting Delivery" %}
-        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none rounded-full">
-        {% elif object.get_reqStatus_display == "Request Denied" %}
-        <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-red-500 border-0 py-2 px-5 focus:outline-none rounded-full">
-        {% elif object.get_reqStatus_display == "Delivered" %}
+        {% elif object.get_transferStatus_display == "Delivered" %}
         <span class="text-center ml-auto text-gray-900 text-sm font-medium h-full [TEST] flex justify-end text-white bg-green-500 border-0 py-2 px-5 focus:outline-none rounded-full">
         {% endif %}
-          {{ object.get_reqStatus_display }}
+          {{ object.get_transferStatus_display }}
         </span>
     </div>
       
       <div class="flex mb-4">
         <a class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg">
-          Details
+          Transfer Details
         </a>
       </div>
       <div class="flex pb-2">
         <span class="text-gray-500">Date Submitted</span>
         <span class="w-1/2 text-right ml-auto text-gray-900"
-          >{{ object.reqDateSubmitted }}</span
+          >{{ object.transferDateSubmitted }}</span
         >
       </div>
       <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500 mr-20">Description</span>
-        <span class="w-1/2 text-right ml-auto text-gray-900"
-          >{{ object.reqDescription }}</span
-        >
+        <span class="text-gray-500">Origin Site</span>
+        <span class="w-1/2 text-right ml-auto text-gray-900">
+          {{ object.site.siteName }}
+        </span>
       </div>
       <div class="flex py-2 border-t border-gray-200">
-        <span class="text-gray-500">Destination Site</span>
-        <span class="w-1/2 text-right ml-auto text-gray-900">{{ object.site.siteName }}</span>
+        <span class="text-gray-500 mr-20">Destination Site</span>
+        <span class="w-1/2 text-right ml-auto text-gray-900">
+          {{ object.requisition.site }}
+        </span>
       </div>
     </div>
-
-    <table id="table"
-      class="w-full overflow-hidden rounded-lg shadow-lg"
-    >
+    <div class="">
+    <table id="table" class="w-full overflow-hidden rounded-lg shadow-lg" style="width:100%;">
         <thead class="bg-slate-100">
             <tr>
                 <th class="p-2 font-medium text-gray-600">Item</th>
@@ -90,26 +86,90 @@
         </thead>
         <tbody class="text-center">
           
-          {% for item in requisition.materialrequisitionitems_set.all %}
-            <tr
-            class="bg-white even:bg-slate-100"
-            >
+          {% for item in transfer.materialtransferitems_set.all %}
+            <tr class="bg-white even:bg-slate-100">
                 <td class="p-2">{{ item.item.itemName }}</td>
                 <td class="p-2">{{ item.itemQuantity }}</td>
             </tr>
           {% endfor %}
         </tbody>
     </table>
-    <!-- Update button -->
+  </div>
     <div class="flex justify-end mt-3 ml-auto">
       <div id="buttons" class="flex">
         <a href="{% url 'transfer:update-transfer' object.pk %}" class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 cursor-hover focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100">
             Update
         </a>
+        <button
+          class="modal-toggle flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded ease-in duration-100"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- MODAL -->
+<div
+  id="delete-modal"
+  class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center"
+>
+  <div
+    class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"
+  ></div>
+
+  <div
+    class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
+  >
+    <!-- Add margin if you want to see some of the overlay behind the modal-->
+    <div class="modal-content py-4 text-left px-6">
+      <!--Title-->
+      <div class="flex justify-between items-center pb-2">
+        <p class="text-2xl font-bold">Delete Confirmation</p>
+        <div class="modal-toggle cursor-pointer z-50">
+          <svg
+            class="fill-current text-black"
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+          >
+            <path
+              d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+
+      <!--Body-->
+      <p>
+        Are you sure you want to delete transfer:
+        <span class="italic">Transfer ID #{{ object.transfer }}</span>
+      </p>
+
+      <!--Footer-->
+      <div class="flex justify-end pt-4">
+        <form
+          class="form-inline"
+          method="post"
+          action="{% url 'transfer:delete-transfer' object.pk %}"
+        >
+          {% csrf_token %}
+          <input
+            type="submit"
+            value="Delete"
+            class="cursor-pointer flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded"
+          />
+        </form>
+        <button
+          class="modal-toggle flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
 
   <script src="{% static 'js/table.js' %}"></script>
   <script src="{% static 'js/modal.js' %}"></script>

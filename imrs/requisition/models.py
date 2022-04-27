@@ -15,15 +15,18 @@ class MaterialRequisitionItems(models.Model):
     itemQuantity = models.PositiveIntegerField(default=0, null=True)
     class Meta:
         UniqueConstraint(fields = ['requisition', 'item'], name = 'req_item_unique')
+    def __str__(self):
+        return self.item.itemName
 
 class MaterialRequisition(models.Model):
     REQ_STATUS = [
         # Unfilled
         (0,'For Review'),
         # Filled
-        (1, 'Awaiting Delivery'),
+        (1, 'Partially Filled'),
         (2, 'Request Denied'),
-        (3, 'Delivered'),
+        (3, 'Filled'),
+        (4, 'Delivered'),
     ]
     requisition = models.AutoField(primary_key=True) #change to UUField if needed
     site = models.ForeignKey("project_site.Site", on_delete=models.CASCADE) 
@@ -37,11 +40,10 @@ class MaterialRequisition(models.Model):
         related_name="mat_req_items"
         )
     reqStatus = models.PositiveSmallIntegerField(choices=REQ_STATUS, default=0)
-    # def clean(self):
-    #     if self.site_id == self.site:
-    #         raise ValidationError("Site cannot send item to themselves.")
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
     class Meta:
         UniqueConstraint(fields = ['requisition', 'site'], name = 'req_site_unique')
+    def __str__(self):
+        return str(self.pk)

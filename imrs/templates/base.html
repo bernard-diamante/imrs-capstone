@@ -21,18 +21,31 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/custom.css' %}" rel="stylesheet"/>
 
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet"> -->
+
 </head>
 <body>
     {% if request.user.is_authenticated %}
         {% include 'navbar.html' %}
     {% endif %}
-    <div class="max-w-7xl mx-auto px-5">
-        <div class="items-start  mx-auto mt-20">
+
+    <div class="preload z-20 bg-white">
+        <!-- <img src="http://i.imgur.com/KUJoe.gif"> -->
+    </div>
+
+    <div class="content max-w-7xl mx-auto px-10">
+        <div class="items-start mx-auto mt-20">
         {% block content %}
         {% endblock content %}
         </div>
     </div>
     {% include "scripts.html" %}
 
+    <script>
+        $(window).on("load", function () {
+            $('.preload').fadeOut('fast');
+        })
+    </script>
 </body>
 </html>

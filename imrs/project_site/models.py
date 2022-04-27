@@ -41,9 +41,11 @@ class Cart(models.Model):
 
 class Inventory(models.Model):
     ITEM_STATUS = [
-        (1, 'Normal'),
+        (0, 'Above Threshold'),
+        (1, 'Moderate'),
         (2, 'Low'),
-        (3, 'Empty')
+        (3, 'Critical'),
+        (4, 'Empty')
     ]
 
     ITEM_TURNOVER = [
@@ -60,7 +62,6 @@ class Inventory(models.Model):
     siteItemMinThreshold = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
-        # unique_together = (('item', 'site'))
         constraints = [
             models.UniqueConstraint(fields=['item', 'site'], name='unique_item_inv')
         ]

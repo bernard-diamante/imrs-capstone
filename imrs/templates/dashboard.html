@@ -9,51 +9,60 @@
 </div>
 
 <div class="flex-col space-y-8">
-    <div class="grid grid-cols-4 gap-6">
+    {% if request.user.role <= 2 %}
+        <div class="grid grid-cols-2 gap-6">
+    {% elif request.user.role == 3 %}
+        <div class="grid grid-cols-3 gap-6">
+    {% endif %}
 
         <a href="{% url 'requisition:list-requisition' %}">
-        <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
-            <div class="text-center m-auto sm:m-0 sm:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold">{{ data.requisition.count }}</h1>
-                <span class="text-sm md:text-base text-slate-700">Pending Requests</span>
+            <div class="h-full flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
+                <div class="text-center m-auto sm:m-0 sm:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold">{{ data.requisition.count }}</h1>
+                    <span class="text-slate-700">Pending Requests</span>
+                </div>
+                <div class="hidden sm:inline-block my-auto">
+                    <span class="material-icons-outlined my-auto hidden lg:inline-block" style="font-size:40px; color:gray;">article</span>
+                </div>
             </div>
-            <div class="hidden sm:inline-block my-auto">
-                <span class="material-icons-outlined my-auto hidden lg:inline-block" style="font-size:40px; color:gray;">article</span>
-            </div>
-        </div>
         </a>
 
         <a href="{% url 'transfer:list-transfer' %}">
-        <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
-            <div class="text-center m-auto sm:m-0 sm:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold">69</h1>
-                <span class="text-sm md:text-base text-slate-700">Transfers<span>
+            <div class="h-full flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
+                <div class="text-center m-auto sm:m-0 sm:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold">{{ data.transfer.count }}</h1>
+                    <span class="text-slate-700">Pending Transfers<span>
+                </div>
+                <div class="hidden sm:inline-block my-auto">
+                    <span class="material-icons-outlined" style="font-size:40px; color:gray;">autorenew</span>
+                </div>
             </div>
-            <div class="hidden sm:inline-block my-auto">
-                <span class="material-icons-outlined" style="font-size:40px; color:gray;">autorenew</span>
-            </div>
-        </div>
         </a>
 
-        <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
-            <div class="text-center m-auto sm:m-0 sm:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold">{{ data.inventory.count }}</h1>
-                <span class="text-sm md:text-base text-slate-700">Low Counts<span>
+        {% if request.user.role == 3 %}
+        <a href="{% url 'inventory:list-inventory' %}">
+            <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
+                <div class="h-full text-center m-auto sm:m-0 sm:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold">{{ data.inventory.count }}</h1>
+                    <span class="text-slate-700">Low Counts<span>
+                </div>
+                <div class="hidden sm:inline-block my-auto">
+                    <!-- <span class="material-icons-outlined my-auto" style="font-size:40px; color:gray;">person</span> -->
+                    <span class="material-icons-outlined" style="font-size:40px; color:gray;">trending_down</span>
+                </div>
             </div>
-            <div class="hidden sm:inline-block my-auto">
-                <span class="material-icons-outlined my-auto" style="font-size:40px; color:gray;">person</span>
-            </div>
-        </div>
+        </a>
+        {% endif %}
 
-        <div class="flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
+        <!-- <div class="h-full flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
             <div class="text-center m-auto sm:m-0 sm:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold">69</h1>
-                <span class="text-sm md:text-base text-slate-700">Incoming Deliveries<span>
+                <h1 class="text-4xl md:text-5xl font-bold"></h1>
+                <span class="text-slate-700">Incoming Deliveries<span>
             </div>
             <div class="hidden sm:inline-block my-auto">
                 <span class="material-icons-outlined my-auto" style="font-size:40px; color:gray;">local_shipping</span>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="w-full border-b border-2 "></div>
@@ -89,7 +98,45 @@
                 </table>
             </div>
         </div>
+
         <div class="flex-col grow">
+            <h4 class="font-bold text-2xl pb-3">Material Transfers</h4>
+            <div class="w-full">
+                <table
+                id="table"
+                class="req-table table overflow-hidden rounded-lg shadow-lg"
+                style="width:100%;"
+                >
+                    <thead class="bg-slate-100 text-gray-600">
+                        <th class="py-2 font-medium">Tran. ID</th>
+                        <!-- <th class="py-2 font-medium">Origin</th> -->
+                        <th class="py-2 font-medium">Destination</th>
+                        <th class="py-2 font-medium">Deliver By</th>
+                        <th class="py-2 font-medium">Status</th>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for tran in data.delivery %}
+                        <tr
+                        data-href="{% url 'transfer:detail-transfer' tran.pk %}"
+                        class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+                        >
+                            <td class="p-2">{{ tran.transfer }}</td>
+                            <!-- <td class="p-2">{{ tran.site }}</td> -->
+                            <td class="p-2">{{ tran.requisition.site }}</td>
+                            <td class="p-2">{{ tran.requisition.reqDateNeeded }}</td>
+                            <td class="p-2">{{ tran.get_transferStatus_display }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+    </div>
+
+    {% if request.user.role == 3 %}
+        <div class="flex-col grow md:w-1/2 md:mx-auto">
             <h4 class="font-bold text-2xl pb-3">Inventory Alerts</h4>
             <div class="w-full">
             <table
@@ -119,7 +166,7 @@
             </table>
             </div>
         </div>
-    </div>
+        {% endif %}
 </div>
 
 <script src="{% static 'js/dash-table.js' %}"></script>

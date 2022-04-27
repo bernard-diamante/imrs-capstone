@@ -10,14 +10,14 @@ class MaterialTransferItems(models.Model):
     itemQuantity = models.PositiveIntegerField(default=0, null=True)
     class Meta:
         UniqueConstraint(fields = ['transfer', 'item'], name = 'req_item_unique')
+    def __str__(self):
+        return self.item.itemName
 
 
 class MaterialTransfer(models.Model):
     TRAN_STATUS = [
-        (0,'For Review'),
-        (1, 'Awaiting Delivery'),
-        (2, 'Transfer Pending'),
-        (3, 'Transfer Accomplished'),
+        (0, 'Awaiting Delivery'),
+        (1, 'Delivered')
     ]
     transfer = models.AutoField(primary_key=True)
     # destination site accessed through requisition forms
@@ -30,11 +30,11 @@ class MaterialTransfer(models.Model):
         through_fields=('transfer', 'item'),
         related_name="mat_tran_items"
         )
-    transferDateSubmitted = models.DateField(auto_now=False)
+    transferDateSubmitted = models.DateField(auto_now=True)
     transferStatus = models.PositiveSmallIntegerField(choices=TRAN_STATUS, default=0)
-    def clean(self):
-        if self.site_id == self.site:
-            raise ValidationError("Site cannot send item to themselves.")
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
+    # def clean(self):
+    #     if self.site_id == self.site:
+    #         raise ValidationError("Site cannot send item to themselves.")
+    # def save(self, *args, **kwargs):
+    #     self.full_clean()
+    #     super().save(*args, **kwargs)

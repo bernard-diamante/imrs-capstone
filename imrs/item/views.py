@@ -66,14 +66,9 @@ class ItemUpdateView(LoginRequiredMixin, generic.UpdateView):
         return super(ItemUpdateView, self).form_valid(form)
 
 class ItemDeleteView(LoginRequiredMixin, generic.DeleteView):
-    template_name = "item/item_delete.html"
-
+    model = Item
     def get_success_url(self):
         return reverse_lazy("item:list-item")
-
-    def get_queryset(self):
-        user = self.request.user
-        return Item.objects.all()
 
 class ItemDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "item/item_detail.html"
