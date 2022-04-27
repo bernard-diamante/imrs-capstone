@@ -62,20 +62,28 @@ MIDDLEWARE = [
 
 CACHES = {
     'default': {
-        'BACKEND': 'django_mysql.cache.MySQLCache',
-        'LOCATION': 'cache_table',
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': [
+            '172.19.26.240:11211',
+            '172.19.26.242:11212',
+            '172.19.26.244:11213',
+        ]
     },
 
-    "select2": {
-        "BACKEND": "django_mysql.cache.MySQLCache",
-        "LOCATION": "cache_table",
+    # "select2": {
+    #     "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+    #     "LOCATION": [
+    #         '172.19.26.240:11211',
+    #         '172.19.26.242:11212',
+    #         '172.19.26.244:11213',
+        # ]
         # "OPTIONS": {
         #     "CLIENT_CLASS": "django_redis.client.DefaultClient",
         # }
-    }    
+    # }    
 }
 
-SELECT2_CACHE_BACKEND = "select2"
+# SELECT2_CACHE_BACKEND = "select2"
 
 ROOT_URLCONF = 'imrs.urls'
 
@@ -213,3 +221,5 @@ LOGGING = {
 }
 
 TAILWIND_APP_NAME = 'theme'
+
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
