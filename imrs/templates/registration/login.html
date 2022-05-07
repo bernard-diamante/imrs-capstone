@@ -1,14 +1,11 @@
-{% extends 'base.html' %} {% load tailwind_filters %} {% load static %} 
-
-<!--  -->
-
+{% extends 'base.html' %} 
+{% load tailwind_filters %} 
+{% load static %} 
 {% block content %}
-<!-- <section class="text-gray-600 body-font"> -->
   <div class="container px-5 py-24 mx-auto items-center">
     <!-- Logo and Label -->
     <div class="mx-auto items-center flex-wrap mb-20 w-1/2">
       <img class="mx-auto mb-5 h-20" src="{% static 'images/logo.png' %}" />
-      <!-- NOTE: Adjust image height -->
       <h1 class="text-center text-3xl break-normal mx-auto">
         Inventory Management and
       </h1>
@@ -34,5 +31,4 @@
       </form>
     </div>
   </div>
-<!-- </section> -->
 {% endblock content %}

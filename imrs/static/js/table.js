@@ -50,37 +50,3 @@ $(function(){
       $('#submit').removeClass('hidden');
   }
 });
-
-// TESTING
-
-// var url="{% url 'inventory:list-inventory' %}";
-// var siteInput
-
-// function siteSelect() {
-//   siteInput = $('#site-select option:selected').val();
-//   // var data = {'site':siteInput, 'csrfmiddlewaretoken': '{{ csrf_token }}'}
-//   // $.post(url,data);
-
-//   jQuery.ajax({
-//     type: 'GET',
-//     url: url,
-//     data: { 
-//         ids: siteInput,
-//                 },
-//     success: function(data) {},
-//     error: function(xhr, textStatus, error) {
-//         console.log(error);  
-//     } 
-//   });
-
-//   table.ajax.reload();
-// };
-
-// var url="{% url 'inventory:list-inventory' %}"
-// var siteInput=$('#site-select').val()
-
-// function siteSelect() {
-//   var data = {'site':siteInput, 'csrfmiddlewaretoken': '{{ csrf_token }}'}
-//   $.post(url,data);
-//   // window.location.replace(url);
-// }

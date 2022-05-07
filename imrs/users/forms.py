@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, UsernameField
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import User
 from .views import *
 
@@ -32,9 +32,6 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['password1'].help_text = "Your password must contain at least 8 characters."
         self.fields['password2'].help_text = None
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     first_name, middle_name, last_name = self.cleaned_data['first_name', 'middle_name', 'last_name'].title()
     def clean_first_name(self):
         cleaned_data = super().clean()
         first_name = cleaned_data['first_name'].title()

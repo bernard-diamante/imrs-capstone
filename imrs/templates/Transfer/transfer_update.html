@@ -43,25 +43,6 @@
             >Item Details</a
           >
         </div>
-    
-        <!-- <form
-          class="form-inline"
-          method="post"
-          action="">
-          {% csrf_token %} {{ form|crispy }}
-          <div class="flex justify-end mt-6 ml-auto">
-            <div id="buttons" class="flex">
-              <input
-                type="submit"
-                value="Submit"
-                class="flex ml-3 text-white bg-indigo-500 border-0 py-2 px-6 cursor-pointer focus:outline-none hover:bg-indigo-600 rounded ease-in duration-100"
-              />
-              <a href="{% url 'transfer:detail-transfer' object.pk %}" class="flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded ease-in duration-100">
-                  Cancel
-              </a>
-            </div>
-          </div>
-        </form> -->
 
         <form class="form-inline" method="post">
           {% csrf_token %}
@@ -71,7 +52,7 @@
 
           {{ inlines.management_form }}
           <div class="flex mb-5">
-            <a
+            {% comment %} <a
               class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
               >Items Requested</a>
           </div>
@@ -82,10 +63,10 @@
                     {{ form|crispy }}
                 </div>
           </div>
-            {% endfor %}
+            {% endfor %} {% endcomment %}
           </div>
           
-          <input class="flex mt-3 mx-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-slate-500 hover:bg-slate-600 ease-in duration-100 border-0 py-2 px-5 focus:outline-none rounded-full" type="button" value="Add an Item +" id="add_more">
+          {% comment %} <input class="flex mt-3 mx-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-slate-500 hover:bg-slate-600 ease-in duration-100 border-0 py-2 px-5 focus:outline-none rounded-full" type="button" value="Add an Item +" id="add_more"> {% endcomment %}
 
           <div id="empty_form" style="display:none">
             <div class="flex flex-row">

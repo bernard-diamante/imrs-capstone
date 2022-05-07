@@ -58,8 +58,5 @@ $(document).ready(function ()
     }
 
 $('.update-cart').click(function () {
-    // $(this).html("✓");
     $(this).replaceWith("<p class='h-7 w-7 cursor-default justify-center text-sm font-bold flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full'>✓</p>")
-    // $(this).removeClass();
-    // $(this).addClass("h-7 w-7 justify-center cursor-default text-sm font-bold flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full");
 })

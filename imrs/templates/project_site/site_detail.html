@@ -1,8 +1,8 @@
-{% extends 'base.html' %} {% load tailwind_filters %} {% load static %}
-
-<!--  -->
-
+{% extends 'base.html' %} 
+{% load tailwind_filters %} 
+{% load static %}
 {% block content %}
+
 <h2 class="font-bold text-black text-4xl pb-10">Project Site</h2>
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
@@ -89,7 +89,6 @@
     </div>
   </div>
 </div>
-<!-- </div> -->
 
 <!-- MODAL -->
 <div
@@ -103,9 +102,7 @@
   <div
     class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
   >
-    <!-- Add margin if you want to see some of the overlay behind the modal-->
     <div class="modal-content py-4 text-left px-6">
-      <!--Title-->
       <div class="flex justify-between items-center pb-2">
         <p class="text-2xl font-bold">Delete Confirmation</p>
         <div class="modal-toggle cursor-pointer z-50">
@@ -123,13 +120,11 @@
         </div>
       </div>
 
-      <!--Body-->
       <p>
         Are you sure you want to delete item:
         <span class="italic">{{ site.siteName }}</span>
       </p>
 
-      <!--Footer-->
       <div class="flex justify-end pt-4">
         <form
           class="form-inline"
@@ -151,10 +146,9 @@
       </div>
     </div>
   </div>
-
-  <!-- </section> -->
+</div>
 
   <script src="{% static 'js/modal.js' %}"></script>
 
   {% endblock content %}
-</div>
+

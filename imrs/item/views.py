@@ -1,29 +1,23 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from .forms import AddItemModelForm, UpdateItemModelForm
 from .models import Item
 from project_site.models import *
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import get_object_or_404
 from project_site.models import Cart
 import json
 from django.http import HttpResponseRedirect
 
-# from inventory.views import InventoryCreateView
 
-# Create your views here.
+
 class ItemListView(LoginRequiredMixin, generic.ListView):
     template_name = "item/item.html"
     context_object_name = "data"
 
     def get_queryset(self):
         items = Item.objects.all()
-        
-        # items_in_cart = Cart.objects.filter()
-
         qs = { 
             "items": items,
             }
@@ -45,10 +39,6 @@ class ItemAddView(LoginRequiredMixin, generic.CreateView):
     
     def get_success_url(self):
         return reverse_lazy("item:list-item")
-
-    # def form_valid(self, form):
-    #     return super(ItemAddView, self).form_valid(form)
-
 
 class ItemUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "item/item_update.html"
@@ -104,7 +94,7 @@ def deleteCartItem(request, item):
 def sendCart(request):
     cart = Cart.objects.filter(site=request.user.site)
 
-    # item is an Cart item
+    # item is a Cart item
     for item in cart:
         inv_item = Inventory.objects.create(
             site=request.user.site,
@@ -123,36 +113,3 @@ class CartListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         qs = Cart.objects.filter(site=self.request.user.site)
         return qs
-
-    # def post(self, request, *args, **kwargs):
-    #     sendCart(request)
-        
-    # def get_success_url(self):
-    #     return reverse_lazy("item:list-item")
-
-        # cart = Cart.objects.filter(site=request.user.site)
-
-        # for item in cart:
-        #     inv_item = Inventory.objects.get_or_create(
-        #         site=request.user.site,
-        #         item__item=item.cartItem__item,
-        #         siteItemCount = item.cartItemCount
-        #         )
-        #     inv_item.save()
-    #     qs = Cart.objects.filter(site=self.request.user.site)
-    #     for item in qs:
-            
-
-# class CartListView(LoginRequiredMixin, generic.CreateView):
-#     template_name = "item/item_summary.html"
-#     context_object_name = "cart"
-#     model = Inventory
-#     form_class = 
-
-#     def get_queryset(self):
-#         qs = {
-#             "cart_items":Cart.objects.filter(site=self.request.user.site)
-#         }
-#         return qs
-
-#     def form_valid(self, form):

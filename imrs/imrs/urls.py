@@ -18,7 +18,7 @@ from django.urls import path, include, reverse_lazy
 from django.contrib.auth.views import LogoutView, LoginView
 from django.views.generic import RedirectView
 from dashboard.views import LandingPageView
-# from inventory.views import LogOutView
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +33,5 @@ urlpatterns = [
     path('login/', LoginView.as_view(redirect_authenticated_user=True), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path("select2/", include("django_select2.urls")),
-    # path("select2/", include("select2.urls")),
-    # path('', RedirectView.as_view(url='login/')),
+    path('contact-admin/', TemplateView.as_view(template_name="contact-admin.html"), name='contact_admin')
 ]

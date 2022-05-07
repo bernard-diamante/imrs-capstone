@@ -1,10 +1,7 @@
-{% extends 'base.html' %} {% load tailwind_filters %} {% load static %}
-
-<!--  -->
-
+{% extends 'base.html' %} 
+{% load tailwind_filters %} 
+{% load static %}
 {% block content %}
-
-
 
 {% if request.user.role <= 2 %}
 <h2 class="font-bold text-4xl pb-3">Inventory</h2>
@@ -36,6 +33,7 @@
           <th class="font-medium">Subcategory</th>
           <th class="font-medium">Turnover</th>
           <th class="font-medium">Status</th>
+          <th class="font-medium">Last Updated</th>
         </tr>
       </thead>
       <tbody class="text-center">
@@ -44,12 +42,27 @@
           data-href="{% url 'inventory:detail-inventory' item.pk %}"
           class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
         >
-          <td class="itemName">{{ item.item.itemName }}</td>
-          <td class=" ">{{ item.siteItemCount }}</td>
-          <td class=" ">{{ item.item.itemCategory }}</td>
-          <td class=" ">{{ item.item.itemSubcategory }}</td>
-          <td class=" ">{{ item.get_siteItemTurnover_display }}</td>
-          <td class=" ">{{ item.get_siteItemStatus_display }}</td>
+          <td class="">{{ item.item.itemName }}</td>
+          <td class="">{{ item.siteItemCount }}</td>
+          <td class="">{{ item.item.itemCategory }}</td>
+          <td class="">{{ item.item.itemSubcategory }}</td>
+          <td class="">{{ item.get_siteItemTurnover_display }}</td>
+          <td>
+          {% if item.get_siteItemStatus_display == "Above Threshold" %}
+            <div class="justify-center text-gray-900 text-sm font-medium flex text-white bg-green-500 border-0 py-2 focus:outline-none rounded-full">
+          {% elif item.get_siteItemStatus_display == "Moderate" %}
+            <div class="justify-center text-gray-900 text-sm font-medium flex text-white bg-yellow-500 border-0 py-2 focus:outline-none rounded-full">
+          {% elif item.get_siteItemStatus_display == "Low" %}
+            <div class="justify-center text-gray-900 text-sm font-medium flex text-white bg-orange-500 border-0 py-2 focus:outline-none rounded-full">
+          {% elif item.get_siteItemStatus_display == "Critical" %}
+            <div class="justify-center text-gray-900 text-sm font-medium flex text-white bg-red-500 border-0 py-2 focus:outline-none rounded-full">
+          {% elif item.get_siteItemStatus_display == "Empty" %}
+            <div class="justify-center text-gray-900 text-sm font-medium flex text-white bg-gray-500 border-0 py-2 focus:outline-none rounded-full">
+          {% endif %}
+            {{ item.get_siteItemStatus_display }}
+            </div>
+          </td>
+          <td class="">{% if item.inventoryDateModified %} {{ item.inventoryDateModified }} {% else %} -- {% endif %}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -58,20 +71,10 @@
 </div>
 <div id="page-button" class="flex flex-row ml-auto">
   {% if request.user.role <= 2 %}
-    <!-- <span class="whitespace-nowrap mr-2 my-auto">View Project Site: </span>
-    <select id="site-select" class="search-select" name="sites">
-      <option></option>
-      {% comment %} {% for site in data.project_sites %} 
-        <option value="{{ site.site }}">{{ site.siteName }}</option>
-      {% endfor %} {% endcomment %}
-    </select>
-    <button onclick="siteSelect()">
-      hello
-    </button> -->
     <form method="get" action="{% url 'inventory:list-inventory' %}">
       <div class="flex flex-row">
         <div class="flex select-width">
-      {{ data.sites_list }}
+          {{ data.sites_list }}
         </div>
       <input type="submit" value="Filter Site" class="ml-5 h-full text-white bg-indigo-500 border-0 px-3 py-1 cursor-pointer focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
     </div>
@@ -80,29 +83,5 @@
 </div>
 
 <script src="{% static 'js/table.js' %}"></script>
-
-<!-- <script>
-  var url="{% url 'inventory:list-inventory' %}";
-var siteInput
-
-function siteSelect() {
-  siteInput = $('#site-select option:selected').val();
-
-  jQuery.ajax({
-    type: 'GET',
-    url: url,
-    data: { 
-        ids: siteInput,
-                },
-    success: function(data) {},
-    error: function(xhr, textStatus, error) {
-        console.log(error);  
-    } 
-  });
-
-  table.clear().draw();
-  };
-  
-</script> -->
 
 {% endblock content %}

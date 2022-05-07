@@ -1,10 +1,10 @@
-{% extends 'base.html' %} {% load tailwind_filters %} {% load static %}
-
-<!--  -->
-
+{% extends 'base.html' %} 
+{% load tailwind_filters %} 
+{% load static %}
 {% block content %}
 
 <h2 class="font-bold text-black text-4xl pb-10">Items</h2>
+<!-- Div indent -->
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">
@@ -74,7 +74,6 @@
     </div>
   </div>
 </div>
-<!-- </div> -->
 
 <!-- MODAL -->
 <div
@@ -136,10 +135,9 @@
       </div>
     </div>
   </div>
-
-  <!-- </section> -->
+</div>
 
   <script src="{% static 'js/modal.js' %}"></script>
 
   {% endblock content %}
-</div>
+

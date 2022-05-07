@@ -2,10 +2,10 @@ from django.urls import path
 from .views import *
 
 
+
 app_name = 'inventory'
 
 urlpatterns = [
-    # inventory
     path('', InventoryListView.as_view(), name='list-inventory'),
     path('<str:pk>/update/', InventoryUpdateView.as_view(), name='update-inventory'),
     path('<str:pk>/', InventoryDetailView.as_view(), name='detail-inventory'),

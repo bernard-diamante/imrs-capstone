@@ -5,6 +5,7 @@
 {% block content %}
 
 <h2 class="font-bold text-black text-4xl pb-10">Inventory</h2>
+<!-- Div indent -->
 <div class="lg:w-4/5 mx-auto flex flex-wrap">
   <!-- Return Button -->
   <div class="flex w-full mb-5">
@@ -59,42 +60,34 @@
           {{ object.get_siteItemStatus_display }}
           </span>
       </div>
-      <!-- <div class="flex">
-        <span class="text-gray-900 text-3xl title-font font-medium mb-4">
-          {{ object.item.itemName }}
-        </span>
-        <span class="ml-auto text-gray-900 text-3xl title-font font-medium mb-4"
-          >QTY:
-        </span>
-        <span class="ml-3 text-gray-900 text-3xl mb-4"
-          >{{ object.siteItemCount }}</span
-        >
-      </div> -->
       <div class="flex mb-4">
-        <a
-          class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg"
-          >Item Details</a
-        >
+        <a class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg">
+          Item Details
+        </a>
       </div>
       <div class="flex pb-2">
         <span class="text-gray-500">Category</span>
-        <span class="w-1/2 text-right ml-auto text-gray-900"
-          >{{ object.item.itemCategory }}</span
-        >
+        <span class="w-1/2 text-right ml-auto text-gray-900">
+          {{ object.item.itemCategory }}
+        </span>
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Subcategory</span>
-        <span class="w-1/2 text-right ml-auto text-gray-900"
-          >{{ object.item.itemSubcategory }}</span
-        >
+        <span class="w-1/2 text-right ml-auto text-gray-900">
+          {{ object.item.itemSubcategory }}
+        </span>
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Turnover</span>
-        <span class="w-1/2 text-right ml-auto text-gray-900">{{ object.get_siteItemTurnover_display }}</span>
+        <span class="w-1/2 text-right ml-auto text-gray-900">
+          {{ object.get_siteItemTurnover_display }}
+        </span>
       </div>
       <div class="flex py-2 border-t border-gray-200">
         <span class="text-gray-500">Min. Threshold</span>
-        <span class="w-1/2 text-right ml-auto text-gray-900">{{ object.siteItemMinThreshold }}</span>
+        <span class="w-1/2 text-right ml-auto text-gray-900">
+          {{ object.siteItemMinThreshold }}
+        </span>
       </div>
     </div>
     <div class="flex justify-end mt-3 ml-auto">
@@ -111,23 +104,16 @@
     </div>
   </div>
 </div>
-<!-- </div> -->
 
 <!-- MODAL -->
 <div
   id="delete-modal"
   class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center"
 >
-  <div
-    class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"
-  ></div>
+  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
 
-  <div
-    class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
-  >
-    <!-- Add margin if you want to see some of the overlay behind the modal-->
+  <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
     <div class="modal-content py-4 text-left px-6">
-      <!--Title-->
       <div class="flex justify-between items-center pb-2">
         <p class="text-2xl font-bold">Delete Confirmation</p>
         <div class="modal-toggle cursor-pointer z-50">
@@ -145,19 +131,16 @@
         </div>
       </div>
 
-      <!--Body-->
       <p>
         Are you sure you want to delete item:
         <span class="italic">{{ object.item.itemName }}</span>
       </p>
 
-      <!--Footer-->
       <div class="flex justify-end pt-4">
         <form
           class="form-inline"
           method="post"
-          action="{% url 'inventory:delete-inventory' object.pk %}"
-        >
+          action="{% url 'inventory:delete-inventory' object.pk %}">
           {% csrf_token %}
           <input
             type="submit"
@@ -166,17 +149,14 @@
           />
         </form>
         <button
-          class="modal-toggle flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded"
-        >
+          class="modal-toggle flex ml-3 text-black bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded">
           Cancel
         </button>
       </div>
     </div>
   </div>
-
-  <!-- </section> -->
-
+</div>
   <script src="{% static 'js/modal.js' %}"></script>
 
   {% endblock content %}
-</div>
+

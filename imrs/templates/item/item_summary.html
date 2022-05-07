@@ -1,7 +1,6 @@
-{% extends 'base.html' %} {% load tailwind_filters %} {% load static %}
-
-<!--  -->
-
+{% extends 'base.html' %} 
+{% load tailwind_filters %} 
+{% load static %}
 {% block content %}
 
 <h2 class="font-bold text-4xl pb-10">Item Summary</h2>
@@ -83,8 +82,6 @@
 </div>
 
 <div id="page-button" class="flex flex-row ml-auto">
-  <!-- <form method="post" action=""> -->
-    <!-- ADD SUBMIT ORDER URL --> 
     <a href="{% url 'item:send-cart' %}">
       <button
         id="submit" class="mx-auto flex text-center justify-center h-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100"
@@ -92,7 +89,6 @@
         Submit
       </button>
     </a>
-  <!-- </form> -->
 </div>
 
 <script src="{% static 'js/table.js' %}"></script>

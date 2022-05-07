@@ -1,10 +1,7 @@
-from django.shortcuts import reverse, redirect, render
+from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from django.contrib.auth.views import LoginView
 
-
-from item.models import Item
 from project_site.models import Inventory
 from requisition.models import MaterialRequisition
 from transfer.models import MaterialTransfer
@@ -15,24 +12,30 @@ class DashboardListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(DashboardListView, self).get_context_data(**kwargs)
-    
         user = self.request.user
-
-        # Add dashboard contents
-
         return context
 
     def get_queryset(self):
-        qs = {
-            'inventory': Inventory.objects.all(),
-            'requisition': MaterialRequisition.objects.all(),
-            'transfer': MaterialTransfer.objects.all(),
-            'delivery': MaterialTransfer.objects.filter(transferStatus=0),
-            # '': Item.objects.all(),
-        }
+        user = self.request.user
+        if user.role >= 2: #Queryset for Site Engr. and Warehouse Manager
+            qs = {
+                'inventory': Inventory.objects.filter(site=user.site, siteItemStatus=2),
+                'requisition': MaterialRequisition.objects.filter(site=user.site),
+                'transfer': MaterialTransfer.objects.filter(site=user.site),
+                'delivery': MaterialTransfer.objects.filter(transferStatus=0, site=user.site),
+            }
+
+
+        else:
+            qs = {
+                'inventory': Inventory.objects.all(),
+                'requisition': MaterialRequisition.objects.filter(reqStatus=0),
+                'transfer': MaterialTransfer.objects.filter(transferStatus=0),
+                # 'delivery': MaterialTransfer.objects.filter(transferStatus=0),
+            }
         return qs
             
-class LandingPageView(generic.TemplateView, LoginRequiredMixin): #Checking if user is logged in
+class LandingPageView(generic.TemplateView, LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect("dashboard:dashboard")

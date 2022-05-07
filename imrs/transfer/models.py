@@ -3,7 +3,6 @@ from item.models import Item
 from django.db.models import UniqueConstraint
 from django.core.exceptions import ValidationError
 
-
 class MaterialTransferItems(models.Model):
     transfer = models.ForeignKey("MaterialTransfer", on_delete=models.CASCADE)
     item = models.ForeignKey('item.Item', on_delete=models.CASCADE)
@@ -16,8 +15,9 @@ class MaterialTransferItems(models.Model):
 
 class MaterialTransfer(models.Model):
     TRAN_STATUS = [
-        (0, 'Awaiting Delivery'),
-        (1, 'Delivered')
+        (0, 'Awaiting Approval'),
+        (1, 'Approved'),
+        (2, 'Delivered')
     ]
     transfer = models.AutoField(primary_key=True)
     # destination site accessed through requisition forms
@@ -32,9 +32,4 @@ class MaterialTransfer(models.Model):
         )
     transferDateSubmitted = models.DateField(auto_now=True)
     transferStatus = models.PositiveSmallIntegerField(choices=TRAN_STATUS, default=0)
-    # def clean(self):
-    #     if self.site_id == self.site:
-    #         raise ValidationError("Site cannot send item to themselves.")
-    # def save(self, *args, **kwargs):
-    #     self.full_clean()
-    #     super().save(*args, **kwargs)
+    transferDateModified = models.DateTimeField(blank=True, null=True)

@@ -7,4 +7,3 @@ class InventoryConfig(AppConfig):
 
     def ready(self):
         from . import signals
-        # pre_save.connect(signals.calculate_item_status)

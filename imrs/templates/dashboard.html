@@ -47,22 +47,11 @@
                     <span class="text-slate-700">Low Counts<span>
                 </div>
                 <div class="hidden sm:inline-block my-auto">
-                    <!-- <span class="material-icons-outlined my-auto" style="font-size:40px; color:gray;">person</span> -->
                     <span class="material-icons-outlined" style="font-size:40px; color:gray;">trending_down</span>
                 </div>
             </div>
         </a>
         {% endif %}
-
-        <!-- <div class="h-full flex justify-between bg-slate-50 rounded-lg p-4 drop-shadow-md hover:drop-shadow-none ease-in duration-300">
-            <div class="text-center m-auto sm:m-0 sm:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold"></h1>
-                <span class="text-slate-700">Incoming Deliveries<span>
-            </div>
-            <div class="hidden sm:inline-block my-auto">
-                <span class="material-icons-outlined my-auto" style="font-size:40px; color:gray;">local_shipping</span>
-            </div>
-        </div> -->
     </div>
 
     <div class="w-full border-b border-2 "></div>
@@ -78,7 +67,7 @@
                 >
                     <thead class="bg-slate-100 text-gray-600">
                         <th class="py-2 font-medium">Req. ID</th>
-                        <th class="py-2 font-medium">Destination</th>
+                        <th class="py-2 font-medium">Requesting Site</th>
                         <th class="py-2 font-medium">Needed By</th>
                         <th class="py-2 font-medium">Status</th>
                     </thead>
@@ -109,8 +98,7 @@
                 >
                     <thead class="bg-slate-100 text-gray-600">
                         <th class="py-2 font-medium">Tran. ID</th>
-                        <!-- <th class="py-2 font-medium">Origin</th> -->
-                        <th class="py-2 font-medium">Destination</th>
+                        <th class="py-2 font-medium">Requesting Site</th>
                         <th class="py-2 font-medium">Deliver By</th>
                         <th class="py-2 font-medium">Status</th>
                     </thead>
@@ -121,7 +109,6 @@
                         class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
                         >
                             <td class="p-2">{{ tran.transfer }}</td>
-                            <!-- <td class="p-2">{{ tran.site }}</td> -->
                             <td class="p-2">{{ tran.requisition.site }}</td>
                             <td class="p-2">{{ tran.requisition.reqDateNeeded }}</td>
                             <td class="p-2">{{ tran.get_transferStatus_display }}</td>

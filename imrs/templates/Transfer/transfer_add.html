@@ -56,9 +56,7 @@
         
         <form
           class="form-inline"
-          method="post"
-          action=""
-        > <!-- add url add form -->
+          method="post">
           {% csrf_token %}
           {{ form.transferStatus.as_hidden }}
           {{ form.site|as_crispy_field }}
@@ -76,7 +74,6 @@
                 <div class='w-full grid grid-cols-2 gap-5 no_error'>
                     {{ form|crispy }}
                 </div>
-                <!-- <input class="delete cursor-pointer ml-5 my-auto text-center text-gray-900 cursor-pointer text-sm font-medium h-full [TEST] text-white bg-rose-500 hover:bg-rose-600 ease-in duration-100 border-0 py-1 px-3 focus:outline-none rounded-full" value="Delete" type="button" formnovalidate></input> -->
           </div>
             {% endfor %}
           </div>

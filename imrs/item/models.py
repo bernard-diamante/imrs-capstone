@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
 class Item(models.Model):
     item = models.AutoField(primary_key=True)
     itemName = models.CharField(max_length=30)

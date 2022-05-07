@@ -1,5 +1,4 @@
 from django.db.models import UniqueConstraint
-from django.core.exceptions import ValidationError
 from item.models import Item
 from django.db import models
 

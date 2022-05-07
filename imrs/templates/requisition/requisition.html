@@ -1,12 +1,9 @@
-{% extends 'base.html' %} {% load tailwind_filters %} {% load static %} 
-
-<!--  -->
-
+{% extends 'base.html' %} 
+{% load tailwind_filters %} 
+{% load static %} 
 {% block content %}
 
 <h2 class="font-bold text-4xl pb-10">Material Requests</h2>
-
-<!-- IF STATEMENT to check if user is MO or SE -->
 <div class="flex space-x-5">
   <div class="w-full">
   <table
@@ -23,15 +20,29 @@
       </tr>
     </thead>
     <tbody class="text-center">
-      {% for request in requisition %}
+      {% for request in requisition.requests %}
       <tr
         data-href="{% url 'requisition:detail-requisition' request.pk %}"
         class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
       >
-        <td class="p-2">{{ request.requisition }}</td>
-        <td class="p-2">{{ request.site }}</td>
-        <td class="p-2">{{ request.reqDateNeeded }}</td>
-        <td class="p-2">{{ request.get_reqStatus_display }}</td>
+        <td class="">{{ request.requisition }}</td>
+        <td class="">{{ request.site }}</td>
+        <td class="">{{ request.reqDateNeeded }}</td>
+        <td class="">
+          {% if request.get_reqStatus_display == "For Review" %}
+          <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-orange-500 border-0 py-2  focus:outline-none rounded-full">
+          {% elif request.get_reqStatus_display == "Partially Filled" %}
+          <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-yellow-500 border-0 py-2  focus:outline-none rounded-full">
+          {% elif request.get_reqStatus_display == "Request Denied" %}
+          <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-red-500 border-0 py-2  focus:outline-none rounded-full">
+          {% elif request.get_reqStatus_display == "Filled" %}
+          <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-blue-500 border-0 py-2  focus:outline-none rounded-full">
+          {% elif request.get_reqStatus_display == "Delivered" %}
+          <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-green-500 border-0 py-2  focus:outline-none rounded-full">
+          {% endif %}
+          {{ request.get_reqStatus_display }}
+          </div>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -45,8 +56,6 @@
     {% endif %}
   </div>
 </div>
-
-<!-- <script src="{% static 'js/table.js' %}"></script> -->
 
 <script>
   $(document).ready(function () {

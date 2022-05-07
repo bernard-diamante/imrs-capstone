@@ -13,19 +13,16 @@ class TransferModelForm(forms.ModelForm):
         fields = (
             'site',
             'transferStatus'
-            # 'originSite'
         )
-        exclude = (
-            'transferItems',
-        )
-        widgets = {
-            # 'requisition.reqDateNeeded': forms.DateInput(attrs={'type': 'date'}),
-            #TextInput(attrs={'style': 'max-width: 600px;', 'placeholder':'Text', 'rows': '3'})
-        }
+        # exclude = (
+        #     'transferItems',
+        # )
     def __init__(self, *args, **kwargs):
         """ Grants access to the request object so that only members of the current user
         are given as options"""
         super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_tag = False
         self.fields['site'].label = "Origin Site"
         self.fields['site'].queryset = self.fields['site'].queryset.order_by('siteName')
         self.fields['transferStatus'].initial = 0
@@ -34,26 +31,10 @@ class TransferModelForm(forms.ModelForm):
         if not (instance and instance.pk):
             self.fields['transferStatus'].widget = forms.HiddenInput()
         
-        # print(kwargs)
-        
-
-
-
-        # self.fields['originSite'].required = True
-        # self.fields['items'] = forms.ModelMultipleChoiceField(
-        #     queryset=Inventory.objects.all(),
-        #     widget=forms.CheckboxSelectMultiple,
-        #     )
-        # self.fields['requisition__reqDateNeeded'].label = "Date Needed"
-                
-
-########################
-        
 class TransferItemsModelForm(forms.ModelForm):
-    transfer = models.AutoField(primary_key=True)
-    item = forms.ModelChoiceField(
-        queryset=Item.objects.filter())
-    itemQuantity = models.PositiveIntegerField(default=0, null=True)
+    # transfer = models.AutoField(primary_key=True)
+    # itemQuantity = models.PositiveIntegerField(default=0, null=True)
+    # item = forms.ModelChoiceField(queryset=MaterialTransfer.objects.filter())
     class Meta:
         model = MaterialTransferItems
         fields = (
@@ -61,26 +42,26 @@ class TransferItemsModelForm(forms.ModelForm):
             'item',
             'itemQuantity',
         )
-        # widgets = {
-        #     'item': Select2Widget
-        # }
     def __init__(self, *args, **kwargs):
-        req = kwargs.pop('req', None)
+        reqs = kwargs.pop('reqs', None)
+        # items = kwargs.pop('items', None)
         super(TransferItemsModelForm, self).__init__(*args, **kwargs)
         self.fields['item'].label = "Item"
-        self.fields['transfer'].label = "Transfer ID"
+        # self.fields['transfer'].label = "Transfer ID"
         self.fields['itemQuantity'].label = "Quantity"
         self.helper = FormHelper()
         self.form_tag = False
-        self.fields['item'].queryset = MaterialRequisitionItems.objects.filter(requisition=req)
-
-
+        self.fields['item'].queryset = Item.objects.filter(item__in=reqs)
+        # print(self.fields['item'].queryset)
+        
+        # self.fields['item'].queryset = MaterialRequisitionItems.objects.filter(requisition=req)
+        # self.fields['item'].queryset = Item.objects.filter(materialrequisitionitems_set=)
+        # self.fields['item'].queryset = self.fields['item'].queryset.filter(item__in=MaterialRequisitionItems.objects.filter(requisition=req))
+        # print(Item.objects.filter(item=MaterialRequisitionItems.objects.filter(requisition=req).values('item__item')))
+        # x = list(MaterialRequisitionItems.objects.filter(requisition=req).values_list('item__item', flat=True))
+        # print(x)
         # transferItems = MaterialTransferItems.objects.filter(transfer__requisition=instance.requisition.pk)
         # self.fields['item'].queryset = self.fields['item'].queryset.order_by('itemName')
-
-
-
-
 
 TransferInlineFormSet = forms.inlineformset_factory(
     MaterialTransfer,
@@ -99,4 +80,17 @@ TransferInlineUpdateFormSet = forms.inlineformset_factory(
     extra=0,
     can_delete=False,
     can_order=False,
-    )   
+    )
+
+   
+class EngineerTransferModelForm(forms.ModelForm):
+    class Meta:
+        model = MaterialTransfer
+        fields = (
+            'transferStatus',
+        )
+    def __init__(self, *args, **kwargs):
+        """ Grants access to the request object so that only members of the current user
+        are given as options"""
+        super().__init__(*args, **kwargs)
+        self.fields['transferStatus'].label = "Transfer Status"

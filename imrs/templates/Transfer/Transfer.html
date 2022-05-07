@@ -1,65 +1,189 @@
-{% extends 'base.html' %} {% load tailwind_filters %} {% load static %} 
-
-<!--  -->
-
+{% extends 'base.html' %} 
+{% load tailwind_filters %} 
+{% load static %} 
 {% block content %}
 
 <h2 class="font-bold text-4xl pb-10">Material Transfers</h2>
 
-<!-- IF STATEMENT to check if user is MO or SE -->
-<div class="flex space-x-5">
-  <div class="w-full">
-  <table
-    id="table"
-    class="overflow-hidden rounded-lg shadow-lg"
-    style="width:100%;"
-  >
-    <thead class="bg-slate-100 text-gray-600">
-      <tr>
-        <!-- <th class="w-2/12 font-medium">Req. ID</th> -->
-        <th class="w-2/12 font-medium">Tran. ID</th>
-        <th class="font-medium">Origin</th>
-        <th class="font-medium">Destination</th>
-        <th class="font-medium">Deliver By</th>
-        <th class="font-medium">Status</th>
-      </tr>
-    </thead>
-    <tbody class="text-center">
-      {% for trans in transfer.transfers %}
-      <tr
-        data-href="{% url 'transfer:detail-transfer' trans.pk %}"
-        class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
-      >
-        <!-- <td class="p-2">{{ trans.requisition }}</td> -->
-        <td class="p-2">{{ trans.transfer }}</td>
-        <td class="p-2">{{ trans.site }}</td>
-        <td class="p-2">{{ trans.requisition.site }}</td>
-        <td class="p-2">{{ trans.requisition.reqDateNeeded }}</td>
-        <td class="p-2">{{ trans.get_transferStatus_display }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div class="flex flex-col w-full space-y-5">
+  {% if request.user.role <= 1 %}
+  <div class="w-full flex flex-col">
+    <table
+      id="table"
+      class="inc-table overflow-hidden rounded-lg shadow-lg"
+      style="width:100%;"
+    >
+      <thead class="bg-slate-100 text-gray-600">
+        <tr>
+          <th class="w-2/12 font-medium">Tran. ID</th>
+          <th class="font-medium">Origin</th>
+          <th class="font-medium">Destination</th>
+          <th class="font-medium">Deliver By</th>
+          <th class="font-medium">Status</th>
+          <th class="font-medium">Last Updated</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        {% for trans in transfers.transfers %}
+        <tr
+          data-href="{% url 'transfer:detail-transfer' trans.pk %}"
+          class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+        >
+          <td class="">{{ trans.transfer }}</td>
+          <td class="">{{ trans.site }}</td>
+          <td class="">{{ trans.requisition.site }}</td>
+          <td class="">{{ trans.requisition.reqDateNeeded }}</td>
+          <td class="">
+            {% if trans.get_transferStatus_display == "Approved" %}
+              <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-blue-500 border-0 py-2 focus:outline-none rounded-full">
+            {% elif trans.get_transferStatus_display == "Awaiting Approval" %}
+              <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-yellow-500 border-0 py-2 focus:outline-none rounded-full">
+            {% elif trans.get_transferStatus_display == "Delivered" %}
+              <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-green-500 border-0 py-2 focus:outline-none rounded-full">
+            {% endif %}
+            {{ trans.get_transferStatus_display }}
+              </div>
+          </td>
+          <td class="">{% if trans.transferDateModified %} {{ trans.transferDateModified }} {% else %} -- {% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-</div>
 
-<!-- <script src="{% static 'js/table.js' %}"></script> -->
+  {% else %}
+  <div class="w-full flex flex-col">
+    <h4 class="font-bold text-2xl pb-3">Incoming Transfers</h4>
+    <table
+      id="table"
+      class="inc-table overflow-hidden rounded-lg shadow-lg"
+      style="width:100%;"
+    >
+      <thead class="bg-slate-100 text-gray-600">
+        <tr>
+          <th class="w-2/12 font-medium">Tran. ID</th>
+          <th class="font-medium">Origin</th>
+          <th class="font-medium">Deliver By</th>
+          <th class="font-medium">Status</th>
+          <th class="font-medium">Last Updated</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        {% for trans in transfers.incomingTransfers %}
+        <tr
+          data-href="{% url 'transfer:detail-transfer' trans.pk %}"
+          class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+        >
+          <td class="">{{ trans.transfer }}</td>
+          <td class="">{{ trans.site }}</td>
+          <td class="">{{ trans.requisition.reqDateNeeded }}</td>
+          <td class="">
+            {% if trans.get_transferStatus_display == "Approved" %}
+              <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-blue-500 border-0 py-2 focus:outline-none rounded-full">
+            {% elif trans.get_transferStatus_display == "Awaiting Approval" %}
+              <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-yellow-500 border-0 py-2 focus:outline-none rounded-full">
+            {% elif trans.get_transferStatus_display == "Delivered" %}
+              <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-green-500 border-0 py-2 focus:outline-none rounded-full">
+            {% endif %}
+            {{ trans.get_transferStatus_display }}
+              </div>
+          </td>
+          <td class="">{% if trans.transferDateModified %} {{ trans.transferDateModified }} {% else %} -- {% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="w-full flex flex-col">
+    <h4 class="font-bold text-2xl pb-3">Outgoing Transfers</h4>
+    <table
+      id="table"
+      class="out-table overflow-hidden rounded-lg shadow-lg"
+      style="width:100%;"
+    >
+      <thead class="bg-slate-100 text-gray-600">
+        <tr>
+          <th class="w-2/12 font-medium">Tran. ID</th>
+          <!-- <th class="font-medium">Origin</th> -->
+          <th class="font-medium">Destination</th>
+          <th class="font-medium">Deliver By</th>
+          <th class="font-medium">Status</th>
+          <th class="font-medium">Last Updated</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        {% for trans in transfers.outgoingTransfers %}
+        <tr
+          data-href="{% url 'transfer:detail-transfer' trans.pk %}"
+          class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"
+        >
+          <td class="">{{ trans.transfer }}</td>
+          <!-- <td class="">{{ trans.site }}</td> -->
+          <td class="">{{ trans.requisition.site }}</td>
+          <td class="">{{ trans.requisition.reqDateNeeded }}</td>
+          <td class="">
+            {% if trans.get_transferStatus_display == "Approved" %}
+              <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-blue-500 border-0 py-2 focus:outline-none rounded-full">
+            {% elif trans.get_transferStatus_display == "Awaiting Approval" %}
+              <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-yellow-500 border-0 py-2 focus:outline-none rounded-full">
+            {% elif trans.get_transferStatus_display == "Delivered" %}
+              <div class="justify-center  text-gray-900 text-sm font-medium h-full flex  text-white bg-green-500 border-0 py-2 focus:outline-none rounded-full">
+            {% endif %}
+            {{ trans.get_transferStatus_display }}
+              </div>
+          </td>
+          <td class="">{% if trans.transferDateModified %} {{ trans.transferDateModified }} {% else %} -- {% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</div>
 
 <script>
   $(document).ready(function () {
-    $('#table').on("click", ".row-href", function () {
+    $('table').on("click", ".row-href", function () {
       window.location = $(this).data("href");
       return false;
     });
   });
 
-  var table = $("#table").DataTable({
+
+  var inctable = $(".inc-table").DataTable({
     initComplete: function() {
-      $('#table_wrapper').prepend($('<div id="table-top" class="flex flex-row mb-5"></div'))
-      $('#table_filter').appendTo($('#table-top'))
-      $('#table_length').appendTo($('#table-top'))
-      $('#table_filter').addClass('flex flex-row justify-start')
-      $('#page-button').appendTo($('#table-top'))
+      var parent = $(this).closest('div')
+
+      $(parent).prepend($('<div class="inc-table-top flex flex-row mb-5"></div'))
+      $(parent).children('#table_filter').appendTo($('.inc-table-top'))
+      $(parent).children('#table_length').appendTo($('.inc-table-top'))
+      $(parent).children('#table_filter').addClass('flex flex-row justify-start')
+      $(parent).children('#page-button').appendTo($('.inc-table-top'))
+      
+    },
+    responsive: true,
+    language: {
+      zeroRecords: "No matching results found.",
+      emptyTable: "No available records.",
+      search: "",
+      searchPlaceholder: "Search",
+      lengthMenu: "No. Entries: _MENU_"
+    },
+    lengthMenu: [10, 25, 50],
+    columnDefs: [ { type: 'date', 'targets': [2] } ],
+    order: [[ 2, 'asc' ]]
+  });
+
+  var outtable = $(".out-table").DataTable({
+    initComplete: function() {
+      var parent = $(this).closest('div')
+
+      $(parent).prepend($('<div class="out-table-top flex flex-row mb-5"></div'))
+      $(parent).children('#table_filter').appendTo($('.out-table-top'))
+      $(parent).children('#table_length').appendTo($('.out-table-top'))
+      $(parent).children('#table_filter').addClass('flex flex-row justify-start')
+      $(parent).children('#page-button').appendTo($('.out-table-top'))
       
     },
     responsive: true,

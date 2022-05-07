@@ -1,5 +1,4 @@
 from django.db import models
-# from inventory.models import CartItem
 from imrs import settings
 from item.models import Item
 
@@ -19,7 +18,7 @@ class Site(models.Model):
         blank=True,
         related_name='inventory_items'
         )
-    siteName = models.CharField(max_length=50, blank=True) #REMOVE BLANK=TRUE TO MAKE THIS REQUIRED
+    siteName = models.CharField(max_length=50)
     siteStreetNumber = models.CharField(max_length=30, blank=True)
     siteStreet = models.CharField(max_length=30, blank=True)
     siteBarangay = models.CharField(max_length=30)
@@ -60,6 +59,7 @@ class Inventory(models.Model):
     siteItemStatus = models.PositiveSmallIntegerField(default=1, choices=ITEM_STATUS)
     siteItemTurnover = models.CharField(max_length=1, choices=ITEM_TURNOVER, default="F")
     siteItemMinThreshold = models.PositiveSmallIntegerField(default=0)
+    inventoryDateModified = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         constraints = [

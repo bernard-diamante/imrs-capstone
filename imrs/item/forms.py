@@ -15,7 +15,6 @@ class UpdateItemModelForm(forms.ModelForm):
         self.fields['itemSubcategory'].label = "Subcategory"
 
 class AddItemModelForm(forms.ModelForm):
-    # item = forms.IntegerField(min_value=0)
     class Meta:
         model = Item
         fields = (

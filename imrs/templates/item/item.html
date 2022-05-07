@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% load tailwind_filters %}
 {% load static %}
-
-<!--  -->
-
 {% block content %}
     <h2 class="font-bold text-4xl pb-10">Items</h2>
 
@@ -17,14 +14,14 @@
                         <th class="font-medium ">Item</th>
                         <th class="font-medium">Category</th>
                         <th class="font-medium">Subcategory</th>
-                        {% if request.user.role == 3 %}
+                        {% if request.user.role >= 2 %}
                         <th class="w-1/12 font-medium">Add</th>
                         {% endif %}
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     {% for item in data.items %}
-                        {% if request.user.role == 3 %}
+                        {% if request.user.role >= 2 %}
                         <tr
                         class="bg-white even:bg-slate-100 ease-in duration-100">
                         {% else  %}
@@ -35,11 +32,10 @@
                             <td class="p-2">{{ item.itemName }}</td>
                             <td class="p-2">{{ item.itemCategory }}</td>
                             <td class="p-2">{{ item.itemSubcategory }}</td>
-                            {% if request.user.role == 3 %}
+                            {% if request.user.role >= 2 %}
                                 <td>
                                     {% if item.item in data.inventory %}
-                                        <!-- <p class="h-7 w-7 justify-center cursor-default text-sm font-bold flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
-                                        >✓</p> -->
+                                    
                                     {% elif item.item in data.cartItemID_list %}
                                         <p class="h-7 w-7 justify-center cursor-default text-sm font-bold flex ml-auto mr-2 text-white bg-green-500 border-0 py-1 px-1 focus:outline-none hover:bg-green-600 rounded-full"
                                         >✓</p>
@@ -58,12 +54,12 @@
     </div>
 
 <div id="page-button" class="flex flex-row ml-auto">
-    {% if request.user.role == 3 %}
+    {% if request.user.role >= 2 %}
         <a href="{% url 'item:list-cart' %}" class="mx-auto flex text-center justify-center h-full w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
             View Item Summary
         </a>
     {% endif %}
-    {% if request.user.role < 3 %}
+    {% if request.user.role < 2 %}
         <a href="{% url 'item:add-item' %}" class="mx-auto flex text-center justify-center h-full w-full text-white bg-indigo-500 border-0 px-3 py-1 focus:outline-none hover:bg-indigo-600 rounded-lg ease-in duration-100">
             Add an Item
         </a>

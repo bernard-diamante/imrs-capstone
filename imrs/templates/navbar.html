@@ -1,7 +1,5 @@
 {% load static %}
 
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-
 <header class="z-50 h-full w-full text-gray-100 font-medium scdc-bg shadow-lg">
   <div class="flex mx-auto content-center justify-center h-20 scdc-bg max-w-7xl px-10">
     <!-- <div class="max-w-7xl"> -->
@@ -11,6 +9,40 @@
     </a>
     <nav class="font-raleway w-full navbar ml-auto mr-auto lg:mr-0 flex items-center text-sm justify-center lg:justify-end">
     <!-- <nav class="font-raleway w-full navbar ml-auto mr-auto lg:mr-0 hidden sm:flex items-center text-sm justify-center lg:justify-end"> -->
+
+      {% comment %} ########## {% endcomment %}
+      {% if not request.user.site and request.user.role >= 2 %}
+      <a href="{% url 'contact_admin' %}" class="main-nav h-full">
+        <div class="nav h-full flex items-center ease-in duration-200 px-6">
+          DASHBOARD
+        </div>
+      </a>
+      <p class="bg-slate-500 h-3 w-0 border-r"></p>
+      <a href="{% url 'contact_admin' %}" class="main-nav h-full">
+        <div class="h-full flex items-center nav ease-in duration-200 px-6">
+          INVENTORY
+        </div>
+      </a>
+      <p class="bg-slate-500 h-3 w-0 border-r"></p>
+      <a href="{% url 'contact_admin' %}" class="main-nav h-full">
+        <div class="h-full flex items-center nav ease-in duration-200 px-6">
+          ITEMS
+        </div>
+      </a>
+      <p class="bg-slate-500 h-3 w-0 border-r"></p>
+      <a href="{% url 'contact_admin' %}" class="main-nav h-full">
+        <div class="h-full flex items-center nav ease-in duration-200 px-6">
+          REQUESTS
+        </div>
+      </a>
+      <p class="bg-slate-500 h-3 w-0 border-r"></p>
+      <a href="{% url 'contact_admin' %}" class="main-nav h-full">
+        <div class="h-full flex items-center nav ease-in duration-200 px-6">
+          TRANSFERS
+        </div>
+      </a>
+
+      {% else %}
       <a href="{% url 'dashboard:dashboard' %}" class="main-nav h-full">
         <div class="nav h-full flex items-center ease-in duration-200 px-6">
           DASHBOARD
@@ -40,7 +72,8 @@
           TRANSFERS
         </div>
       </a>
-      
+      {% endif %}
+
       <!-- Admin -->
       <div @click.away="open = false" class="relative" x-data="{ open: false }">
         <button @click="open = !open" class="items-center w-auto px-4 py-2 mt-0 text-sm font-semibold text-left bg-gray-100 rounded-lg inline ml-4 text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline ease-in duration-100">

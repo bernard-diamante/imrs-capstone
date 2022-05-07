@@ -45,9 +45,7 @@
     
         <form
           class="form-inline"
-          method="post"
-          action=""
-        > <!-- add url add form -->
+          method="post">
           {% csrf_token %} {{ form|crispy }}
           <div class="flex justify-end mt-6 ml-auto">
             <div id="buttons" class="flex">
@@ -66,6 +64,5 @@
     </div>
     
     <script src="{% static 'js/inventory-buttons.js' %}"></script>
-
 
 {% endblock %}
