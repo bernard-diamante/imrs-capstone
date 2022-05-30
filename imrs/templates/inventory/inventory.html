@@ -48,7 +48,7 @@
           <td class="">{{ item.item.itemSubcategory }}</td>
           <td class="">{{ item.get_siteItemTurnover_display }}</td>
           <td>
-          {% if item.get_siteItemStatus_display == "Above Threshold" %}
+          {% if item.get_siteItemStatus_display == "Within Threshold" %}
             <div class="justify-center text-gray-900 text-sm font-medium flex text-white bg-green-500 border-0 py-2 focus:outline-none rounded-full">
           {% elif item.get_siteItemStatus_display == "Moderate" %}
             <div class="justify-center text-gray-900 text-sm font-medium flex text-white bg-yellow-500 border-0 py-2 focus:outline-none rounded-full">

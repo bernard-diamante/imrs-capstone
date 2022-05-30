@@ -21,6 +21,7 @@ class SiteModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SiteModelForm, self).__init__(*args, **kwargs)
         self.fields['user'].queryset = User.objects.filter(role=3) | User.objects.filter(role=2)
+        self.fields['user'].label = "Site Engineer"
         self.fields['siteName'].label = "Name"
         self.fields['siteStreetNumber'].label = "Street Number"
         self.fields['siteStreet'].label = "Street"

@@ -5,6 +5,7 @@ import datetime
 
 @receiver(post_save, sender=MaterialTransfer)
 def auto_now_transfer_modified(sender, instance, **kwargs):
+    
     instance.transferDateModified = datetime.datetime.now()
 
 

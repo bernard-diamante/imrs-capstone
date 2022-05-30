@@ -40,7 +40,7 @@ class Cart(models.Model):
 
 class Inventory(models.Model):
     ITEM_STATUS = [
-        (0, 'Above Threshold'),
+        (0, 'Within Threshold'),
         (1, 'Moderate'),
         (2, 'Low'),
         (3, 'Critical'),

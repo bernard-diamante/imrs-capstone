@@ -103,7 +103,7 @@
                         <th class="py-2 font-medium">Status</th>
                     </thead>
                     <tbody class="text-center">
-                        {% for tran in data.delivery %}
+                        {% for tran in data.transfer %}
                         <tr
                         data-href="{% url 'transfer:detail-transfer' tran.pk %}"
                         class="row-href cursor-pointer bg-white hover:bg-slate-200 even:bg-slate-100 even:hover:bg-slate-200 ease-in duration-100"

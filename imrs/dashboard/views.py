@@ -21,8 +21,8 @@ class DashboardListView(generic.ListView):
             qs = {
                 'inventory': Inventory.objects.filter(site=user.site, siteItemStatus=2),
                 'requisition': MaterialRequisition.objects.filter(site=user.site),
-                'transfer': MaterialTransfer.objects.filter(site=user.site),
-                'delivery': MaterialTransfer.objects.filter(transferStatus=0, site=user.site),
+                'transfer': MaterialTransfer.objects.filter(site=user.site, transferStatus=0),
+                # 'delivery': MaterialTransfer.objects.filter(transferStatus=0, site=user.site),
             }
 
 
